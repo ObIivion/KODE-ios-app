@@ -64,32 +64,39 @@ class EmployeeCell: UITableViewCell {
     func setImageViewConstraints(){
         
         employeeImageView.translatesAutoresizingMaskIntoConstraints = false
-        employeeImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        employeeImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10).isActive = true
-        employeeImageView.heightAnchor.constraint(equalToConstant: 72).isActive = true
-        employeeImageView.widthAnchor.constraint(equalToConstant: 72).isActive = true
+        NSLayoutConstraint.activate([
+            employeeImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+             employeeImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10), employeeImageView.heightAnchor.constraint(equalToConstant: 72),
+             employeeImageView.widthAnchor.constraint(equalToConstant: 72)
+        ])
+        
+        
+       
     }
     
    func setNameLabelConstraints(){
-        
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.leadingAnchor.constraint(equalTo: employeeImageView.trailingAnchor, constant: 16).isActive = true
-        nameLabel.centerYAnchor.constraint(equalTo: employeeImageView.centerYAnchor, constant: -20).isActive = true
+       
+       nameLabel.translatesAutoresizingMaskIntoConstraints = false
+       NSLayoutConstraint.activate([
+        nameLabel.leadingAnchor.constraint(equalTo: employeeImageView.trailingAnchor, constant: 16), nameLabel.centerYAnchor.constraint(equalTo: employeeImageView.centerYAnchor, constant: -20)
+       ])
     }
-    
     
     func setTagLabelConstraints(){
         
         tagLabel.translatesAutoresizingMaskIntoConstraints = false
-        tagLabel.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: 4).isActive = true
-        tagLabel.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            tagLabel.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: 4), tagLabel.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor)
+        ])
     }
     
     func setDepartmentLabelConstraints(){
         
         departmentLabel.translatesAutoresizingMaskIntoConstraints = false
-        departmentLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor).isActive = true
-        departmentLabel.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor, constant: 20).isActive = true
+        NSLayoutConstraint.activate([
+            departmentLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor), departmentLabel.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor, constant: 20)
+        ])
+        
     }
     
     func set(employee: Employee){

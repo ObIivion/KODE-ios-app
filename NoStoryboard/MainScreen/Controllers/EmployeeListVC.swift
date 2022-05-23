@@ -60,5 +60,4 @@ extension EmployeeListVC: UITableViewDelegate, UITableViewDataSource {
         return employers.count
     }
     
-    
 }

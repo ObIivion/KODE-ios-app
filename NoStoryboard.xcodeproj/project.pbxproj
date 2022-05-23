@@ -105,9 +105,8 @@
 		A37B16D02838F8E10029C602 /* NoStoryboard */ = {
 			isa = PBXGroup;
 			children = (
+				A37B1712283C1FBD0029C602 /* MainScreen */,
 				A37B170B283926060029C602 /* Extensions-Utils */,
-				A37B170728390F0C0029C602 /* Controller */,
-				A37B170528390EEB0029C602 /* View */,
 				A37B170428390EDA0029C602 /* Model */,
 				A37B170828390F340029C602 /* Supporting */,
 				A37B16DF2838F8E10029C602 /* LaunchScreen.storyboard */,
@@ -142,22 +141,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		A37B170528390EEB0029C602 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		A37B170728390F0C0029C602 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				A37B170928390FB70029C602 /* EmployeeListVC.swift */,
-				A37B170E283A78C50029C602 /* EmployeeCell.swift */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
 		A37B170828390F340029C602 /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
@@ -174,6 +157,31 @@
 				A37B170C283926410029C602 /* UIView+Ext.swift */,
 			);
 			path = "Extensions-Utils";
+			sourceTree = "<group>";
+		};
+		A37B1712283C1FBD0029C602 /* MainScreen */ = {
+			isa = PBXGroup;
+			children = (
+				A37B1715283C20A60029C602 /* Controllers */,
+				A37B1713283C20970029C602 /* Views */,
+			);
+			path = MainScreen;
+			sourceTree = "<group>";
+		};
+		A37B1713283C20970029C602 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A37B1715283C20A60029C602 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				A37B170928390FB70029C602 /* EmployeeListVC.swift */,
+				A37B170E283A78C50029C602 /* EmployeeCell.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

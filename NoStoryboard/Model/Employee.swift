@@ -18,7 +18,7 @@ struct Employee {
 
 extension EmployeeListVC{
 
-    func setDataEmployee() -> Array<Employee>{
+    func setDataEmployee() -> [Employee] {
 
         var listEmployee: [Employee] = []
         

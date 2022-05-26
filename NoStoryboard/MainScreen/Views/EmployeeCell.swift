@@ -56,7 +56,6 @@ class EmployeeCell: UITableViewCell {
         
     }
     
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -69,9 +68,6 @@ class EmployeeCell: UITableViewCell {
              employeeImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10), employeeImageView.heightAnchor.constraint(equalToConstant: 72),
              employeeImageView.widthAnchor.constraint(equalToConstant: 72)
         ])
-        
-        
-       
     }
     
    func setNameLabelConstraints(){
@@ -99,11 +95,12 @@ class EmployeeCell: UITableViewCell {
         
     }
     
-    func set(employee: Employee){
+    func set(employee: EmployeeModel){
         
-        employeeImageView.image = employee.image
-        nameLabel.text = employee.name
-        tagLabel.text = employee.tag
+        
+        employeeImageView.image = UIImage(named: "goose")
+        nameLabel.text = employee.firstName
+        tagLabel.text = employee.userTag
         departmentLabel.text = employee.department
         
     }

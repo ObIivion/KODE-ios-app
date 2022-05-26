@@ -9,22 +9,36 @@ import UIKit
 
 class EmployeeListVC: UIViewController {
 
-    var tableView = UITableView()
-    var employers: Array<Employee> = []
+    private let tableView = UITableView()
+    private var employers: [EmployeeModel] = []
+    private let employeeProvider = ApiProvider<EmployeeList>()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "Designers"
-        employers = setDataEmployee()
         
         view.backgroundColor = UIColor(red: 0xE5, green: 0xE5, blue: 0xE5, alpha: 0xFF)
         configureTableView()
         
-
+        let urlString = "https://stoplight.io/mocks/kode-education/trainee-test/25143926/users"
+        employeeProvider.getData(from: urlString, itemsComplitionHandler: self.requestCompletionHandler)
+        print("---->>>>>_>______>>__>_>__")
     }
     
+    func requestCompletionHandler(result: Result<EmployeeList, Error>){
+        
+        switch result {
+        case let .success(responseData):
+            self.employers = responseData.items
+            self.tableView.reloadData()
+        case let .failure(error):
+            print(error)
+        }
+        
+    }
+       
     func configureTableView() {
         
         view.addSubview(tableView)

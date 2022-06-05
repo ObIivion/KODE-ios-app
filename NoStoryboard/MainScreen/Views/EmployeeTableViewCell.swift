@@ -7,8 +7,10 @@
 
 import UIKit
 
-class EmployeeCell: UITableViewCell {
+class EmployeeTableViewCell: UITableViewCell {
     
+    static let identifier = "tableCell"
+
     private let employeeImageView: UIImageView = {
         let view = UIImageView()
         view.clipsToBounds = true
@@ -96,13 +98,10 @@ class EmployeeCell: UITableViewCell {
     }
     
     func set(employee: EmployeeModel){
-        
-        
         employeeImageView.image = UIImage(named: "goose")
-        nameLabel.text = employee.firstName
+        nameLabel.text = "\(employee.firstName) \(employee.lastName)"
         tagLabel.text = employee.userTag
         departmentLabel.text = employee.department
-        
     }
-    
+
 }

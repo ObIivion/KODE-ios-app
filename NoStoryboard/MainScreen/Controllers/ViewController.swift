@@ -145,22 +145,3 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     }
     
 }
-
-// extension ViewController: UITextFieldDelegate {
-    
-    
-    
-//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//
-//        if searchTextField.text == nil {
-//            print("пустое поле")
-//        }
-//        
-//        if let text = searchTextField.text {
-//            print("string: \(string) text: \(text)")
-//        filterText(query: text + string)
-//        }
-//
-//        return true
-//    }
-// }

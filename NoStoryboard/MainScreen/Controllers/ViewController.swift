@@ -14,7 +14,8 @@ class ViewController: UIViewController {
                     "HR", "PR", "Back Office", "Support"]
     
     private var employee: [EmployeeModel] = []
-    
+    private var filteredEmployee: [EmployeeModel] = []
+    private var employeeIsFiltered = false
     private let employeeProvider = ApiProvider<EmployeeList>()
     
     private let searchTextField = SearchTextField(inset: UIEdgeInsets(top: 10, left: 44, bottom: 10, right: 35))
@@ -58,8 +59,26 @@ class ViewController: UIViewController {
                 print(error)
             }
         }
+        
+        searchTextField.addTarget(self, action: #selector(self.textFieldDidChange(paramTarget:)), for: .editingChanged)
+        
+    }
+                                  
+    @objc func textFieldDidChange(paramTarget: UITextField){
+        
+        filteredEmployee.removeAll()
+        
+        guard let query = paramTarget.text else { return }
+        
+        for i in employee{
+            if i.firstName.starts(with: query) {
+                filteredEmployee.append(i)
+            }
+        }
+        employeeTableView.reloadData()
     }
     
+    //constraints
     func setupViews(){
         
         searchTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -89,15 +108,26 @@ class ViewController: UIViewController {
 // extension for UITableView
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if filteredEmployee.isEmpty {
         return employee.count
+        } else {
+            return filteredEmployee.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: EmployeeTableViewCell.identifier) as! EmployeeTableViewCell
-        let employee = employee[indexPath.row]
-        cell.set(employee: employee)
-        return cell
+        
+        if (filteredEmployee.isEmpty){
+            let employee = employee[indexPath.row]
+            cell.set(employee: employee)
+            return cell
+        } else {
+            let employee = filteredEmployee[indexPath.row]
+            cell.set(employee: employee)
+            return cell
+        }
     }
 }
 
@@ -115,3 +145,22 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     }
     
 }
+
+// extension ViewController: UITextFieldDelegate {
+    
+    
+    
+//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//
+//        if searchTextField.text == nil {
+//            print("пустое поле")
+//        }
+//        
+//        if let text = searchTextField.text {
+//            print("string: \(string) text: \(text)")
+//        filterText(query: text + string)
+//        }
+//
+//        return true
+//    }
+// }

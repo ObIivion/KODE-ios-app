@@ -61,9 +61,9 @@ class ViewController: UIViewController {
         }
         
         searchTextField.addTarget(self, action: #selector(self.textFieldDidChange(paramTarget:)), for: .editingChanged)
-        
+    
     }
-                                  
+    // фильтрация по вводу
     @objc func textFieldDidChange(paramTarget: UITextField){
         
         filteredEmployee.removeAll()
@@ -140,8 +140,113 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopTabsCollectionViewCell.identifier, for: indexPath) as! TopTabsCollectionViewCell
-        cell.label.text = tabNames[indexPath.row]
+        cell.label.text = tabNames[indexPath.item]
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedTab = tabNames[indexPath.item]
+        tabSelectedFilter(tabName: selectedTab)
+    }
+    
+    func tabSelectedFilter(tabName: String){
+        
+        filteredEmployee.removeAll()
+        
+        switch tabName {
+            
+        case "Designers":
+            for i in employee {
+                if i.department == "design" {
+                    filteredEmployee.append(i)
+                }
+            }
+            employeeTableView.reloadData()
+        case "Analysts":
+            for i in employee {
+                if i.department == "analytics" {
+                    filteredEmployee.append(i)
+                }
+            }
+            employeeTableView.reloadData()
+        case "Managers":
+            for i in employee {
+                if i.department == "management" {
+                    filteredEmployee.append(i)
+                }
+            }
+            employeeTableView.reloadData()
+        case "iOS":
+            for i in employee {
+                if i.department == "ios" {
+                    filteredEmployee.append(i)
+                }
+            }
+            employeeTableView.reloadData()
+        case "Android":
+            for i in employee {
+                if i.department == "android" {
+                    filteredEmployee.append(i)
+                }
+            }
+            employeeTableView.reloadData()
+        case "QA":
+            for i in employee {
+                if i.department == "qa" {
+                    filteredEmployee.append(i)
+                }
+            }
+            employeeTableView.reloadData()
+        case "Frontend":
+            for i in employee {
+                if i.department == "frontend" {
+                    filteredEmployee.append(i)
+                }
+            }
+            employeeTableView.reloadData()
+        case "Backend":
+            for i in employee {
+                if i.department == "backend" {
+                    filteredEmployee.append(i)
+                }
+            }
+            employeeTableView.reloadData()
+        case "HR":
+            for i in employee {
+                if i.department == "hr" {
+                    filteredEmployee.append(i)
+                }
+            }
+            employeeTableView.reloadData()
+        case "PR":
+            for i in employee {
+                if i.department == "pr" {
+                    filteredEmployee.append(i)
+                }
+            }
+            employeeTableView.reloadData()
+        case "Back Office":
+            for i in employee {
+                if i.department == "back_office" {
+                    filteredEmployee.append(i)
+                }
+            }
+            employeeTableView.reloadData()
+        case "Support":
+            for i in employee {
+                if i.department == "support" {
+                    filteredEmployee.append(i)
+                }
+            }
+            employeeTableView.reloadData()
+        default:
+            employeeTableView.reloadData()
+        }
+        
+    }
+    
 }
+
+//["Designers", "Analysts", "Managers", "iOS",
+//                 "Android", "QA", "Frontend", "Backend",
+//                 "HR", "PR", "Back Office", "Support"]

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class EmployeeListVC: UIViewController {
     
     private let tabs = Department.allCases // статическое поле allCases генерирует сам свифт - достаточно добавить CaseIterable протокол енаму
     
@@ -108,7 +108,7 @@ class ViewController: UIViewController {
 }
 
 // extension for UITableView
-extension ViewController: UITableViewDelegate, UITableViewDataSource {
+extension EmployeeListVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         filteredEmployee.count // теперь всегда данные берем из filtered
     }
@@ -124,7 +124,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 // extension for UICollectionView
-extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
+extension EmployeeListVC: UICollectionViewDelegate, UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return tabs.count

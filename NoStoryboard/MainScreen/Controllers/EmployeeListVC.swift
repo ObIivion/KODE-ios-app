@@ -28,48 +28,41 @@ class EmployeeListVC: UIViewController {
 
     
     private let employeeProvider = ApiProvider()
-    private let searchTextField = SearchTextField(inset: UIEdgeInsets(top: 10, left: 44, bottom: 10, right: 35))
     
-    private let topTabsCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        let tab = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        return tab
-    }()
     
-    private let employeeTableView = UITableView()
+    override func loadView() {
+        self.view = EmployeeListVCRootView()
+    }
+    
+    var mainView: EmployeeListVCRootView { view as! EmployeeListVCRootView }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor =  .white
-        view.addSubview(searchTextField)
-        view.addSubview(employeeTableView)
-        view.addSubview(topTabsCollectionView)
-        setupViews()
+        mainView.employeeTableView.delegate = self
+        mainView.employeeTableView.dataSource = self
+        mainView.topTabsCollectionView.delegate = self
+        mainView.topTabsCollectionView.dataSource = self
         
-        employeeTableView.delegate = self
-        employeeTableView.dataSource = self
-        employeeTableView.register(EmployeeTableViewCell.self, forCellReuseIdentifier: EmployeeTableViewCell.identifier)
-        employeeTableView.rowHeight = 90
+        mainView.employeeTableView.register(EmployeeTableViewCell.self, forCellReuseIdentifier: EmployeeTableViewCell.identifier)
+        mainView.employeeTableView.rowHeight = 90
         
-        topTabsCollectionView.register(TopTabsCollectionViewCell.self, forCellWithReuseIdentifier: TopTabsCollectionViewCell.identifier)
-        topTabsCollectionView.delegate = self
-        topTabsCollectionView.dataSource = self
+        mainView.topTabsCollectionView.register(TopTabsCollectionViewCell.self, forCellWithReuseIdentifier: TopTabsCollectionViewCell.identifier)
+        
+        mainView.searchTextField.addTarget(self, action: #selector(self.textFieldDidChange), for: .editingChanged)
         
         employeeProvider.getData(EmployeeList.self, from: "/kode-education/trainee-test/25143926/users") { result in // поправил url - теперь нам надо писать только изменяемую часть
             
             switch result {
             case let .success(responseData):
                 self.employee = responseData.items
-                self.employeeTableView.reloadData()
+                self.mainView.employeeTableView.reloadData()
             case let .failure(error):
                 print(error)
             }
         }
         
-        searchTextField.addTarget(self, action: #selector(self.textFieldDidChange), for: .editingChanged)
+        
         
     }
     // фильтрация по вводу
@@ -77,32 +70,13 @@ class EmployeeListVC: UIViewController {
         
         searchText = sender.text ?? ""
         
-        employeeTableView.reloadData()
+        mainView.employeeTableView.reloadData()
     }
     
     //constraints
     func setupViews(){
         
-        searchTextField.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            searchTextField.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -50),
-            searchTextField.heightAnchor.constraint(equalToConstant: 40),
-            searchTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            searchTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 14),
-        ])
-        
-        self.topTabsCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        self.topTabsCollectionView.topAnchor.constraint(equalTo: self.searchTextField.bottomAnchor, constant: 6).isActive = true
-        self.topTabsCollectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        self.topTabsCollectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-        self.topTabsCollectionView.heightAnchor.constraint(equalToConstant: 36).isActive = true
-        
-        self.employeeTableView.translatesAutoresizingMaskIntoConstraints = false
-        self.employeeTableView.topAnchor.constraint(equalTo: self.topTabsCollectionView.bottomAnchor, constant: 22).isActive = true
-        self.employeeTableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        self.employeeTableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-        self.employeeTableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
     }
     
 }
@@ -144,7 +118,7 @@ extension EmployeeListVC: UICollectionViewDelegate, UICollectionViewDataSource{
             selectedDepartment = tabs[indexPath.item] // если я тапаю на ячейку с дркгим фильтром - просто сменится департмент по которому фильтрую
         }
         
-        employeeTableView.reloadData()
+        mainView.employeeTableView.reloadData()
         // больше нам не надо делать огромный switch - вся фильтрация пройдет в filteredEmployee и просто сравнится у кого department такой же как текущий selectedDepartment, а selectedDepartment мы только что установили, зная индекс
     }
 

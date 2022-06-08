@@ -12,14 +12,14 @@ class ViewController: UIViewController {
     private let tabs = Department.allCases // статическое поле allCases генерирует сам свифт - достаточно добавить CaseIterable протокол енаму
     
     private var searchText: String = "" // строка по которой фильтруем
-    private var selectedDepartment: Department = .design // отдел по которому фильтруем
+    private var selectedDepartment: Department? = nil // отдел по которому фильтруем
     
     private var employee: [EmployeeModel] = [] // список сотрудников который мы получили
     
     private var filteredEmployee: [EmployeeModel] { // это как-бы переменная, но на самом деле в нее нельзя записать, она каждый раз будет вычиляться заново, по сути это только getter, такие переменные больше функции чем переменные
         return employee
             .filter({
-                $0.department == selectedDepartment // возвращаем только сотрудников с отделом как текущий
+                $0.department == selectedDepartment || selectedDepartment == nil // возвращаем только сотрудников с отделом как текущий, а если текущтй nil - вернутся все, без филтрации
             })
             .filter({
                 $0.firstName.starts(with: searchText) || $0.lastName.starts(with: searchText) || searchText.isEmpty // добавил условие searchText.isEmpty чтоб сохранились все элементы если поиск пустой
@@ -138,7 +138,12 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedDepartment = tabs[indexPath.item]
+        if selectedDepartment == tabs[indexPath.item] {
+            selectedDepartment = nil // если я тапаю на ту же ячейку что и выбрана - фильтр снимется и покажутся все без фильтрации по профессии
+        } else {
+            selectedDepartment = tabs[indexPath.item] // если я тапаю на ячейку с дркгим фильтром - просто сменится департмент по которому фильтрую
+        }
+        
         employeeTableView.reloadData()
         // больше нам не надо делать огромный switch - вся фильтрация пройдет в filteredEmployee и просто сравнится у кого department такой же как текущий selectedDepartment, а selectedDepartment мы только что установили, зная индекс
     }

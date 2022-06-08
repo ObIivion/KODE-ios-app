@@ -101,6 +101,12 @@ extension EmployeeListVC: UICollectionViewDelegate, UICollectionViewDataSource{
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopTabsCollectionViewCell.identifier, for: indexPath) as! TopTabsCollectionViewCell
         cell.label.text = tabs[indexPath.item].title // используем title который вручную прописали у department
         
+        if tabs[indexPath.item] == selectedDepartment { // если департамент впо индексу такой же как и selectedDepartment - я выделяю ячейку цветом
+            cell.label.textColor = .black
+        } else {
+            cell.label.textColor = .darkGray
+        }
+        
         return cell
     }
     

@@ -9,15 +9,25 @@ import UIKit
 
 class ViewController: UIViewController {
     
-   private let tabNames = ["Designers", "Analysts", "Managers", "iOS",
-                    "Android", "QA", "Frontend", "Backend",
-                    "HR", "PR", "Back Office", "Support"]
+    private let tabs = Department.allCases // статическое поле allCases генерирует сам свифт - достаточно добавить CaseIterable протокол енаму
     
-    private var employee: [EmployeeModel] = []
-    private var filteredEmployee: [EmployeeModel] = []
-    private var employeeIsFiltered = false
-    private let employeeProvider = ApiProvider<EmployeeList>()
+    private var searchText: String = "" // строка по которой фильтруем
+    private var selectedDepartment: Department = .design // отдел по которому фильтруем
     
+    private var employee: [EmployeeModel] = [] // список сотрудников который мы получили
+    
+    private var filteredEmployee: [EmployeeModel] { // это как-бы переменная, но на самом деле в нее нельзя записать, она каждый раз будет вычиляться заново, по сути это только getter, такие переменные больше функции чем переменные
+        return employee
+            .filter({
+                $0.department == selectedDepartment // возвращаем только сотрудников с отделом как текущий
+            })
+            .filter({
+                $0.firstName.starts(with: searchText) || $0.lastName.starts(with: searchText) || searchText.isEmpty // добавил условие searchText.isEmpty чтоб сохранились все элементы если поиск пустой
+            })
+    }
+
+    
+    private let employeeProvider = ApiProvider()
     private let searchTextField = SearchTextField(inset: UIEdgeInsets(top: 10, left: 44, bottom: 10, right: 35))
     
     private let topTabsCollectionView: UICollectionView = {
@@ -29,10 +39,10 @@ class ViewController: UIViewController {
     }()
     
     private let employeeTableView = UITableView()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor =  .white
         view.addSubview(searchTextField)
         view.addSubview(employeeTableView)
@@ -49,7 +59,7 @@ class ViewController: UIViewController {
         topTabsCollectionView.dataSource = self
         
         let urlString = "https://stoplight.io/mocks/kode-education/trainee-test/25143926/users"
-        employeeProvider.getData(from: urlString) { result in
+        employeeProvider.getData(EmployeeList.self, from: urlString) { result in
             
             switch result {
             case let .success(responseData):
@@ -60,21 +70,14 @@ class ViewController: UIViewController {
             }
         }
         
-        searchTextField.addTarget(self, action: #selector(self.textFieldDidChange(paramTarget:)), for: .editingChanged)
-    
+        searchTextField.addTarget(self, action: #selector(self.textFieldDidChange), for: .editingChanged)
+        
     }
     // фильтрация по вводу
-    @objc func textFieldDidChange(paramTarget: UITextField){
+    @objc func textFieldDidChange(_ sender: UITextField) {// принято называть sender
         
-        filteredEmployee.removeAll()
+        searchText = sender.text ?? ""
         
-        guard let query = paramTarget.text else { return }
-        
-        for i in employee{
-            if i.firstName.starts(with: query) {
-                filteredEmployee.append(i)
-            }
-        }
         employeeTableView.reloadData()
     }
     
@@ -108,26 +111,16 @@ class ViewController: UIViewController {
 // extension for UITableView
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if filteredEmployee.isEmpty {
-        return employee.count
-        } else {
-            return filteredEmployee.count
-        }
+        filteredEmployee.count // теперь всегда данные берем из filtered
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: EmployeeTableViewCell.identifier) as! EmployeeTableViewCell
+        let employee = filteredEmployee[indexPath.row]
+        cell.set(employee: employee)
         
-        if (filteredEmployee.isEmpty){
-            let employee = employee[indexPath.row]
-            cell.set(employee: employee)
-            return cell
-        } else {
-            let employee = filteredEmployee[indexPath.row]
-            cell.set(employee: employee)
-            return cell
-        }
+        return cell
     }
 }
 
@@ -135,118 +128,21 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return tabNames.count
+        return tabs.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopTabsCollectionViewCell.identifier, for: indexPath) as! TopTabsCollectionViewCell
-        cell.label.text = tabNames[indexPath.item]
+        cell.label.text = tabs[indexPath.item].title // используем title который вручную прописали у department
+        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedTab = tabNames[indexPath.item]
-        tabSelectedFilter(tabName: selectedTab)
+        selectedDepartment = tabs[indexPath.item]
+        employeeTableView.reloadData()
+        // больше нам не надо делать огромный switch - вся фильтрация пройдет в filteredEmployee и просто сравнится у кого department такой же как текущий selectedDepartment, а selectedDepartment мы только что установили, зная индекс
     }
-    
-    func tabSelectedFilter(tabName: String){
-        
-        filteredEmployee.removeAll()
-        
-        switch tabName {
-            
-        case "Designers":
-            for i in employee {
-                if i.department == "design" {
-                    filteredEmployee.append(i)
-                }
-            }
-            employeeTableView.reloadData()
-        case "Analysts":
-            for i in employee {
-                if i.department == "analytics" {
-                    filteredEmployee.append(i)
-                }
-            }
-            employeeTableView.reloadData()
-        case "Managers":
-            for i in employee {
-                if i.department == "management" {
-                    filteredEmployee.append(i)
-                }
-            }
-            employeeTableView.reloadData()
-        case "iOS":
-            for i in employee {
-                if i.department == "ios" {
-                    filteredEmployee.append(i)
-                }
-            }
-            employeeTableView.reloadData()
-        case "Android":
-            for i in employee {
-                if i.department == "android" {
-                    filteredEmployee.append(i)
-                }
-            }
-            employeeTableView.reloadData()
-        case "QA":
-            for i in employee {
-                if i.department == "qa" {
-                    filteredEmployee.append(i)
-                }
-            }
-            employeeTableView.reloadData()
-        case "Frontend":
-            for i in employee {
-                if i.department == "frontend" {
-                    filteredEmployee.append(i)
-                }
-            }
-            employeeTableView.reloadData()
-        case "Backend":
-            for i in employee {
-                if i.department == "backend" {
-                    filteredEmployee.append(i)
-                }
-            }
-            employeeTableView.reloadData()
-        case "HR":
-            for i in employee {
-                if i.department == "hr" {
-                    filteredEmployee.append(i)
-                }
-            }
-            employeeTableView.reloadData()
-        case "PR":
-            for i in employee {
-                if i.department == "pr" {
-                    filteredEmployee.append(i)
-                }
-            }
-            employeeTableView.reloadData()
-        case "Back Office":
-            for i in employee {
-                if i.department == "back_office" {
-                    filteredEmployee.append(i)
-                }
-            }
-            employeeTableView.reloadData()
-        case "Support":
-            for i in employee {
-                if i.department == "support" {
-                    filteredEmployee.append(i)
-                }
-            }
-            employeeTableView.reloadData()
-        default:
-            employeeTableView.reloadData()
-        }
-        
-    }
+
     
 }
-
-//["Designers", "Analysts", "Managers", "iOS",
-//                 "Android", "QA", "Frontend", "Backend",
-//                 "HR", "PR", "Back Office", "Support"]

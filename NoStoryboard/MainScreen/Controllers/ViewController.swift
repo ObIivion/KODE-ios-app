@@ -58,8 +58,7 @@ class ViewController: UIViewController {
         topTabsCollectionView.delegate = self
         topTabsCollectionView.dataSource = self
         
-        let urlString = "https://stoplight.io/mocks/kode-education/trainee-test/25143926/users"
-        employeeProvider.getData(EmployeeList.self, from: urlString) { result in
+        employeeProvider.getData(EmployeeList.self, from: "/kode-education/trainee-test/25143926/users") { result in // поправил url - теперь нам надо писать только изменяемую часть
             
             switch result {
             case let .success(responseData):

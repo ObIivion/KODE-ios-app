@@ -1,6 +1,6 @@
 import UIKit
 
-class EmployeeListVCRootView: UIView {
+class EmployeeListVCRootView: BaseView {
     let searchTextField = SearchTextField(inset: UIEdgeInsets(top: 10, left: 44, bottom: 10, right: 35))
     
     let topTabsCollectionView: UICollectionView = {
@@ -14,17 +14,7 @@ class EmployeeListVCRootView: UIView {
     
     let employeeTableView = UITableView()
     
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError()
-    }
-    
-    func setup() {
+    override func setup() {
         backgroundColor =  .white
         addSubview(searchTextField)
         addSubview(employeeTableView)

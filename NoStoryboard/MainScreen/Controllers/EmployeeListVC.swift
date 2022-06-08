@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EmployeeListVC: UIViewController {
+class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
     
     private let tabs = Department.allCases // статическое поле allCases генерирует сам свифт - достаточно добавить CaseIterable протокол енаму
     
@@ -28,13 +28,6 @@ class EmployeeListVC: UIViewController {
 
     
     private let employeeProvider = ApiProvider()
-    
-    
-    override func loadView() {
-        self.view = EmployeeListVCRootView()
-    }
-    
-    var mainView: EmployeeListVCRootView { view as! EmployeeListVCRootView }
     
     override func viewDidLoad() {
         super.viewDidLoad()

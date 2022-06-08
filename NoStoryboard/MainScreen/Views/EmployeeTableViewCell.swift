@@ -101,7 +101,7 @@ class EmployeeTableViewCell: UITableViewCell {
         employeeImageView.image = UIImage(named: "goose")
         nameLabel.text = "\(employee.firstName) \(employee.lastName)"
         tagLabel.text = employee.userTag
-        departmentLabel.text = employee.department
+        departmentLabel.text = employee.department?.title // поправил под номую модельку с енамом Department
     }
 
 }

@@ -55,8 +55,6 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
             }
         }
         
-        
-        
     }
     // фильтрация по вводу
     @objc func textFieldDidChange(_ sender: UITextField) {// принято называть sender
@@ -64,12 +62,6 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
         searchText = sender.text ?? ""
         
         mainView.employeeTableView.reloadData()
-    }
-    
-    //constraints
-    func setupViews(){
-        
-        
     }
     
 }
@@ -101,25 +93,43 @@ extension EmployeeListVC: UICollectionViewDelegate, UICollectionViewDataSource{
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopTabsCollectionViewCell.identifier, for: indexPath) as! TopTabsCollectionViewCell
         cell.label.text = tabs[indexPath.item].title // используем title который вручную прописали у department
         
-        if tabs[indexPath.item] == selectedDepartment { // если департамент впо индексу такой же как и selectedDepartment - я выделяю ячейку цветом
-            cell.label.textColor = .black
-        } else {
-            cell.label.textColor = .darkGray
-        }
         
+//        if tabs[indexPath.item] == selectedDepartment { // если департамент по индексу такой же как и selectedDepartment - я выделяю ячейку цветом
+//            cell.label.textColor = .black
+//        } else {
+//            cell.label.textColor = .blue
+//        }
+                
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        mainView.topTabsCollectionView.visibleCells.forEach { cell in
+            let myCell = cell as! TopTabsCollectionViewCell
+            if myCell.label.text == tabs[indexPath.item].title && myCell.label.textColor == .blue {
+                myCell.label.textColor = .black
+            } else if myCell.label.text == tabs[indexPath.item].title {
+                myCell.label.textColor = .blue
+            } else {
+                myCell.label.textColor = .black
+            }
+            
+        }
+        
+        let cell = collectionView.cellForItem(at: indexPath) as! TopTabsCollectionViewCell
+        
         if selectedDepartment == tabs[indexPath.item] {
-            selectedDepartment = nil // если я тапаю на ту же ячейку что и выбрана - фильтр снимется и покажутся все без фильтрации по профессии
+            selectedDepartment = nil// если я тапаю на ту же ячейку что и выбрана - фильтр снимется и покажутся все без фильтрации по профессии
+            cell.label.textColor = .black
+          
         } else {
             selectedDepartment = tabs[indexPath.item] // если я тапаю на ячейку с дркгим фильтром - просто сменится департмент по которому фильтрую
         }
         
         mainView.employeeTableView.reloadData()
         // больше нам не надо делать огромный switch - вся фильтрация пройдет в filteredEmployee и просто сравнится у кого department такой же как текущий selectedDepartment, а selectedDepartment мы только что установили, зная индекс
+        
     }
 
-    
 }

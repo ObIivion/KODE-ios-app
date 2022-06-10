@@ -36,5 +36,7 @@ class TopTabsCollectionViewCell: UICollectionViewCell {
             label.heightAnchor.constraint(equalTo: contentView.heightAnchor).isActive = true
             label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
         }
+    
+    
         
     }

@@ -12,7 +12,7 @@ class BaseView: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        setup() // этва штука вызывается если класс создан не из кода, а через сториборд
+        setup() // эта штука вызывается если класс создан не из кода, а через сториборд
     }
     
     func setup() {

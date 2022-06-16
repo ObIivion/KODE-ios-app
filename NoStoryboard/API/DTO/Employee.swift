@@ -10,6 +10,7 @@ struct EmployeeModel: Codable{
     let department: Department?
     let position: String
     let birthday: String
+    let phone: String
 }
 
 

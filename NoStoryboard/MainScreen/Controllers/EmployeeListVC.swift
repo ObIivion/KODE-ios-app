@@ -26,8 +26,9 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
             })
     }
 
-    
     private let employeeProvider = ApiProvider()
+    
+    private var modelController = ModelController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +57,8 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
                 print(error)
             }
         }
+        
+        navigationItem.title = "MainNavViewController"
         
     }
     
@@ -89,6 +92,14 @@ extension EmployeeListVC: UITableViewDelegate, UITableViewDataSource {
         cell.set(employee: employee)
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        print(filteredEmployee[indexPath.item])
+        let vc = DetailsVC()
+        vc.modelController.employeeModel = filteredEmployee[indexPath.item]
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 

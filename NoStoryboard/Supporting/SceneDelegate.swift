@@ -15,8 +15,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         let navController = UINavigationController(rootViewController: EmployeeListVC())
-        navController.navigationBar.prefersLargeTitles = true
-        navController.navigationBar.isHidden = true
+        navController.navigationBar.prefersLargeTitles = false
+        navController.navigationBar.isHidden = false
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)

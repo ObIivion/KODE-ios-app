@@ -11,11 +11,15 @@ class TopTabsCollectionViewCell: UICollectionViewCell {
     
     private(set) var model: Department?
     
+    static let identifier = "Cell"
+    private let label = UILabel()
+    private var bottomBorderView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 2))
+    
     func setCellSelected(_ isSelected: Bool) {
         if isSelected {
-            label.textColor = .red
+            bottomBorderView.isHidden = false
         } else {
-            label.textColor = .black
+            bottomBorderView.isHidden = true
         }
     }
     
@@ -23,15 +27,16 @@ class TopTabsCollectionViewCell: UICollectionViewCell {
         self.model = department
         label.text = department.title
     }
-        
-        static let identifier = "Cell"
-        private let label = UILabel()
-        
+            
         override init(frame: CGRect) {
             super.init(frame: frame)
             label.textColor = .black
+            bottomBorderView.backgroundColor = .blue
+            bottomBorderView.isHidden = false
             contentView.addSubview(label)
+            contentView.addSubview(bottomBorderView)
             layoutSubviews()
+            
             
             contentView.translatesAutoresizingMaskIntoConstraints = false
             contentView.heightAnchor.constraint(equalToConstant: 36).isActive = true
@@ -50,6 +55,12 @@ class TopTabsCollectionViewCell: UICollectionViewCell {
             label.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
             label.heightAnchor.constraint(equalTo: contentView.heightAnchor).isActive = true
             label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+            
+            bottomBorderView.translatesAutoresizingMaskIntoConstraints = false
+            bottomBorderView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+            bottomBorderView.leadingAnchor.constraint(equalTo: label.leadingAnchor).isActive = true
+            bottomBorderView.trailingAnchor.constraint(equalTo: label.trailingAnchor).isActive = true
+            bottomBorderView.heightAnchor.constraint(equalToConstant: 2).isActive = true
         }
     
     

@@ -8,9 +8,24 @@
 import UIKit
 
 class TopTabsCollectionViewCell: UICollectionViewCell {
+    
+    private(set) var model: Department?
+    
+    func setCellSelected(_ isSelected: Bool) {
+        if isSelected {
+            label.textColor = .red
+        } else {
+            label.textColor = .black
+        }
+    }
+    
+    func setModel(_ department: Department) {
+        self.model = department
+        label.text = department.title
+    }
         
         static let identifier = "Cell"
-        let label = UILabel()
+        private let label = UILabel()
         
         override init(frame: CGRect) {
             super.init(frame: frame)

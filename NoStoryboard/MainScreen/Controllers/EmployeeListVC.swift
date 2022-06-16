@@ -44,6 +44,8 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
         
         mainView.searchTextField.addTarget(self, action: #selector(self.textFieldDidChange), for: .editingChanged)
         
+        updateDepartmentSelection()// обновляем выбор на старте, пусть будет
+        
         employeeProvider.getData(EmployeeList.self, from: "/kode-education/trainee-test/25143926/users") { result in // поправил url - теперь нам надо писать только изменяемую часть
             
             switch result {
@@ -56,12 +58,20 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
         }
         
     }
-    // фильтрация по вводу
-    @objc func textFieldDidChange(_ sender: UITextField) {// принято называть sender
+    
+    // добавил private - по умолчанию пиши все private и только если надо чтоб было доступно из других классов не пиши
+    @objc private func textFieldDidChange(_ sender: UITextField) {// принято называть sender
         
         searchText = sender.text ?? ""
         
         mainView.employeeTableView.reloadData()
+    }
+    
+    private func updateDepartmentSelection() {
+        mainView.topTabsCollectionView.visibleCells.compactMap({ $0 as? TopTabsCollectionViewCell }).forEach({ cell in
+            let shouldBeSelected = cell.model == self.selectedDepartment
+            cell.setCellSelected(shouldBeSelected)
+        })
     }
     
 }
@@ -91,44 +101,28 @@ extension EmployeeListVC: UICollectionViewDelegate, UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopTabsCollectionViewCell.identifier, for: indexPath) as! TopTabsCollectionViewCell
-        cell.label.text = tabs[indexPath.item].title // используем title который вручную прописали у department
+        
+        cell.setModel(tabs[indexPath.item]) // по хорошему все сабвьюшки ячеек, да и впрочем остальных вьюшек должны быть приватными, за редким исключением
+        // поэтому я сделал так что в ячеку передается целиком департмент - по сути это модкль для ячейки
         
         
-//        if tabs[indexPath.item] == selectedDepartment { // если департамент по индексу такой же как и selectedDepartment - я выделяю ячейку цветом
-//            cell.label.textColor = .black
-//        } else {
-//            cell.label.textColor = .blue
-//        }
+        cell.setCellSelected(tabs[indexPath.item] == selectedDepartment)
+        // теперь ячейка сама опредляет как себя вести если она выбрана или нет, мы просто усланавливаем значение сотит ли ей отображаться как выбранной
                 
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        mainView.topTabsCollectionView.visibleCells.forEach { cell in
-            let myCell = cell as! TopTabsCollectionViewCell
-            if myCell.label.text == tabs[indexPath.item].title && myCell.label.textColor == .blue {
-                myCell.label.textColor = .black
-            } else if myCell.label.text == tabs[indexPath.item].title {
-                myCell.label.textColor = .blue
-            } else {
-                myCell.label.textColor = .black
-            }
-            
-        }
-        
-        let cell = collectionView.cellForItem(at: indexPath) as! TopTabsCollectionViewCell
-        
         if selectedDepartment == tabs[indexPath.item] {
-            selectedDepartment = nil// если я тапаю на ту же ячейку что и выбрана - фильтр снимется и покажутся все без фильтрации по профессии
-            cell.label.textColor = .black
-          
+            selectedDepartment = nil
         } else {
-            selectedDepartment = tabs[indexPath.item] // если я тапаю на ячейку с дркгим фильтром - просто сменится департмент по которому фильтрую
+            selectedDepartment = tabs[indexPath.item]
         }
-        
         mainView.employeeTableView.reloadData()
-        // больше нам не надо делать огромный switch - вся фильтрация пройдет в filteredEmployee и просто сравнится у кого department такой же как текущий selectedDepartment, а selectedDepartment мы только что установили, зная индекс
+        // пускай здесь отсанется только логика
+        
+        // а вот дальше пойдет обновление ячеек
+        updateDepartmentSelection()
         
     }
 

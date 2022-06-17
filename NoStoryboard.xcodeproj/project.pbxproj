@@ -147,8 +147,8 @@
 		A37B16D02838F8E10029C602 /* NoStoryboard */ = {
 			isa = PBXGroup;
 			children = (
-				A3ECD6E5285BD09F00DE450F /* ProfileScreen */,
 				608F0A0A2850F0FC002596EF /* API */,
+				A3ECD6E5285BD09F00DE450F /* ProfileScreen */,
 				A37B1712283C1FBD0029C602 /* MainScreen */,
 				A37B170828390F340029C602 /* Supporting */,
 				A37B16DF2838F8E10029C602 /* LaunchScreen.storyboard */,

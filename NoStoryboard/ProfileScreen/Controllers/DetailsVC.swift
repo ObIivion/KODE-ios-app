@@ -10,24 +10,22 @@ import UIKit
 
 class DetailsVC: BaseViewController<ProfileView> {
     
-    var modelController = ModelController()
+    var employee: EmployeeModel! // force unwrap - зло. Но тут можно. Если ты гарантируешь что ты сначала установишь  значение, и только потом вызовется view did load
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "SecondViewController"
     
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        mainView.setData(firstName: modelController.employeeModel.firstName,
-                         lastName: modelController.employeeModel.lastName,
-                         tag: modelController.employeeModel.userTag,
-                         department: modelController.employeeModel.department!,
-                         phone: modelController.employeeModel.phone,
-                         dateBirth: modelController.employeeModel.birthday,
+        // перенес во view did load  потому что нет смысла выносить во view did appear - можно один раз при загрузке контроллера
+        mainView.setData(firstName: employee.firstName,
+                         lastName: employee.lastName,
+                         tag: employee.userTag,
+                         department: employee.department,
+                         phone: employee.phone,
+                         dateBirth: employee.birthday,
                          years: 228)
+        
         
     }
     

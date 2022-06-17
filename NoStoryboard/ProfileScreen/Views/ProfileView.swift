@@ -133,11 +133,12 @@ class ProfileView: BaseView {
         
     }
     
-    func setData(firstName: String, lastName: String, tag: String, department: Department, phone: String, dateBirth: String, years: Int){
+    // лучше прокидывать  optional вместо forcce unwrap
+    func setData(firstName: String, lastName: String, tag: String, department: Department?, phone: String, dateBirth: String, years: Int){
         
         self.nameLabel.text = "\(firstName) \(lastName)"
         self.tagLabel.text = tag
-        self.departmentLabel.text = department.title
+        self.departmentLabel.text = department?.title
         phoneCell.setData(phoneNumber: phone)
         birthCell.setData(dateBirth: dateBirth, years: years)
         

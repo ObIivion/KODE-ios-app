@@ -28,7 +28,9 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
 
     private let employeeProvider = ApiProvider()
     
-    private var modelController = ModelController()
+    // убрал var modelController = ModelController()
+    // очень странно хранить такой контроллер , который просто держит в себе один объект, но при том зачем-то в контроллере со списком
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,10 +98,10 @@ extension EmployeeListVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        print(filteredEmployee[indexPath.item])
-        let vc = DetailsVC()
-        vc.modelController.employeeModel = filteredEmployee[indexPath.item]
-        navigationController?.pushViewController(vc, animated: true)
+        let vc = DetailsVC() // просто создаем новый инстанс второго экрана
+        vc.employee = filteredEmployee[indexPath.item] // устанавливаем ему модель
+        
+        navigationController?.pushViewController(vc, animated: true) // пушим
     }
 }
 

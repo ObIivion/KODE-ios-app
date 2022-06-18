@@ -83,7 +83,7 @@ class BirthViewCell: BaseView {
         yearsLabel.trailingAnchor.constraint(equalTo: birthView.trailingAnchor, constant: -20).isActive = true
     }
     
-    func setData(dateBirth: String, years: Int){
+    func setData(dateBirth: String, years: String){
         
         self.birthDataLabel.text = "\(dateBirth)"
         self.yearsLabel.text = "\(years)"

@@ -28,6 +28,7 @@
 		A3ECD6F0285BD1D700DE450F /* BirthViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3ECD6EB285BD09F00DE450F /* BirthViewCell.swift */; };
 		A3ECD6F1285BD1DA00DE450F /* PhoneViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3ECD6EA285BD09F00DE450F /* PhoneViewCell.swift */; };
 		A3ECD6F3285BD21300DE450F /* ImageResizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3ECD6F2285BD21300DE450F /* ImageResizer.swift */; };
+		A3F5B2DD285E81D100E07952 /* YearsDict.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = A3F5B2DF285E81D100E07952 /* YearsDict.stringsdict */; };
 		A3F9FEF7284CC4DA00090A65 /* TopTabsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F9FEF6284CC4DA00090A65 /* TopTabsCollectionViewCell.swift */; };
 		A3F9FEF9284CC56300090A65 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F9FEF8284CC56300090A65 /* SearchTextField.swift */; };
 /* End PBXBuildFile section */
@@ -75,6 +76,9 @@
 		A3ECD6EB285BD09F00DE450F /* BirthViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthViewCell.swift; sourceTree = "<group>"; };
 		A3ECD6EC285BD14D00DE450F /* ModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelController.swift; sourceTree = "<group>"; };
 		A3ECD6F2285BD21300DE450F /* ImageResizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResizer.swift; sourceTree = "<group>"; };
+		A3F5B2E0285E83AC00E07952 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		A3F5B2E1285E83AC00E07952 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/YearsDict.stringsdict; sourceTree = "<group>"; };
+		A3F5B2E2285E83D000E07952 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/YearsDict.stringsdict; sourceTree = "<group>"; };
 		A3F9FEF6284CC4DA00090A65 /* TopTabsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopTabsCollectionViewCell.swift; sourceTree = "<group>"; };
 		A3F9FEF8284CC56300090A65 /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -181,6 +185,7 @@
 				608F0A292850FAF1002596EF /* BaseView.swift */,
 				608F0A2E2850FB92002596EF /* BaseViewController.swift */,
 				A3ECD6F2285BD21300DE450F /* ImageResizer.swift */,
+				A3F5B2DF285E81D100E07952 /* YearsDict.stringsdict */,
 			);
 			path = Supporting;
 			sourceTree = "<group>";
@@ -327,6 +332,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = A37B16C52838F8E10029C602;
 			productRefGroup = A37B16CF2838F8E10029C602 /* Products */;
@@ -347,6 +353,7 @@
 			files = (
 				A37B16E12838F8E10029C602 /* LaunchScreen.storyboard in Resources */,
 				A37B16DE2838F8E10029C602 /* Assets.xcassets in Resources */,
+				A3F5B2DD285E81D100E07952 /* YearsDict.stringsdict in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,8 +436,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				A37B16E02838F8E10029C602 /* Base */,
+				A3F5B2E0285E83AC00E07952 /* ru */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		A3F5B2DF285E81D100E07952 /* YearsDict.stringsdict */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A3F5B2E1285E83AC00E07952 /* ru */,
+				A3F5B2E2285E83D000E07952 /* en */,
+			);
+			name = YearsDict.stringsdict;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -440,6 +457,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -500,6 +518,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";

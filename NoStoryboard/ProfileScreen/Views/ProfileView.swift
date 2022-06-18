@@ -134,7 +134,7 @@ class ProfileView: BaseView {
     }
     
     // лучше прокидывать  optional вместо forcce unwrap
-    func setData(firstName: String, lastName: String, tag: String, department: Department?, phone: String, dateBirth: String, years: Int){
+    func setData(firstName: String, lastName: String, tag: String, department: Department?, phone: String, dateBirth: String, years: String){
         
         self.nameLabel.text = "\(firstName) \(lastName)"
         self.tagLabel.text = tag

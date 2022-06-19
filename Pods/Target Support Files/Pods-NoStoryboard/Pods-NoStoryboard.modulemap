@@ -1,0 +1,6 @@
+framework module Pods_NoStoryboard {
+  umbrella header "Pods-NoStoryboard-umbrella.h"
+
+  export *
+  module * { export * }
+}

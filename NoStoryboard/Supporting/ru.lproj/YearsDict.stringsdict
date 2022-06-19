@@ -23,7 +23,7 @@
 			<key>many</key>
 			<string>%d лет</string>
 			<key>other</key>
-			<string>%d года</string>
+			<string>%d лет</string>
 		</dict>
 	</dict>
 </dict>

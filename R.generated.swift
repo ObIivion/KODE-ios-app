@@ -181,8 +181,13 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
 
-  /// This `R.string` struct is generated, and contains static references to 2 localization tables.
+  /// This `R.string` struct is generated, and contains static references to 3 localization tables.
   struct string {
+    /// This `R.string.launchScreen` struct is generated, and contains static references to 0 localization keys.
+    struct launchScreen {
+      fileprivate init() {}
+    }
+
     /// This `R.string.localizable` struct is generated, and contains static references to 0 localization keys.
     struct localizable {
       fileprivate init() {}
@@ -192,12 +197,12 @@ struct R: Rswift.Validatable {
     struct yearsDict {
       /// en translation: %#@ages@
       ///
-      /// Locales: en
-      static let number_of_ages = Rswift.StringResource(key: "number_of_ages", tableName: "YearsDict", bundle: R.hostingBundle, locales: ["en"], comment: nil)
+      /// Locales: en, ru
+      static let number_of_ages = Rswift.StringResource(key: "number_of_ages", tableName: "YearsDict", bundle: R.hostingBundle, locales: ["en", "ru"], comment: nil)
 
       /// en translation: %#@ages@
       ///
-      /// Locales: en
+      /// Locales: en, ru
       static func number_of_ages(ages value1: Int, preferredLanguages: [String]? = nil) -> String {
         guard let preferredLanguages = preferredLanguages else {
           let format = NSLocalizedString("number_of_ages", tableName: "YearsDict", bundle: hostingBundle, comment: "")

@@ -63,11 +63,13 @@
 		82759A7562C9570A78469F28 /* Pods_NoStoryboard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NoStoryboard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F47A389F7A4F8AD94977CB5 /* Pods-NoStoryboard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoStoryboard.debug.xcconfig"; path = "Target Support Files/Pods-NoStoryboard/Pods-NoStoryboard.debug.xcconfig"; sourceTree = "<group>"; };
 		A32EEFD2285FB91000B4906E /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
+		A32EEFD4285FBE2B00B4906E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		A32EEFD5285FBE4600B4906E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/YearsDict.stringsdict; sourceTree = "<group>"; };
+		A32EEFD6285FBE5F00B4906E /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ru; path = ru.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A37B16CE2838F8E10029C602 /* NoStoryboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NoStoryboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A37B16D12838F8E10029C602 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A37B16DB2838F8E10029C602 /* NoStoryboard.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NoStoryboard.xcdatamodel; sourceTree = "<group>"; };
 		A37B16DD2838F8E10029C602 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		A37B16E02838F8E10029C602 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A37B16E22838F8E10029C602 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A37B16E72838F8E20029C602 /* NoStoryboardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NoStoryboardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A37B16EB2838F8E20029C602 /* NoStoryboardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoStoryboardTests.swift; sourceTree = "<group>"; };
@@ -362,7 +364,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
+				ru,
 			);
 			mainGroup = A37B16C52838F8E10029C602;
 			productRefGroup = A37B16CF2838F8E10029C602 /* Products */;
@@ -529,7 +531,8 @@
 		A37B16DF2838F8E10029C602 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				A37B16E02838F8E10029C602 /* Base */,
+				A32EEFD4285FBE2B00B4906E /* ru */,
+				A32EEFD6285FBE5F00B4906E /* ru */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -546,6 +549,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				A3F5B2E2285E83D000E07952 /* en */,
+				A32EEFD5285FBE4600B4906E /* ru */,
 			);
 			name = YearsDict.stringsdict;
 			sourceTree = "<group>";

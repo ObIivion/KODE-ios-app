@@ -15,7 +15,7 @@ class EmployeeListVCRootView: BaseView {
     let employeeTableView = UITableView()
     
     override func setup() {
-        backgroundColor =  .white
+        backgroundColor = .white
         addSubview(searchTextField)
         addSubview(employeeTableView)
         addSubview(topTabsCollectionView)

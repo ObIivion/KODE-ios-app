@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import Rswift
 
 class DetailsVC: BaseViewController<ProfileView> {
     
@@ -84,12 +84,15 @@ class DetailsVC: BaseViewController<ProfileView> {
             let dateCurrent = Date()
             
             if let years = calendar.dateComponents([.year], from: date, to: dateCurrent).year {
-            
-                let formatString: String = NSLocalizedString("my life my rules", comment: "Age with plural rules")
-                print("format String: \(formatString)")
-                let resultString: String = String.localizedStringWithFormat(formatString, years)
-                print(resultString)
-            return resultString
+                
+                //let formatString: String = NSLocalizedString("number_of_ages", comment: "Age with plural rules")
+                
+                let str = R.string.yearsDict.number_of_ages(ages: years)
+                
+                //let resultString: String = String.localizedStringWithFormat(formatString, years)
+                
+                print(str)
+            return str
             
             }
         }

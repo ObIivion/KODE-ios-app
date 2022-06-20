@@ -14,19 +14,39 @@ class EmployeeListVCRootView: BaseView {
     
     let employeeTableView = UITableView()
     
+    let errorView = LostInternetConnectionView()
+    
     override func setup() {
         backgroundColor = .white
         addSubview(searchTextField)
         addSubview(employeeTableView)
         addSubview(topTabsCollectionView)
-
+        addSubview(errorView)
         
         setupConstraints()
+        
+        NetworkMonitor.shared.startMonitoring()
+        print("Шо там по интернету")
+        print(NetworkMonitor.shared.isConnected)
+        
+        if NetworkMonitor.shared.isConnected {
+            print("Easy connection")
+            errorView.isHidden = true
+            searchTextField.isHidden = false
+            employeeTableView.isHidden = false
+            topTabsCollectionView.isHidden = false
+        } else {
+            print("Error connection")
+            searchTextField.isHidden = true
+            employeeTableView.isHidden = true
+            topTabsCollectionView.isHidden = true
+            errorView.isHidden = false
+        }
     }
     
     func setupConstraints() {
-        searchTextField.translatesAutoresizingMaskIntoConstraints = false
         
+        searchTextField.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             searchTextField.widthAnchor.constraint(equalTo: widthAnchor, constant: -50),
             searchTextField.heightAnchor.constraint(equalToConstant: 40),
@@ -48,6 +68,14 @@ class EmployeeListVCRootView: BaseView {
             employeeTableView.leadingAnchor.constraint(equalTo: leadingAnchor),
             employeeTableView.trailingAnchor.constraint(equalTo: trailingAnchor),
             employeeTableView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
+        
+        errorView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            errorView.topAnchor.constraint(equalTo: topAnchor),
+            errorView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            errorView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            errorView.trailingAnchor.constraint(equalTo: trailingAnchor),
         ])
     }
 }

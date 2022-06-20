@@ -14,6 +14,8 @@
 		608F0A2F2850FB92002596EF /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608F0A2E2850FB92002596EF /* BaseViewController.swift */; };
 		786DE759B10D47D3975F2260 /* Pods_NoStoryboard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82759A7562C9570A78469F28 /* Pods_NoStoryboard.framework */; };
 		A32EEFD3285FB91000B4906E /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32EEFD2285FB91000B4906E /* R.generated.swift */; };
+		A32EEFD82860CD9700B4906E /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32EEFD72860CD9700B4906E /* NetworkMonitor.swift */; };
+		A32EEFDA2860E32B00B4906E /* LostInternetConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32EEFD92860E32B00B4906E /* LostInternetConnectionView.swift */; };
 		A37B16D22838F8E10029C602 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37B16D12838F8E10029C602 /* AppDelegate.swift */; };
 		A37B16DC2838F8E10029C602 /* NoStoryboard.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A37B16DA2838F8E10029C602 /* NoStoryboard.xcdatamodeld */; };
 		A37B16DE2838F8E10029C602 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A37B16DD2838F8E10029C602 /* Assets.xcassets */; };
@@ -66,6 +68,8 @@
 		A32EEFD4285FBE2B00B4906E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		A32EEFD5285FBE4600B4906E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/YearsDict.stringsdict; sourceTree = "<group>"; };
 		A32EEFD6285FBE5F00B4906E /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ru; path = ru.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A32EEFD72860CD9700B4906E /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
+		A32EEFD92860E32B00B4906E /* LostInternetConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LostInternetConnectionView.swift; sourceTree = "<group>"; };
 		A37B16CE2838F8E10029C602 /* NoStoryboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NoStoryboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A37B16D12838F8E10029C602 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A37B16DB2838F8E10029C602 /* NoStoryboard.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NoStoryboard.xcdatamodel; sourceTree = "<group>"; };
@@ -130,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				A39E84C2283D0FB200961CF5 /* ApiProvider.swift */,
+				A32EEFD72860CD9700B4906E /* NetworkMonitor.swift */,
 				608F0A0B2850F104002596EF /* DTO */,
 			);
 			path = API;
@@ -228,6 +233,7 @@
 				A37B170E283A78C50029C602 /* EmployeeTableViewCell.swift */,
 				A3F9FEF6284CC4DA00090A65 /* TopTabsCollectionViewCell.swift */,
 				A3F9FEF8284CC56300090A65 /* SearchTextField.swift */,
+				A32EEFD92860E32B00B4906E /* LostInternetConnectionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -482,6 +488,7 @@
 				A32EEFD3285FB91000B4906E /* R.generated.swift in Sources */,
 				A3ECD6ED285BD14D00DE450F /* ModelController.swift in Sources */,
 				A37B170F283A78C50029C602 /* EmployeeTableViewCell.swift in Sources */,
+				A32EEFDA2860E32B00B4906E /* LostInternetConnectionView.swift in Sources */,
 				A3ECD6F0285BD1D700DE450F /* BirthViewCell.swift in Sources */,
 				A3ECD6EF285BD1D500DE450F /* ProfileView.swift in Sources */,
 				A3ECD6F1285BD1DA00DE450F /* PhoneViewCell.swift in Sources */,
@@ -490,6 +497,7 @@
 				A3F9FEF7284CC4DA00090A65 /* TopTabsCollectionViewCell.swift in Sources */,
 				608F0A122850F12C002596EF /* Department.swift in Sources */,
 				A37B16DC2838F8E10029C602 /* NoStoryboard.xcdatamodeld in Sources */,
+				A32EEFD82860CD9700B4906E /* NetworkMonitor.swift in Sources */,
 				A3F9FEF9284CC56300090A65 /* SearchTextField.swift in Sources */,
 				608F0A252850F8B8002596EF /* EmployeeListVCRootView.swift in Sources */,
 			);

@@ -12,7 +12,7 @@ class ApiProvider {
     
     @discardableResult
     func getData<Response: Codable>(
-        _ model: Response.Type = Response.self,
+        _ model: Response.Type,
         from endpoint: String,
         _ completion: @escaping (Result<Response, Error>) -> Void
     ) -> URLSessionDataTask {

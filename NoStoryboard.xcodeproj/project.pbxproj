@@ -27,7 +27,9 @@
 		A37B170F283A78C50029C602 /* EmployeeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37B170E283A78C50029C602 /* EmployeeTableViewCell.swift */; };
 		A39CC1FC285F0BA700B86502 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A39CC1FE285F0BA700B86502 /* Localizable.strings */; };
 		A39E84C3283D0FB200961CF5 /* ApiProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39E84C2283D0FB200961CF5 /* ApiProvider.swift */; };
-		A3ECD6ED285BD14D00DE450F /* ModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3ECD6EC285BD14D00DE450F /* ModelController.swift */; };
+		A3C2A81B2863288900DDB1C3 /* SortingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C2A81A2863288900DDB1C3 /* SortingViewController.swift */; };
+		A3C2A81D286329A800DDB1C3 /* BottomSheetSortingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C2A81C286329A800DDB1C3 /* BottomSheetSortingView.swift */; };
+		A3C2A81F2863621A00DDB1C3 /* RadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C2A81E2863621A00DDB1C3 /* RadioButton.swift */; };
 		A3ECD6EE285BD1D100DE450F /* DetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3ECD6E7285BD09F00DE450F /* DetailsVC.swift */; };
 		A3ECD6EF285BD1D500DE450F /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3ECD6E9285BD09F00DE450F /* ProfileView.swift */; };
 		A3ECD6F0285BD1D700DE450F /* BirthViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3ECD6EB285BD09F00DE450F /* BirthViewCell.swift */; };
@@ -84,11 +86,13 @@
 		A37B170E283A78C50029C602 /* EmployeeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeTableViewCell.swift; sourceTree = "<group>"; };
 		A39CC1FD285F0BA700B86502 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A39E84C2283D0FB200961CF5 /* ApiProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiProvider.swift; sourceTree = "<group>"; };
+		A3C2A81A2863288900DDB1C3 /* SortingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingViewController.swift; sourceTree = "<group>"; };
+		A3C2A81C286329A800DDB1C3 /* BottomSheetSortingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetSortingView.swift; sourceTree = "<group>"; };
+		A3C2A81E2863621A00DDB1C3 /* RadioButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioButton.swift; sourceTree = "<group>"; };
 		A3ECD6E7285BD09F00DE450F /* DetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsVC.swift; sourceTree = "<group>"; };
 		A3ECD6E9285BD09F00DE450F /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		A3ECD6EA285BD09F00DE450F /* PhoneViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneViewCell.swift; sourceTree = "<group>"; };
 		A3ECD6EB285BD09F00DE450F /* BirthViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthViewCell.swift; sourceTree = "<group>"; };
-		A3ECD6EC285BD14D00DE450F /* ModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelController.swift; sourceTree = "<group>"; };
 		A3ECD6F2285BD21300DE450F /* ImageResizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResizer.swift; sourceTree = "<group>"; };
 		A3F5B2E2285E83D000E07952 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/YearsDict.stringsdict; sourceTree = "<group>"; };
 		A3F9FEF6284CC4DA00090A65 /* TopTabsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopTabsCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -234,6 +238,8 @@
 				A3F9FEF6284CC4DA00090A65 /* TopTabsCollectionViewCell.swift */,
 				A3F9FEF8284CC56300090A65 /* SearchTextField.swift */,
 				A32EEFD92860E32B00B4906E /* LostInternetConnectionView.swift */,
+				A3C2A81C286329A800DDB1C3 /* BottomSheetSortingView.swift */,
+				A3C2A81E2863621A00DDB1C3 /* RadioButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -242,7 +248,7 @@
 			isa = PBXGroup;
 			children = (
 				A37B170928390FB70029C602 /* EmployeeListVC.swift */,
-				A3ECD6EC285BD14D00DE450F /* ModelController.swift */,
+				A3C2A81A2863288900DDB1C3 /* SortingViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -482,20 +488,22 @@
 				608F0A2F2850FB92002596EF /* BaseViewController.swift in Sources */,
 				A37B16D22838F8E10029C602 /* AppDelegate.swift in Sources */,
 				608F0A0D2850F112002596EF /* Employee.swift in Sources */,
+				A3C2A81B2863288900DDB1C3 /* SortingViewController.swift in Sources */,
 				A37B170A28390FB70029C602 /* EmployeeListVC.swift in Sources */,
 				A3ECD6EE285BD1D100DE450F /* DetailsVC.swift in Sources */,
 				608F0A2A2850FAF1002596EF /* BaseView.swift in Sources */,
 				A32EEFD3285FB91000B4906E /* R.generated.swift in Sources */,
-				A3ECD6ED285BD14D00DE450F /* ModelController.swift in Sources */,
 				A37B170F283A78C50029C602 /* EmployeeTableViewCell.swift in Sources */,
 				A32EEFDA2860E32B00B4906E /* LostInternetConnectionView.swift in Sources */,
 				A3ECD6F0285BD1D700DE450F /* BirthViewCell.swift in Sources */,
 				A3ECD6EF285BD1D500DE450F /* ProfileView.swift in Sources */,
 				A3ECD6F1285BD1DA00DE450F /* PhoneViewCell.swift in Sources */,
 				A3ECD6F3285BD21300DE450F /* ImageResizer.swift in Sources */,
+				A3C2A81F2863621A00DDB1C3 /* RadioButton.swift in Sources */,
 				A39E84C3283D0FB200961CF5 /* ApiProvider.swift in Sources */,
 				A3F9FEF7284CC4DA00090A65 /* TopTabsCollectionViewCell.swift in Sources */,
 				608F0A122850F12C002596EF /* Department.swift in Sources */,
+				A3C2A81D286329A800DDB1C3 /* BottomSheetSortingView.swift in Sources */,
 				A37B16DC2838F8E10029C602 /* NoStoryboard.xcdatamodeld in Sources */,
 				A32EEFD82860CD9700B4906E /* NetworkMonitor.swift in Sources */,
 				A3F9FEF9284CC56300090A65 /* SearchTextField.swift in Sources */,

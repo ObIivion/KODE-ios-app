@@ -1,5 +1,6 @@
 import UIKit
 
+@available(iOS 15.0, *)
 class EmployeeListVCRootView: BaseView {
     let searchTextField = SearchTextField(inset: UIEdgeInsets(top: 10, left: 44, bottom: 10, right: 35))
     

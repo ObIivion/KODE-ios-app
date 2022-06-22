@@ -7,11 +7,13 @@
 
 import UIKit
 import Foundation
+import Rswift
 
 class SearchTextField: UITextField {
     
     private var insets: UIEdgeInsets
     
+    @available(iOS 15.0, *)
     init(inset: UIEdgeInsets){
         self.insets = inset
         super.init(frame: .zero)
@@ -24,9 +26,10 @@ class SearchTextField: UITextField {
         self.leftView = leftView
         
         let rightView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        let rightImage = UIImageView(frame: CGRect(x: -13.5, y: 0, width: 20, height: 20))
-        rightImage.image = UIImage(named: "list-ui-alt")
-        rightView.addSubview(rightImage)
+        let rightImageButton = UIButton(frame: CGRect(x: -13.5, y: 0, width: 20, height: 20))
+        rightImageButton.setBackgroundImage(R.image.listUiAlt(), for: .normal)
+        rightImageButton.addTarget(self, action: #selector(EmployeeListVC.rightViewButtonClicked(_:)), for: .touchUpInside)
+        rightView.addSubview(rightImageButton)
         self.rightViewMode = .always
         self.rightView = rightView
         

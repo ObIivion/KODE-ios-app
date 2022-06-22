@@ -130,14 +130,18 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
 
-  /// This `R.image` struct is generated, and contains static references to 6 images.
+  /// This `R.image` struct is generated, and contains static references to 8 images.
   struct image {
     /// Image `NLO`.
     static let nlO = Rswift.ImageResource(bundle: R.hostingBundle, name: "NLO")
+    /// Image `UnChecked`.
+    static let unChecked = Rswift.ImageResource(bundle: R.hostingBundle, name: "UnChecked")
     /// Image `Vector`.
     static let vector = Rswift.ImageResource(bundle: R.hostingBundle, name: "Vector")
     /// Image `goose`.
     static let goose = Rswift.ImageResource(bundle: R.hostingBundle, name: "goose")
+    /// Image `isChecked`.
+    static let isChecked = Rswift.ImageResource(bundle: R.hostingBundle, name: "isChecked")
     /// Image `list-ui-alt`.
     static let listUiAlt = Rswift.ImageResource(bundle: R.hostingBundle, name: "list-ui-alt")
     /// Image `phone`.
@@ -153,6 +157,13 @@ struct R: Rswift.Validatable {
     #endif
 
     #if os(iOS) || os(tvOS)
+    /// `UIImage(named: "UnChecked", bundle: ..., traitCollection: ...)`
+    static func unChecked(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.unChecked, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "Vector", bundle: ..., traitCollection: ...)`
     static func vector(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.vector, compatibleWith: traitCollection)
@@ -163,6 +174,13 @@ struct R: Rswift.Validatable {
     /// `UIImage(named: "goose", bundle: ..., traitCollection: ...)`
     static func goose(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.goose, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIImage(named: "isChecked", bundle: ..., traitCollection: ...)`
+    static func isChecked(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.isChecked, compatibleWith: traitCollection)
     }
     #endif
 

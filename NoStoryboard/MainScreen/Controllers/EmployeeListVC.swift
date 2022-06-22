@@ -7,7 +7,10 @@
 
 import UIKit
 
+@available(iOS 15.0, *)
 class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
+    
+    private lazy var sortingViewController = SortingViewController()
     
     private let tabs = Department.allCases // статическое поле allCases генерирует сам свифт - достаточно добавить CaseIterable протокол енаму
     
@@ -65,7 +68,8 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
     }
     
     // добавил private - по умолчанию пиши все private и только если надо чтоб было доступно из других классов не пиши
-    @objc private func textFieldDidChange(_ sender: UITextField) {// принято называть sender
+    @objc
+    private func textFieldDidChange(_ sender: UITextField) {// принято называть sender
         
         searchText = sender.text ?? ""
         
@@ -79,9 +83,24 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
         })
     }
     
+    @objc
+    func rightViewButtonClicked(_ sender: UIButton){
+        
+        if let sheet = sortingViewController.sheetPresentationController {
+            sheet.detents = [.medium()]
+            sheet.prefersGrabberVisible = true
+            sheet.preferredCornerRadius = 20
+            sheet.largestUndimmedDetentIdentifier = .medium
+        }
+        
+        self.present(SortingViewController(), animated: true)
+        
+    }
+    
 }
 
 // extension for UITableView
+@available(iOS 15.0, *)
 extension EmployeeListVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         filteredEmployee.count // теперь всегда данные берем из filtered
@@ -106,6 +125,7 @@ extension EmployeeListVC: UITableViewDelegate, UITableViewDataSource {
 }
 
 // extension for UICollectionView
+@available(iOS 15.0, *)
 extension EmployeeListVC: UICollectionViewDelegate, UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -11,6 +11,8 @@ import Rswift
 
 class SearchTextField: UITextField {
     
+    public let rightImageButton = UIButton(frame: CGRect(x: -13.5, y: 0, width: 20, height: 20))
+    
     private var insets: UIEdgeInsets
     
     @available(iOS 15.0, *)
@@ -26,9 +28,9 @@ class SearchTextField: UITextField {
         self.leftView = leftView
         
         let rightView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        let rightImageButton = UIButton(frame: CGRect(x: -13.5, y: 0, width: 20, height: 20))
+        
         rightImageButton.setBackgroundImage(R.image.listUiAlt(), for: .normal)
-        rightImageButton.addTarget(self, action: #selector(EmployeeListVC.rightViewButtonClicked(_:)), for: .touchUpInside)
+        
         rightView.addSubview(rightImageButton)
         self.rightViewMode = .always
         self.rightView = rightView

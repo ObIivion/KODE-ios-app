@@ -12,9 +12,6 @@ class SortingViewController: BaseViewController<BottomSheetSortingView> {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Сортировки"
-        
-        
     }
 
 }

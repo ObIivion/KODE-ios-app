@@ -50,6 +50,8 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
         
         mainView.searchTextField.addTarget(self, action: #selector(self.textFieldDidChange), for: .editingChanged)
         
+        mainView.searchTextField.rightImageButton.addTarget(self, action: #selector(rightViewButtonClicked(_:)), for: .touchUpInside)
+        
         updateDepartmentSelection()// обновляем выбор на старте, пусть будет
         
         employeeProvider.getData(EmployeeList.self, from: "/kode-education/trainee-test/25143926/users") { result in // поправил url - теперь нам надо писать только изменяемую часть
@@ -87,13 +89,14 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
     func rightViewButtonClicked(_ sender: UIButton){
         
         if let sheet = sortingViewController.sheetPresentationController {
+            print("------->>>>>>>----------->>>>>>>---------")
             sheet.detents = [.medium()]
             sheet.prefersGrabberVisible = true
             sheet.preferredCornerRadius = 20
             sheet.largestUndimmedDetentIdentifier = .medium
         }
         
-        self.present(SortingViewController(), animated: true)
+        self.present(SortingViewController(), animated: true, completion: nil)
         
     }
     

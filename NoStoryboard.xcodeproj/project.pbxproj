@@ -29,7 +29,6 @@
 		A39E84C3283D0FB200961CF5 /* ApiProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39E84C2283D0FB200961CF5 /* ApiProvider.swift */; };
 		A3C2A81B2863288900DDB1C3 /* SortingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C2A81A2863288900DDB1C3 /* SortingViewController.swift */; };
 		A3C2A81D286329A800DDB1C3 /* BottomSheetSortingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C2A81C286329A800DDB1C3 /* BottomSheetSortingView.swift */; };
-		A3C2A81F2863621A00DDB1C3 /* RadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C2A81E2863621A00DDB1C3 /* RadioButton.swift */; };
 		A3ECD6EE285BD1D100DE450F /* DetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3ECD6E7285BD09F00DE450F /* DetailsVC.swift */; };
 		A3ECD6EF285BD1D500DE450F /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3ECD6E9285BD09F00DE450F /* ProfileView.swift */; };
 		A3ECD6F0285BD1D700DE450F /* BirthViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3ECD6EB285BD09F00DE450F /* BirthViewCell.swift */; };
@@ -88,7 +87,6 @@
 		A39E84C2283D0FB200961CF5 /* ApiProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiProvider.swift; sourceTree = "<group>"; };
 		A3C2A81A2863288900DDB1C3 /* SortingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingViewController.swift; sourceTree = "<group>"; };
 		A3C2A81C286329A800DDB1C3 /* BottomSheetSortingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetSortingView.swift; sourceTree = "<group>"; };
-		A3C2A81E2863621A00DDB1C3 /* RadioButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioButton.swift; sourceTree = "<group>"; };
 		A3ECD6E7285BD09F00DE450F /* DetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsVC.swift; sourceTree = "<group>"; };
 		A3ECD6E9285BD09F00DE450F /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		A3ECD6EA285BD09F00DE450F /* PhoneViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneViewCell.swift; sourceTree = "<group>"; };
@@ -239,7 +237,6 @@
 				A3F9FEF8284CC56300090A65 /* SearchTextField.swift */,
 				A32EEFD92860E32B00B4906E /* LostInternetConnectionView.swift */,
 				A3C2A81C286329A800DDB1C3 /* BottomSheetSortingView.swift */,
-				A3C2A81E2863621A00DDB1C3 /* RadioButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -499,7 +496,6 @@
 				A3ECD6EF285BD1D500DE450F /* ProfileView.swift in Sources */,
 				A3ECD6F1285BD1DA00DE450F /* PhoneViewCell.swift in Sources */,
 				A3ECD6F3285BD21300DE450F /* ImageResizer.swift in Sources */,
-				A3C2A81F2863621A00DDB1C3 /* RadioButton.swift in Sources */,
 				A39E84C3283D0FB200961CF5 /* ApiProvider.swift in Sources */,
 				A3F9FEF7284CC4DA00090A65 /* TopTabsCollectionViewCell.swift in Sources */,
 				608F0A122850F12C002596EF /* Department.swift in Sources */,

@@ -18,7 +18,7 @@ class ApiProvider {
     ) -> URLSessionDataTask {
         let url = baseUrl.appendingPathComponent(endpoint)
         
-        let dataTask =  URLSession.shared.dataTask(with: url) { data, response, error in
+        let dataTask = URLSession.shared.dataTask(with: url) { data, response, error in
             
             guard let data = data, error == nil else { print("Ошибка получения данных"); return}
             

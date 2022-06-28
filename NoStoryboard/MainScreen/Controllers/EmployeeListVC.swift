@@ -89,7 +89,6 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
     func rightViewButtonClicked(_ sender: UIButton){
         
         if let sheet = sortingViewController.sheetPresentationController {
-            print("------->>>>>>>----------->>>>>>>---------")
             sheet.detents = [.medium()]
             sheet.prefersGrabberVisible = true
             sheet.preferredCornerRadius = 20
@@ -106,15 +105,27 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
 @available(iOS 15.0, *)
 extension EmployeeListVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        filteredEmployee.count // теперь всегда данные берем из filtered
+        
+        if !employee.isEmpty {
+            return 15
+        } else {
+        return filteredEmployee.count // теперь всегда данные берем из filtered
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: EmployeeTableViewCell.identifier) as! EmployeeTableViewCell
+        if !employee.isEmpty {
         let employee = filteredEmployee[indexPath.row]
-        cell.set(employee: employee)
-        
+            cell.set(employee: employee)
+            cell.setViewWithData()
+            print("--------------- Set View sith Data -----------------")
+        } else {
+            cell.setLoadingView()
+            print("------------ Set View LOADING --------------")
+        }
+        print("ALLLOOOOOOOOOOOOOOO")
         return cell
     }
     

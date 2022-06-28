@@ -47,21 +47,24 @@ class EmployeeTableViewCell: UITableViewCell {
     
     private let nameLoadingView: UIView = {
         let view = UIView()
-        view.layer.cornerRadius = 50
+        view.frame = CGRect(x: 0, y: 0, width: 144, height: 16)
+        view.layer.cornerRadius = 8
         view.backgroundColor = UIColor(red: 0.955, green: 0.955, blue: 0.965, alpha: 1)
         return view
     }()
     
     private let departmentLoadingView: UIView = {
         let view = UIView()
-        view.layer.cornerRadius = 50
+        view.frame = CGRect(x: 0, y: 0, width: 80, height: 12)
+        view.layer.cornerRadius = 6
         view.backgroundColor = UIColor(red: 0.955, green: 0.955, blue: 0.965, alpha: 1)
         return view
     }()
     
     private let imageLoadingView: UIView = {
         let view = UIView()
-        view.layer.cornerRadius = 50
+        view.frame = CGRect(x: 0, y: 0, width: 72, height: 72)
+        view.layer.cornerRadius = 36
         view.backgroundColor = UIColor(red: 0.955, green: 0.955, blue: 0.965, alpha: 1)
         return view
     }()
@@ -86,6 +89,9 @@ class EmployeeTableViewCell: UITableViewCell {
         
         setLoadingViewsConstraints()
         
+        shimmerLoadingAnimation(viewToAnimate: imageLoadingView)
+        shimmerLoadingAnimation(viewToAnimate: nameLoadingView)
+        shimmerLoadingAnimation(viewToAnimate: departmentLoadingView)
     }
     
     required init?(coder: NSCoder) {
@@ -153,8 +159,8 @@ class EmployeeTableViewCell: UITableViewCell {
         
             departmentLoadingView.leadingAnchor.constraint(equalTo: nameLoadingView.leadingAnchor),
             departmentLoadingView.centerYAnchor.constraint(equalTo: nameLoadingView.centerYAnchor, constant: 20),
-            nameLoadingView.widthAnchor.constraint(equalToConstant: 80),
-            nameLoadingView.heightAnchor.constraint(equalToConstant: 12)])
+            departmentLoadingView.widthAnchor.constraint(equalToConstant: 80),
+            departmentLoadingView.heightAnchor.constraint(equalToConstant: 12)])
         
     }
     
@@ -171,7 +177,6 @@ class EmployeeTableViewCell: UITableViewCell {
         departmentLoadingView.isHidden = false
         
     }
-    
     
     func setViewWithData() {
         
@@ -192,6 +197,33 @@ class EmployeeTableViewCell: UITableViewCell {
         nameLabel.text = "\(employee.firstName) \(employee.lastName)"
         tagLabel.text = employee.userTag
         departmentLabel.text = employee.department?.title // поправил под номую модельку с енамом Department
+    }
+    
+    func shimmerLoadingAnimation(viewToAnimate: UIView){
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 1.0)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
+        
+        gradientLayer.colors = [UIColor(red: 0.955, green: 0.955, blue: 0.965, alpha: 1).cgColor,
+                                UIColor(red: 0.379, green: 0.949, blue: 0.581, alpha: 1).cgColor,
+                                UIColor(red: 0.955, green: 0.955, blue: 0.965, alpha: 1).cgColor]
+        
+        gradientLayer.locations = [0, 0.5, 1]
+        
+        gradientLayer.frame = viewToAnimate.bounds
+        
+
+        viewToAnimate.layer.addSublayer(gradientLayer)
+        
+        let animation = CABasicAnimation(keyPath: "locations")
+        animation.fromValue = [-1.0, -0.5, 0.0]
+        animation.toValue = [1.0, 1.5, 2.0]
+        animation.repeatCount = Float.infinity
+        animation.duration = 1
+
+        gradientLayer.add(animation, forKey: animation.keyPath)
+        
     }
 
 }

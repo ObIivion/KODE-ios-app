@@ -106,7 +106,7 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
 extension EmployeeListVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if !employee.isEmpty {
+        if employee.isEmpty {
             return 15
         } else {
         return filteredEmployee.count // теперь всегда данные берем из filtered
@@ -125,7 +125,6 @@ extension EmployeeListVC: UITableViewDelegate, UITableViewDataSource {
             cell.setLoadingView()
             print("------------ Set View LOADING --------------")
         }
-        print("ALLLOOOOOOOOOOOOOOO")
         return cell
     }
     

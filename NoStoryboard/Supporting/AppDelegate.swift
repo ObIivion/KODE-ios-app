@@ -25,8 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.window = window
         
-//        fatalError("\(UIScreen.main.bounds.size)")
-        
         return true
     }
 }

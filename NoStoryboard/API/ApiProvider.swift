@@ -12,7 +12,7 @@ class ApiProvider {
     
     @discardableResult
     func getData<Response: Codable>(
-        _ model: Response.Type,
+        _ model: Response.Type = Response.self,
         from endpoint: String,
         _ completion: @escaping (Result<Response, Error>) -> Void
     ) -> URLSessionDataTask {
@@ -20,7 +20,13 @@ class ApiProvider {
         
         let dataTask = URLSession.shared.dataTask(with: url) { data, response, error in
             
-            guard let data = data, error == nil else { print("Ошибка получения данных"); return}
+            guard let data = data, error == nil else {
+                print("Ошибка получения данных")
+                DispatchQueue.main.async {
+                    completion(.failure(error!))
+                }
+             return
+            }
             
             do {
                 let decoder = JSONDecoder()

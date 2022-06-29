@@ -26,23 +26,8 @@ class EmployeeListVCRootView: BaseView {
         
         setupConstraints()
         
-        NetworkMonitor.shared.startMonitoring()
-        print("Шо там по интернету")
-        print(NetworkMonitor.shared.isConnected)
+        setViewDependingOnConnection()
         
-        if NetworkMonitor.shared.isConnected {
-            print("Easy connection")
-            errorView.isHidden = true
-            searchTextField.isHidden = false
-            employeeTableView.isHidden = false
-            topTabsCollectionView.isHidden = false
-        } else {
-            print("Error connection")
-            searchTextField.isHidden = true
-            employeeTableView.isHidden = true
-            topTabsCollectionView.isHidden = true
-            errorView.isHidden = false
-        }
     }
     
     func setupConstraints() {
@@ -79,4 +64,47 @@ class EmployeeListVCRootView: BaseView {
             errorView.trailingAnchor.constraint(equalTo: trailingAnchor),
         ])
     }
+    
+    func setViewDependingOnConnection(){
+
+        NetworkMonitor.shared.startMonitoring()
+        print("T/f \(NetworkMonitor.shared.isConnected)")
+        print("ПРОВЕРОЧКА ИНТЕРНЕТА")
+
+        if NetworkMonitor.shared.isConnected {
+            print("Интернет присутствует")
+            errorView.isHidden = true
+            searchTextField.isHidden = false
+            employeeTableView.isHidden = false
+            topTabsCollectionView.isHidden = false
+        } else {
+            print("Интернет отсутствует")
+            searchTextField.isHidden = true
+            employeeTableView.isHidden = true
+            topTabsCollectionView.isHidden = true
+            errorView.isHidden = false
+        }
+        
+        NetworkMonitor.shared.stopMonitoring()
+    }
+    
+    func setErrorView(){
+        
+        searchTextField.isHidden = true
+        employeeTableView.isHidden = true
+        topTabsCollectionView.isHidden = true
+        errorView.isHidden = false
+        
+    }
+    
+    func setMainView(){
+        
+        errorView.isHidden = true
+        searchTextField.isHidden = false
+        employeeTableView.isHidden = false
+        topTabsCollectionView.isHidden = false
+        
+    }
+    
+    
 }

@@ -38,6 +38,8 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        mainView.errorView.tryAgainButton.addTarget(self, action: #selector(checkConnection(_:)), for: .touchUpInside)
+        
         mainView.employeeTableView.delegate = self
         mainView.employeeTableView.dataSource = self
         mainView.topTabsCollectionView.delegate = self
@@ -54,18 +56,32 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
         
         updateDepartmentSelection()// обновляем выбор на старте, пусть будет
         
+        // вот это замыкание пусть останется просто чтобы было куда смотреть, а то пиздец. Я сделал функцию из этого замыкания и она даже заработала, но не сказал бы, что понимаю почему это сработало (ну +- только если и то не факт что напишу аналогично сам)
         employeeProvider.getData(EmployeeList.self, from: "/kode-education/trainee-test/25143926/users") { result in // поправил url - теперь нам надо писать только изменяемую часть
             
             switch result {
             case let .success(responseData):
                 self.employee = responseData.items
+                self.mainView.setMainView()
                 self.mainView.employeeTableView.reloadData()
             case let .failure(error):
-                print(error)
+                self.mainView.setErrorView()
+                print("-------- ERRRORRRRRRRR -------")
+                print("то самое еррор \(error)")
             }
         }
         
         navigationItem.title = "MainNavViewController"
+        
+    }
+    
+    @objc
+    private func checkConnection(_ sender: UIButton) {
+        sender.backgroundColor = UIColor(red: 0.3, green: 0.5, blue: 0.8, alpha: 0.3)
+        
+        self.mainView.setMainView()
+        
+        employeeProvider.getData(EmployeeList.self, from: "/kode-education/trainee-test/25143926/users", self.loadData(result:))
         
     }
     
@@ -76,6 +92,22 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
         searchText = sender.text ?? ""
         
         mainView.employeeTableView.reloadData()
+    }
+    
+    private func loadData(result: Result<EmployeeList, Error>) {
+        
+        switch result {
+        case let .success(responseData):
+            self.employee = responseData.items
+            self.mainView.setMainView()
+            self.mainView.employeeTableView.reloadData()
+        case let .failure(error):
+            self.mainView.setErrorView()
+            print("-------- ERRRORRRRRRRR -------")
+            print("то самое еррор \(error)")
+        }
+    
+        
     }
     
     private func updateDepartmentSelection() {
@@ -105,7 +137,7 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
 @available(iOS 15.0, *)
 extension EmployeeListVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
+
         if employee.isEmpty {
             return 15
         } else {
@@ -120,10 +152,8 @@ extension EmployeeListVC: UITableViewDelegate, UITableViewDataSource {
         let employee = filteredEmployee[indexPath.row]
             cell.set(employee: employee)
             cell.setViewWithData()
-            print("--------------- Set View sith Data -----------------")
         } else {
             cell.setLoadingView()
-            print("------------ Set View LOADING --------------")
         }
         return cell
     }

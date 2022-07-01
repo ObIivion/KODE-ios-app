@@ -1,20 +1,24 @@
 PODS:
+  - FloatingPanel (2.5.3)
   - R.swift (6.1.0):
     - R.swift.Library (~> 5.3.0)
   - R.swift.Library (5.3.0)
 
 DEPENDENCIES:
+  - FloatingPanel
   - R.swift
 
 SPEC REPOS:
   trunk:
+    - FloatingPanel
     - R.swift
     - R.swift.Library
 
 SPEC CHECKSUMS:
+  FloatingPanel: 3cee815e9ded75b632543fa73ab655a1ef941452
   R.swift: ec98ff71c4ab2f6fd01dd077e5afd15e63a4834c
   R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962
 
-PODFILE CHECKSUM: c010b8d8d196fa9fa3d13f0639c7ea0d9eba3317
+PODFILE CHECKSUM: 10bad6491c60365be67d65fabeb25571e33b43bd
 
 COCOAPODS: 1.11.3

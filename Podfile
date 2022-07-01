@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
- platform :ios, '9.0'
+ platform :ios, '13.0'
 
 target 'NoStoryboard' do
   # Comment the next line if you don't want to use dynamic frameworks
@@ -8,6 +8,7 @@ target 'NoStoryboard' do
   # Pods for NoStoryboard
 
   pod 'R.swift'
+  pod 'FloatingPanel'
 
 
 end

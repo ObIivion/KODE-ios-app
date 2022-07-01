@@ -23,7 +23,11 @@ class ApiProvider {
             guard let data = data, error == nil else {
                 print("Ошибка получения данных")
                 DispatchQueue.main.async {
-                    completion(.failure(error!))
+                    if let error = error {
+                    completion(.failure(error))
+                    } else {
+                        print("ваще хз чё прозошло тогда")
+                    }
                 }
              return
             }
@@ -34,6 +38,7 @@ class ApiProvider {
                 dateFormatter.dateFormat = "yyyy-MM-dd"
                 decoder.dateDecodingStrategy = .formatted(dateFormatter)
                 let result = try decoder.decode(Response.self, from: data)
+                
                 DispatchQueue.main.async {
                     completion(.success(result))
                 }

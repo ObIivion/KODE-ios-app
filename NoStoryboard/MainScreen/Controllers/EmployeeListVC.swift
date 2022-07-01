@@ -6,11 +6,11 @@
 //
 
 import UIKit
+import FloatingPanel
 
-@available(iOS 15.0, *)
 class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
     
-    private lazy var sortingViewController = SortingViewController()
+    private var floatingPanelController = FloatingPanelController()
     
     private let tabs = Department.allCases // статическое поле allCases генерирует сам свифт - достаточно добавить CaseIterable протокол енаму
     
@@ -19,7 +19,7 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
     
     private var employee: [EmployeeModel] = [] // список сотрудников который мы получили
     
-    private var filteredEmployee: [EmployeeModel] { // это как-бы переменная, но на самом деле в нее нельзя записать, она каждый раз будет вычиляться заново, по сути это только getter, такие переменные больше функции чем переменные
+    var filteredEmployee: [EmployeeModel] { // это как-бы переменная, но на самом деле в нее нельзя записать, она каждый раз будет вычиляться заново, по сути это только getter, такие переменные больше функции чем переменные
         return employee
             .filter({
                 $0.department == selectedDepartment || selectedDepartment == nil // возвращаем только сотрудников с отделом как текущий, а если текущтй nil - вернутся все, без филтрации
@@ -39,6 +39,8 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
         super.viewDidLoad()
         
         mainView.errorView.tryAgainButton.addTarget(self, action: #selector(checkConnection(_:)), for: .touchUpInside)
+        
+        setupFloatingPanel()
         
         mainView.employeeTableView.delegate = self
         mainView.employeeTableView.dataSource = self
@@ -62,6 +64,8 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
             switch result {
             case let .success(responseData):
                 self.employee = responseData.items
+                print ("-------------------------- --- -- - -- - - --- - ")
+                dump(self.employee)
                 self.mainView.setMainView()
                 self.mainView.employeeTableView.reloadData()
             case let .failure(error):
@@ -103,11 +107,8 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
             self.mainView.employeeTableView.reloadData()
         case let .failure(error):
             self.mainView.setErrorView()
-            print("-------- ERRRORRRRRRRR -------")
-            print("то самое еррор \(error)")
+            
         }
-    
-        
     }
     
     private func updateDepartmentSelection() {
@@ -120,21 +121,15 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
     @objc
     func rightViewButtonClicked(_ sender: UIButton){
         
-        if let sheet = sortingViewController.sheetPresentationController {
-            sheet.detents = [.medium()]
-            sheet.prefersGrabberVisible = true
-            sheet.preferredCornerRadius = 20
-            sheet.largestUndimmedDetentIdentifier = .medium
-        }
-        
-        self.present(SortingViewController(), animated: true, completion: nil)
-        
+        floatingPanelController.addPanel(toParent: self)
+        floatingPanelController.hide()
+        floatingPanelController.show(animated: true, completion: nil)
+                
     }
-    
 }
 
 // extension for UITableView
-@available(iOS 15.0, *)
+
 extension EmployeeListVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
@@ -168,7 +163,7 @@ extension EmployeeListVC: UITableViewDelegate, UITableViewDataSource {
 }
 
 // extension for UICollectionView
-@available(iOS 15.0, *)
+
 extension EmployeeListVC: UICollectionViewDelegate, UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -202,4 +197,36 @@ extension EmployeeListVC: UICollectionViewDelegate, UICollectionViewDataSource{
         
     }
 
+}
+
+extension EmployeeListVC: FloatingPanelControllerDelegate {
+    
+    func setupFloatingPanel() {
+        
+        floatingPanelController.delegate = self
+        
+        guard let sortingVC = SortingViewController() as? SortingViewController else { return }
+        sortingVC.delegate = self
+        floatingPanelController.set(contentViewController: sortingVC)
+        floatingPanelController.isRemovalInteractionEnabled = true
+    }
+    
+}
+
+extension EmployeeListVC: SortingViewDelegate {
+    
+    func sortByAlphabet() {
+        
+        employee.sort(by: { $0.firstName < $1.firstName })
+        print("отсосртировал, вот новые данные")
+        dump(employee)
+        mainView.employeeTableView.reloadData()
+    }
+    
+    func sortByBirthday() {
+        
+        
+        
+    }
+    
 }

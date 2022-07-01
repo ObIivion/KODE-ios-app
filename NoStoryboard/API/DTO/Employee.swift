@@ -10,9 +10,18 @@ struct EmployeeModel: Codable{
     let department: Department?
     let position: String
     let birthday: String
+    var birthdayDate: Date? {
+        
+        let dateFormatterSet = DateFormatter()
+        dateFormatterSet.locale = Locale(identifier: "ru_RU")
+        dateFormatterSet.setLocalizedDateFormatFromTemplate("dd MMMM yyyy")
+        dateFormatterSet.dateFormat = "dd MMMM yyyy"
+        
+        let date = dateFormatterSet.date(from: birthday)
+        return date
+}
     let phone: String
 }
-
 
 struct EmployeeList: Codable {
     let items: [EmployeeModel]

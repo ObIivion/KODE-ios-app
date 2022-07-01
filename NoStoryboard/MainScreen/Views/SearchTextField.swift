@@ -15,7 +15,7 @@ class SearchTextField: UITextField {
     
     private var insets: UIEdgeInsets
     
-    @available(iOS 15.0, *)
+    
     init(inset: UIEdgeInsets){
         self.insets = inset
         super.init(frame: .zero)

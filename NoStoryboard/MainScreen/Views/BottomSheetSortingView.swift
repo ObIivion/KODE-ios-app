@@ -10,7 +10,7 @@ import Rswift
 
 class BottomSheetSortingView: BaseView {
     
-    private let alphabetSortRadioButton: UIButton = {
+    let alphabetSortRadioButton: UIButton = {
        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
         button.isSelected = false
         if button.isSelected {
@@ -21,7 +21,7 @@ class BottomSheetSortingView: BaseView {
         return button
     }()
     
-    private let birthdaySortRadioButton: UIButton = {
+    let birthdaySortRadioButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
         button.isSelected = false
         if button.isSelected {
@@ -48,8 +48,17 @@ class BottomSheetSortingView: BaseView {
         return label
     }()
     
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Сортировка"
+        label.textColor = UIColor(red: 0.02, green: 0.02, blue: 0.063, alpha: 1)
+        label.font = UIFont(name: "Inter-SemiBold", size: 20)
+        return label
+    }()
+    
     override func setup() {
         backgroundColor = .white
+        addSubview(titleLabel)
         addSubview(alphabetSortRadioButton)
         addSubview(birthdaySortRadioButton)
         addSubview(birthdaySortLabel)
@@ -57,10 +66,14 @@ class BottomSheetSortingView: BaseView {
         
         setupConstraints()
         
-        
     }
     
     func setupConstraints() {
+        
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 24),
+            titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor)])
         
         alphabetSortRadioButton.translatesAutoresizingMaskIntoConstraints = false
         

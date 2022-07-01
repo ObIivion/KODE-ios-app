@@ -64,14 +64,11 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
             switch result {
             case let .success(responseData):
                 self.employee = responseData.items
-                print ("-------------------------- --- -- - -- - - --- - ")
                 dump(self.employee)
                 self.mainView.setMainView()
                 self.mainView.employeeTableView.reloadData()
             case let .failure(error):
                 self.mainView.setErrorView()
-                print("-------- ERRRORRRRRRRR -------")
-                print("то самое еррор \(error)")
             }
         }
         
@@ -218,15 +215,25 @@ extension EmployeeListVC: SortingViewDelegate {
     func sortByAlphabet() {
         
         employee.sort(by: { $0.firstName < $1.firstName })
-        print("отсосртировал, вот новые данные")
-        dump(employee)
+//        print("отсосртировал, вот новые данные")
+//        dump(employee)
         mainView.employeeTableView.reloadData()
     }
     
     func sortByBirthday() {
         
-        
-        
+        employee.sort { date1, date2 in
+            
+            if let date1 = date1.birthdayDate {
+                if let date2 = date2.birthdayDate{
+                    return date1 > date2
+                }
+            }
+            print("не удалось отсортировать")
+            return false
+        }
+        print(" --- отсосртировал, вот новые данные ----")
+        dump(employee)
+        mainView.employeeTableView.reloadData()
     }
-    
 }

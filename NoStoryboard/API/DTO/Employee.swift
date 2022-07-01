@@ -12,12 +12,10 @@ struct EmployeeModel: Codable{
     let birthday: String
     var birthdayDate: Date? {
         
-        let dateFormatterSet = DateFormatter()
-        dateFormatterSet.locale = Locale(identifier: "ru_RU")
-        dateFormatterSet.setLocalizedDateFormatFromTemplate("dd MMMM yyyy")
-        dateFormatterSet.dateFormat = "dd MMMM yyyy"
+        let dateFormatterGet = DateFormatter()
+        dateFormatterGet.dateFormat = "yyyy-MM-dd"
         
-        let date = dateFormatterSet.date(from: birthday)
+        let date = dateFormatterGet.date(from: birthday)
         return date
 }
     let phone: String

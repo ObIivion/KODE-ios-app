@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import Rswift
 
 class ProfileView: BaseView {
     
@@ -20,8 +20,7 @@ class ProfileView: BaseView {
             let view = UIImageView()
             
             view.clipsToBounds = false
-            view.image = UIImage(named: "goose")
-            
+            view.image = R.image.goose()
             view.layer.shadowColor = CGColor(red: 22/255, green: 30/255, blue: 52/255, alpha : 0.08)
             view.layer.shadowOffset = CGSize(width: 0, height: 8)
             view.layer.shadowRadius = 12
@@ -35,7 +34,6 @@ class ProfileView: BaseView {
             view.numberOfLines = 0
             view.font = UIFont(name: "Gill Sans SemiBold" , size: 24)
             view.textColor = UIColor(red: 0.05, green: 0.05, blue: 0.16, alpha: 1)
-            view.text = "Алиса Иванова"
             return view
         }()
         
@@ -44,7 +42,6 @@ class ProfileView: BaseView {
             view.numberOfLines = 0
             view.font = UIFont(name: "Gill Sans SemiBold" , size: 14)
             view.textColor = UIColor(red: 0.151, green: 0.151, blue: 0.155, alpha: 1.0)
-            view.text = "al"
             return view
         }()
         
@@ -53,7 +50,6 @@ class ProfileView: BaseView {
             view.numberOfLines = 0
             view.font = UIFont(name: "Gill Sans Regular", size: 13)
             view.textColor = UIColor(red: 0.85, green: 0.85, blue: 0.92, alpha: 1.0)
-            view.text = "Designer"
             return view
         }()
     
@@ -67,8 +63,8 @@ class ProfileView: BaseView {
     
     private let avatarResizer = ImageResizer()
     
-     let birthCell = BirthViewCell()
-     let phoneCell = PhoneViewCell()
+     private let birthCell = BirthViewCell()
+     private let phoneCell = PhoneViewCell()
 
         override func setup() {
             
@@ -86,47 +82,28 @@ class ProfileView: BaseView {
         addSubview(tagLabel)
         addSubview(departmentLabel)
             
-        setupImageViewConstraints()
-        setupNameLabelConstraints()
-        setupTagLabelConstraints()
-        setupDepartmentLabelConstraints()
-        setupStackViewConstraints()
+        setupConstraints()
             
-        }
+    }
     
-    func setupImageViewConstraints(){
-
+    private func setupConstraints(){
+        
         employeeImageView.translatesAutoresizingMaskIntoConstraints = false
         employeeImageView.topAnchor.constraint(equalTo: upView.topAnchor, constant: 104).isActive = true
         employeeImageView.centerXAnchor.constraint(equalTo: upView.centerXAnchor).isActive = true
-        
-    }
     
-    func setupNameLabelConstraints(){
-        
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.centerXAnchor.constraint(equalTo: upView.centerXAnchor).isActive = true
         nameLabel.topAnchor.constraint(equalTo: employeeImageView.bottomAnchor, constant: 24).isActive = true
-        
-    }
-    
-    func setupTagLabelConstraints(){
         
         tagLabel.translatesAutoresizingMaskIntoConstraints = false
         tagLabel.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: 4).isActive = true
         tagLabel.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor).isActive = true
         
-    }
-    
-    func setupDepartmentLabelConstraints(){
-        
         departmentLabel.translatesAutoresizingMaskIntoConstraints = false
         departmentLabel.centerXAnchor.constraint(equalTo: upView.centerXAnchor).isActive = true
         departmentLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 12).isActive = true
-    }
     
-    func setupStackViewConstraints(){
-        
         stackView.topAnchor.constraint(equalTo: upView.bottomAnchor).isActive = true
         stackView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         stackView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true

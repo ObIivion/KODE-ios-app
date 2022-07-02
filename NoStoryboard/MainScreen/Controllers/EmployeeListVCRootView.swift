@@ -29,7 +29,7 @@ class EmployeeListVCRootView: BaseView {
         
     }
     
-    func setupConstraints() {
+    private func setupConstraints() {
         
         searchTextField.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -64,7 +64,7 @@ class EmployeeListVCRootView: BaseView {
         ])
     }
     
-    func setViewDependingOnConnection(){
+    private func setViewDependingOnConnection(){
 
         NetworkMonitor.shared.startMonitoring()
         print("T/f \(NetworkMonitor.shared.isConnected)")

@@ -6,31 +6,29 @@
 //
 
 import UIKit
+import Rswift
 
 class BirthViewCell: BaseView {
     
     private let birthView: UIView = {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 73.5))
-        //view.backgroundColor = .systemBlue
         return view
     }()
     
     private let starImageView: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "star")
+        view.image = R.image.star()
         view.layer.borderWidth = 0
         return view
     }()
     
     private let birthDataLabel: UILabel = {
         let label = UILabel()
-        label.text = "5 июня 1996"
         return label
     }()
     
     private let yearsLabel: UILabel = {
         let label = UILabel()
-        label.text = "24 года"
         return label
     }()
     
@@ -52,9 +50,7 @@ class BirthViewCell: BaseView {
         addSubview(yearsLabel)
         addSubview(dividingLine)
         
-        setupStarImageViewConstraints()
-        setupBirthDateLabelConstraints()
-        setupYearsLabelViewConstraints()
+        setupConstraints()
         
     }
     
@@ -62,32 +58,25 @@ class BirthViewCell: BaseView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupStarImageViewConstraints(){
+   private func setupConstraints(){
         
         starImageView.translatesAutoresizingMaskIntoConstraints = false
         starImageView.centerYAnchor.constraint(equalTo: birthView.centerYAnchor).isActive = true
         starImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
-    }
-    
-    func setupBirthDateLabelConstraints (){
         
         birthDataLabel.translatesAutoresizingMaskIntoConstraints = false
         birthDataLabel.centerYAnchor.constraint(equalTo: starImageView.centerYAnchor).isActive = true
         birthDataLabel.leadingAnchor.constraint(equalTo: starImageView.trailingAnchor, constant: 14).isActive = true
-    }
-    
-    func setupYearsLabelViewConstraints(){
         
         yearsLabel.translatesAutoresizingMaskIntoConstraints = false
         yearsLabel.centerYAnchor.constraint(equalTo: starImageView.centerYAnchor).isActive = true
         yearsLabel.trailingAnchor.constraint(equalTo: birthView.trailingAnchor, constant: -20).isActive = true
+        
     }
     
     func setData(dateBirth: String, years: String){
         
         self.birthDataLabel.text = "\(dateBirth)"
         self.yearsLabel.text = "\(years)"
-        
     }
-    
 }

@@ -54,42 +54,34 @@ class LostInternetConnectionView: BaseView {
         addSubview(subTitleLabel)
         addSubview(tryAgainButton)
         
-        setupNLOImageViewConstraints()
-        setupTitleLabelConstraints()
-        setupSubTitleLabelConstraints()
-        setupTryAgainButtonConstraints()
+        setupConstraints()
         
     }
     
-    func setupNLOImageViewConstraints(){
+    private func setupConstraints() {
+        
         
         NLOImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             NLOImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             NLOImageView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -50)
         ])
-        
-    }
     
-    func setupTitleLabelConstraints(){
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             titleLabel.topAnchor.constraint(equalTo: NLOImageView.bottomAnchor, constant: 8)
         ])
-    }
     
-    func setupSubTitleLabelConstraints(){
+    
         
         subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             subTitleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12)
         ])
-    }
     
-    func setupTryAgainButtonConstraints(){
         
         tryAgainButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

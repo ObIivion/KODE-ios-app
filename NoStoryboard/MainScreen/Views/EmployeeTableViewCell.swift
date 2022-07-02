@@ -199,7 +199,7 @@ class EmployeeTableViewCell: UITableViewCell {
         departmentLabel.text = employee.department?.title // поправил под номую модельку с енамом Department
     }
     
-    func shimmerLoadingAnimation(viewToAnimate: UIView){
+    private func shimmerLoadingAnimation(viewToAnimate: UIView){
         
         let gradientLayer = CAGradientLayer()
         gradientLayer.startPoint = CGPoint(x: 0.0, y: 1.0)

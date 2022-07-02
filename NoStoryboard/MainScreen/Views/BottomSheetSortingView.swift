@@ -68,7 +68,7 @@ class BottomSheetSortingView: BaseView {
         
     }
     
-    func setupConstraints() {
+   private func setupConstraints() {
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

@@ -40,12 +40,24 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
     
     var thisYearBirthdayEmployee: [EmployeeModel] {
         
-        return employee.filter { self.calculateDayDifference(birthdayDate: $0.birthdayDate) < 0 }
+        return filteredEmployee.filter {
+            return self.calculateDayDifference(birthdayDate: $0.birthdayDate) > 0
+        }
     }
     
     var nextYearBirthdayEmployee: [EmployeeModel] {
         
-        return filteredEmployee.filter { self.calculateDayDifference(birthdayDate: $0.birthdayDate) > 0 }
+        return filteredEmployee.filter {
+            
+            return self.calculateDayDifference(birthdayDate: $0.birthdayDate) < 0
+            
+        }
+    }
+    
+    var employeeModelForSections: [[EmployeeModel]] {
+        
+        return [thisYearBirthdayEmployee, nextYearBirthdayEmployee]
+        
     }
 
     private let employeeProvider = ApiProvider()
@@ -184,7 +196,7 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
             
         let dateComponentsNow = calendar.dateComponents([.day, .month, .year], from: dateCurrent)
             
-        let birthdayDateComponents = calendar.dateComponents([.day, .month, .year], from: date)
+        let birthdayDateComponents = calendar.dateComponents([.day, .month], from: date)
             
         var bufferDateComponents = DateComponents()
         bufferDateComponents.year = dateComponentsNow.year
@@ -193,7 +205,7 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
             
         guard let bufferDate = calendar.date(from: bufferDateComponents) else { return 0 }
                 
-        guard let dayDifference = calendar.dateComponents([.day], from: bufferDate, to: dateCurrent).day else { return 0 }
+        guard let dayDifference = calendar.dateComponents([.day], from: dateCurrent, to: bufferDate).day else { return 0 }
         
         return dayDifference
     }
@@ -227,6 +239,7 @@ extension EmployeeListVC: UITableViewDelegate, UITableViewDataSource {
         } else {
             
         if self.shouldShowBirthday {
+           
             return section == 0 ? thisYearBirthdayEmployee.count : nextYearBirthdayEmployee.count
             
         } else {
@@ -262,10 +275,19 @@ extension EmployeeListVC: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: EmployeeTableViewCell.identifier) as! EmployeeTableViewCell
         cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: tableView.bounds.width)
         if !employee.isEmpty {
+            
+            if shouldShowBirthday {
+                let sortedEmployee = employeeModelForSections[indexPath.section][indexPath.row]
+                cell.setData(firstName: sortedEmployee.firstName, lastName: sortedEmployee.lastName, tag: sortedEmployee.userTag, department: sortedEmployee.department, dateBirth: formatDate(date: sortedEmployee.birthdayDate))
+                cell.setBirthdayLabelVisibility(shouldShowBirthday: self.shouldShowBirthday)
+                cell.setViewWithData()
+            } else {
+            
         let employee = filteredEmployee[indexPath.row]
             cell.setData(firstName: employee.firstName, lastName: employee.lastName, tag: employee.userTag, department: employee.department, dateBirth: formatDate(date: employee.birthdayDate))
             cell.setBirthdayLabelVisibility(shouldShowBirthday: self.shouldShowBirthday)
             cell.setViewWithData()
+            }
         } else {
             cell.setLoadingView()
         }
@@ -342,10 +364,23 @@ extension EmployeeListVC: SortingViewDelegate {
     
     func sortByBirthday() {
         
+        print("----- SORTED BY DAY LEFT DR -----")
         employee.sort { date1, date2 in
             guard let date1 = date1.birthdayDate else { return false }
             guard let date2 = date2.birthdayDate else { return false }
-                return date1 > date2
+            
+            var dayDifference1 = calculateDayDifference(birthdayDate: date1)
+            var dayDifference2 = calculateDayDifference(birthdayDate: date2)
+            
+            if (dayDifference1 < 0) {
+                dayDifference1 += 365
+            }
+            
+            if dayDifference2 < 0 {
+                dayDifference2 += 365
+            }
+            
+            return dayDifference1 < dayDifference2
         }
         mainView.employeeTableView.reloadData()
     }

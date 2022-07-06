@@ -60,17 +60,52 @@ class DetailsVC: BaseViewController<ProfileView> {
     
     func calculateYears(date: Date?) -> String {
         
-        if let date = date {
+        guard let date = date else { return "Не удалось вычислить год" }
         
-            let calendar = Calendar.current
-            let dateCurrent = Date()
+        let calendar = Calendar.current
+        let dateCurrent = Date()
             
-            if let years = calendar.dateComponents([.year], from: date, to: dateCurrent).year {
-               
-                let str = R.string.yearsDict.number_of_ages(ages: years)
-            return str
-            }
+        let dateComponentsNow = calendar.dateComponents([.day, .month, .year], from: dateCurrent)
+            
+        let birthdayDateComponents = calendar.dateComponents([.day, .month], from: date)
+        
+            
+        var bufferDateComponents = DateComponents()
+        bufferDateComponents.year = dateComponentsNow.year
+        bufferDateComponents.month = birthdayDateComponents.month
+        bufferDateComponents.day = birthdayDateComponents.day
+            
+        guard let bufferDate = calendar.date(from: bufferDateComponents) else { return "Не удалось вычислить год"  }
+                
+        guard var dayDifference = calendar.dateComponents([.day], from: dateCurrent, to: bufferDate).day else { return "Не удалось вычислить год" }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        if dayDifference < 0 {
+            dayDifference += 365
+            return "\(dateFormatter.string(from: bufferDate)) || \(dayDifference)"
+        } else {
+            return "\(dateFormatter.string(from: bufferDate)) || \(dayDifference)"
         }
-        return "Не удалось вычислить год"
+        
+        
+        
+        
     }
 }
+    
+    
+    //        if let date = date {
+    //
+    //            let calendar = Calendar.current
+    //            let dateCurrent = Date()
+    //
+    //            if let years = calendar.dateComponents([.year], from: date, to: dateCurrent).year {
+    //
+    //                let str = R.string.yearsDict.number_of_ages(ages: years)
+    //            return str
+    //            }
+    //        }
+    //        return "Не удалось вычислить год"
+    //    }

@@ -37,7 +37,6 @@ class TopTabsCollectionViewCell: UICollectionViewCell {
             contentView.addSubview(bottomBorderView)
             layoutSubviews()
             
-            
             contentView.translatesAutoresizingMaskIntoConstraints = false
             contentView.heightAnchor.constraint(equalToConstant: 36).isActive = true
             contentView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16).isActive = true
@@ -63,6 +62,4 @@ class TopTabsCollectionViewCell: UICollectionViewCell {
             bottomBorderView.heightAnchor.constraint(equalToConstant: 2).isActive = true
         }
     
-    
-        
     }

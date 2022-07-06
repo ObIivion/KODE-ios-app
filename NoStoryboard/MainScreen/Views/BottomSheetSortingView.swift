@@ -12,23 +12,15 @@ class BottomSheetSortingView: BaseView {
     
     let alphabetSortRadioButton: UIButton = {
        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        button.isSelected = false
-        if button.isSelected {
-            button.setBackgroundImage(R.image.isSelected(), for: .normal)
-        } else {
-            button.setBackgroundImage(R.image.unSelected(), for: .normal)
-        }
+        button.setBackgroundImage(R.image.unSelected(), for: .normal)
+        button.setBackgroundImage(R.image.isSelected(), for: .selected)
         return button
     }()
     
     let birthdaySortRadioButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        button.isSelected = false
-        if button.isSelected {
-            button.setBackgroundImage(R.image.isSelected(), for: .normal)
-        } else {
-            button.setBackgroundImage(R.image.unSelected(), for: .normal)
-        }
+        button.setBackgroundImage(R.image.unSelected(), for: .normal)
+        button.setBackgroundImage(R.image.isSelected(), for: .selected)
         return button
      }()
     

@@ -8,17 +8,26 @@
 import UIKit
 import Rswift
 
-protocol SortingViewDelegate {
+protocol SortingViewDelegate: AnyObject {
+    
+//    var thisYearBirthdayEmployee: [EmployeeModel] {get set}
+//    
+//    var nextYearBirthdayEmployee: [EmployeeModel] {get set}
+//    
+//    func checkMonths(birthdayDate: Date?)
     
     func sortByAlphabet()
     
     func sortByBirthday()
     
+    func showBirthday(shouldShow: Bool)
 }
+
+
 
 class SortingViewController: BaseViewController<BottomSheetSortingView> {
     
-    var delegate: SortingViewDelegate?
+    weak var delegate: SortingViewDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,17 +38,22 @@ class SortingViewController: BaseViewController<BottomSheetSortingView> {
     
     @objc
     private func alphabetSortButtonClicked(_ sender: UIButton) {
-        mainView.alphabetSortRadioButton.setBackgroundImage(R.image.isSelected(), for: .normal)
-        mainView.birthdaySortRadioButton.setBackgroundImage(R.image.unSelected(), for: .normal)
+        
+        mainView.alphabetSortRadioButton.isSelected = true
+        mainView.birthdaySortRadioButton.isSelected = false
+        
+        delegate?.showBirthday(shouldShow: false)
         
         delegate?.sortByAlphabet()
+        
     }
     
     @objc
     private func birthdaySortButtonClicked(_ sender: UIButton) {
-        mainView.birthdaySortRadioButton.setBackgroundImage(R.image.isSelected(), for: .normal)
-        mainView.alphabetSortRadioButton.setBackgroundImage(R.image.unSelected(), for: .normal)
         
+        mainView.alphabetSortRadioButton.isSelected = false
+        mainView.birthdaySortRadioButton.isSelected = true
+        delegate?.showBirthday(shouldShow: true)
         delegate?.sortByBirthday()
         
     }

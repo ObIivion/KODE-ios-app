@@ -27,8 +27,7 @@ class PhoneViewCell: BaseView {
        return label
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override func setup() {
         
         addSubview(phoneView)
         addSubview(phoneImageView)
@@ -36,10 +35,6 @@ class PhoneViewCell: BaseView {
         
         setPhoneImageConstraints()
         setPhoneLabelConstraints()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
    private func setPhoneImageConstraints(){

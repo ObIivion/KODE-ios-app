@@ -21,7 +21,7 @@ class SearchTextField: UITextField {
         
         let leftImage = UIImageView(frame: .zero)
         leftImage.image = R.image.vector()
-        self.leftViewMode = .always
+        self.leftViewMode = .unlessEditing
         self.leftView = leftImage
         
         rightImageButton.setImage(R.image.listUiAlt(), for: .normal)

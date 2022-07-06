@@ -19,9 +19,6 @@ class DetailsVC: BaseViewController<ProfileView> {
         let formattedPhone = formatPhone(phone: employee.phone)
         let formattedBirthday = formatDate(date: employee.birthdayDate)
         let calculatedYears = calculateYears(date: employee.birthdayDate)
-        
-        print("------ ------- ------- ------- ------ ------- -----")
-        print(employee.birthdayDate)
     
         // перенес во view did load  потому что нет смысла выносить во view did appear - можно один раз при загрузке контроллера
         mainView.setData(firstName: employee.firstName,

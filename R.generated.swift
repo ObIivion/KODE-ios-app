@@ -130,7 +130,7 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
 
-  /// This `R.image` struct is generated, and contains static references to 8 images.
+  /// This `R.image` struct is generated, and contains static references to 9 images.
   struct image {
     /// Image `NLO`.
     static let nlO = Rswift.ImageResource(bundle: R.hostingBundle, name: "NLO")
@@ -148,6 +148,8 @@ struct R: Rswift.Validatable {
     static let star = Rswift.ImageResource(bundle: R.hostingBundle, name: "star")
     /// Image `unSelected`.
     static let unSelected = Rswift.ImageResource(bundle: R.hostingBundle, name: "unSelected")
+    /// Image `vector_editing`.
+    static let vector_editing = Rswift.ImageResource(bundle: R.hostingBundle, name: "vector_editing")
 
     #if os(iOS) || os(tvOS)
     /// `UIImage(named: "NLO", bundle: ..., traitCollection: ...)`
@@ -202,6 +204,13 @@ struct R: Rswift.Validatable {
     /// `UIImage(named: "unSelected", bundle: ..., traitCollection: ...)`
     static func unSelected(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.unSelected, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIImage(named: "vector_editing", bundle: ..., traitCollection: ...)`
+    static func vector_editing(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.vector_editing, compatibleWith: traitCollection)
     }
     #endif
 

@@ -6,9 +6,7 @@
 //
 
 import UIKit
-import CoreData
 
-@available(iOS 15.0, *)
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     

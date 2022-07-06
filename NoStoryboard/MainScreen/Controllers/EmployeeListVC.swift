@@ -8,9 +8,18 @@
 import UIKit
 import FloatingPanel
 
-class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
+class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
     
     private var floatingPanelController = FloatingPanelController()
+    
+    var shouldShowBirthday: Bool = false
+    
+    private let refreshControl: UIRefreshControl = {
+        let refresh = UIRefreshControl()
+        refresh.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
+        return refresh
+        
+    }()
     
     private let tabs = Department.allCases // статическое поле allCases генерирует сам свифт - достаточно добавить CaseIterable протокол енаму
     
@@ -28,6 +37,16 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
                 $0.firstName.starts(with: searchText) || $0.lastName.starts(with: searchText) || searchText.isEmpty // добавил условие searchText.isEmpty чтоб сохранились все элементы если поиск пустой
             })
     }
+    
+    var thisYearBirthdayEmployee: [EmployeeModel] {
+        
+        return employee.filter { self.calculateDayDifference(birthdayDate: $0.birthdayDate) < 0 }
+    }
+    
+    var nextYearBirthdayEmployee: [EmployeeModel] {
+        
+        return filteredEmployee.filter { self.calculateDayDifference(birthdayDate: $0.birthdayDate) > 0 }
+    }
 
     private let employeeProvider = ApiProvider()
     
@@ -41,6 +60,8 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
         mainView.errorView.tryAgainButton.addTarget(self, action: #selector(checkConnection(_:)), for: .touchUpInside)
         
         setupFloatingPanel()
+        
+        mainView.employeeTableView.refreshControl = refreshControl
         
         mainView.employeeTableView.delegate = self
         mainView.employeeTableView.dataSource = self
@@ -64,16 +85,36 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
             switch result {
             case let .success(responseData):
                 self.employee = responseData.items
-                dump(self.employee)
                 self.mainView.setMainView()
                 self.mainView.employeeTableView.reloadData()
-            case let .failure(error):
+            case .failure(_):
                 self.mainView.setErrorView()
             }
         }
         
         navigationItem.title = "MainNavViewController"
         
+    }
+    
+    @objc
+    private func didPullToRefresh(_ sender: UIRefreshControl) {
+        
+        self.mainView.setMainView()
+        
+        employeeProvider.getData(EmployeeList.self, from: "/kode-education/trainee-test/25143926/users") { result in // поправил url - теперь нам надо писать только изменяемую часть
+            
+            switch result {
+            case let .success(responseData):
+                self.employee = responseData.items
+                self.mainView.setMainView()
+                self.mainView.employeeTableView.reloadData()
+                self.refreshControl.endRefreshing()
+            case let .failure(error):
+                self.refreshControl.endRefreshing()
+                self.mainView.setErrorView()
+                print(error)
+            }
+        }
     }
     
     @objc
@@ -108,6 +149,55 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
         }
     }
     
+    private func formatDate (date: Date?) -> String {
+
+            let formatter = DateFormatter()
+            formatter.locale = Locale(identifier: "ru_RU")
+            formatter.setLocalizedDateFormatFromTemplate("dd MMM")
+
+        if let date = date {
+            
+            var date = formatter.string(from: date)
+            
+            if date.count == 7 {
+                date.removeLast()
+            }
+            
+            if date.count == 8 {
+                date.removeLast(2)
+            }
+            return date
+        }
+        
+        return "Дата не была получена"
+    }
+    
+    /// Это чтобы посчитать, в этом году будет день рождения или уже в следующем.
+    /// Если число отрицательное - в следующем году. Если положительное - в этом
+    
+    private func calculateDayDifference(birthdayDate: Date?) -> Int {
+        
+        guard let date = birthdayDate else { return 0}
+        
+        let calendar = Calendar.current
+        let dateCurrent = Date()
+            
+        let dateComponentsNow = calendar.dateComponents([.day, .month, .year], from: dateCurrent)
+            
+        let birthdayDateComponents = calendar.dateComponents([.day, .month, .year], from: date)
+            
+        var bufferDateComponents = DateComponents()
+        bufferDateComponents.year = dateComponentsNow.year
+        bufferDateComponents.month = birthdayDateComponents.month
+        bufferDateComponents.day = birthdayDateComponents.day
+            
+        guard let bufferDate = calendar.date(from: bufferDateComponents) else { return 0 }
+                
+        guard let dayDifference = calendar.dateComponents([.day], from: bufferDate, to: dateCurrent).day else { return 0 }
+        
+        return dayDifference
+    }
+    
     private func updateDepartmentSelection() {
         mainView.topTabsCollectionView.visibleCells.compactMap({ $0 as? TopTabsCollectionViewCell }).forEach({ cell in
             let shouldBeSelected = cell.model == self.selectedDepartment
@@ -128,21 +218,53 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView> {
 // extension for UITableView
 
 extension EmployeeListVC: UITableViewDelegate, UITableViewDataSource {
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
         if employee.isEmpty {
             return 15
         } else {
-        return filteredEmployee.count // теперь всегда данные берем из filtered
+            
+        if self.shouldShowBirthday {
+            return section == 0 ? thisYearBirthdayEmployee.count : nextYearBirthdayEmployee.count
+            
+        } else {
+            return filteredEmployee.count // теперь всегда данные берем из filtered
+        }
+    }
+}
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+
+        return self.shouldShowBirthday ?  2 : 1
+        
+}
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == 0 {
+            return nil
+        } else {
+            return HeaderSectionView()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 0
+        } else {
+            return 68
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: EmployeeTableViewCell.identifier) as! EmployeeTableViewCell
+        cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: tableView.bounds.width)
         if !employee.isEmpty {
         let employee = filteredEmployee[indexPath.row]
-            cell.set(employee: employee)
+            cell.setData(firstName: employee.firstName, lastName: employee.lastName, tag: employee.userTag, department: employee.department, dateBirth: formatDate(date: employee.birthdayDate))
+            cell.setBirthdayLabelVisibility(shouldShowBirthday: self.shouldShowBirthday)
             cell.setViewWithData()
         } else {
             cell.setLoadingView()
@@ -215,25 +337,37 @@ extension EmployeeListVC: SortingViewDelegate {
     func sortByAlphabet() {
         
         employee.sort(by: { $0.firstName < $1.firstName })
-//        print("отсосртировал, вот новые данные")
-//        dump(employee)
         mainView.employeeTableView.reloadData()
     }
     
     func sortByBirthday() {
         
         employee.sort { date1, date2 in
-            
-            if let date1 = date1.birthdayDate {
-                if let date2 = date2.birthdayDate{
-                    return date1 > date2
-                }
-            }
-            print("не удалось отсортировать")
-            return false
+            guard let date1 = date1.birthdayDate else { return false }
+            guard let date2 = date2.birthdayDate else { return false }
+                return date1 > date2
         }
-        print(" --- отсосртировал, вот новые данные ----")
-        dump(employee)
         mainView.employeeTableView.reloadData()
     }
+    
+    func showBirthday(shouldShow: Bool){
+        
+        self.shouldShowBirthday = shouldShow
+        mainView.employeeTableView.reloadData()
+    }
+}
+    
+extension EmployeeListVC: UITextFieldDelegate {
+        
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        mainView.searchTextField.rightImageButton.isHidden = true
+        mainView.cancelButton.isHidden = false
+        mainView.searchTextField.placeholder = ""
+        
+        let leftImage = UIImageView(frame: .zero)
+        leftImage.image = R.image.vector_editing()
+        mainView.searchTextField.leftViewMode = .whileEditing
+        mainView.searchTextField.leftView = leftImage
+    }
+    
 }

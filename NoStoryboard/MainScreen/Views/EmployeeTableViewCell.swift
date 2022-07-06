@@ -7,7 +7,10 @@
 
 import UIKit
 
-class EmployeeTableViewCell: UITableViewCell {
+class EmployeeTableViewCell: UITableViewCell
+{
+    
+    var shouldShowBirthday = false
     
     static let identifier = "tableCell"
 
@@ -40,6 +43,15 @@ class EmployeeTableViewCell: UITableViewCell {
         view.numberOfLines = 0
         view.font = UIFont(name: "Gill Sans Regular", size: 13)
         view.textColor = UIColor(red: 0.85, green: 0.85, blue: 0.92, alpha: 1.0)
+        return view
+    }()
+    
+    let birthdayLabel: UILabel = {
+        let view = UILabel()
+        view.numberOfLines = 0
+        view.font = UIFont(name: "Gill Sans Regular", size: 15)
+        view.textColor = UIColor(red: 0.333, green: 0.333, blue: 0.361, alpha: 1)
+        view.isHidden = true
         return view
     }()
     
@@ -77,15 +89,13 @@ class EmployeeTableViewCell: UITableViewCell {
         addSubview(nameLabel)
         addSubview(tagLabel)
         addSubview(departmentLabel)
+        addSubview(birthdayLabel)
         
         addSubview(imageLoadingView)
         addSubview(nameLoadingView)
         addSubview(departmentLoadingView)
         
-        setImageViewConstraints()
-        setNameLabelConstraints()
-        setDepartmentLabelConstraints()
-        setTagLabelConstraints()
+        setupConstraints()
         
         setLoadingViewsConstraints()
         
@@ -98,42 +108,44 @@ class EmployeeTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setImageViewConstraints(){
-        
+    func setBirthdayLabelVisibility(shouldShowBirthday: Bool) {
+        birthdayLabel.isHidden = !shouldShowBirthday
+    }
+    
+    private func setupConstraints(){
+    
         employeeImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             employeeImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
              employeeImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10), employeeImageView.heightAnchor.constraint(equalToConstant: 72),
              employeeImageView.widthAnchor.constraint(equalToConstant: 72)
         ])
-    }
     
-    private func setNameLabelConstraints(){
-       
        nameLabel.translatesAutoresizingMaskIntoConstraints = false
        NSLayoutConstraint.activate([
         nameLabel.leadingAnchor.constraint(equalTo: employeeImageView.trailingAnchor, constant: 16), nameLabel.centerYAnchor.constraint(equalTo: employeeImageView.centerYAnchor, constant: -20)
        ])
-    }
     
-    private func setTagLabelConstraints(){
-        
         tagLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             tagLabel.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: 4), tagLabel.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor)
         ])
-    }
     
-    private func setDepartmentLabelConstraints(){
-        
         departmentLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             departmentLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
             departmentLabel.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor, constant: 20)
         ])
         
-    }
     
+        birthdayLabel.translatesAutoresizingMaskIntoConstraints = false
+            
+        NSLayoutConstraint.activate([
+            birthdayLabel.centerYAnchor.constraint(equalTo: employeeImageView.centerYAnchor, constant: -12),
+            birthdayLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -19.5)
+        ])
+    
+    }
     private func setLoadingViewsConstraints() {
         
         imageLoadingView.translatesAutoresizingMaskIntoConstraints = false
@@ -192,11 +204,12 @@ class EmployeeTableViewCell: UITableViewCell {
         
     }
     
-    func set(employee: EmployeeModel){
+    func setData(firstName: String, lastName: String, tag: String, department: Department?, dateBirth: String){
         employeeImageView.image = UIImage(named: "goose")
-        nameLabel.text = "\(employee.firstName) \(employee.lastName)"
-        tagLabel.text = employee.userTag
-        departmentLabel.text = employee.department?.title // поправил под номую модельку с енамом Department
+        nameLabel.text = "\(firstName) \(lastName)"
+        tagLabel.text = tag
+        departmentLabel.text = department?.title
+        birthdayLabel.text = dateBirth
     }
     
     private func shimmerLoadingAnimation(viewToAnimate: UIView){

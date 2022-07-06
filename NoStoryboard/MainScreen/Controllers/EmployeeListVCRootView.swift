@@ -1,7 +1,17 @@
 import UIKit
 
 class EmployeeListVCRootView: BaseView {
-    let searchTextField = SearchTextField(inset: UIEdgeInsets(top: 10, left: 44, bottom: 10, right: 35))
+    
+    let cancelButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Отмена", for: .normal)
+        button.setTitleColor(UIColor(red: 0.396, green: 0.204, blue: 1, alpha: 1), for: .normal)
+        button.titleLabel?.font = UIFont(name: "Gill Sans SemiBold" , size: 16)
+        button.isHidden = true
+        return button
+    }()
+    
+    var searchTextField = SearchTextField(inset: UIEdgeInsets(top: 10, left: 44, bottom: 10, right: 35))
     
     let topTabsCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -19,6 +29,7 @@ class EmployeeListVCRootView: BaseView {
     override func setup() {
         backgroundColor = .white
         addSubview(searchTextField)
+        addSubview(cancelButton)
         addSubview(employeeTableView)
         addSubview(topTabsCollectionView)
         addSubview(errorView)
@@ -37,6 +48,12 @@ class EmployeeListVCRootView: BaseView {
             searchTextField.heightAnchor.constraint(equalToConstant: 40),
             searchTextField.centerXAnchor.constraint(equalTo: centerXAnchor),
             searchTextField.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 14),
+        ])
+        
+        cancelButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            cancelButton.leadingAnchor.constraint(equalTo: searchTextField.trailingAnchor, constant: 12),
+            cancelButton.centerYAnchor.constraint(equalTo: searchTextField.centerYAnchor)
         ])
         
         topTabsCollectionView.translatesAutoresizingMaskIntoConstraints = false

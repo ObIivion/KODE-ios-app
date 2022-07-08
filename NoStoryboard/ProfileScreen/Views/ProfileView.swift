@@ -18,8 +18,6 @@ class ProfileView: BaseView {
         
     private let employeeImageView: UIImageView = {
             let view = UIImageView()
-            
-            view.clipsToBounds = false
             view.image = R.image.goose()
             view.layer.shadowColor = CGColor(red: 22/255, green: 30/255, blue: 52/255, alpha : 0.08)
             view.layer.shadowOffset = CGSize(width: 0, height: 8)
@@ -30,28 +28,28 @@ class ProfileView: BaseView {
         }()
         
      let nameLabel: UILabel = {
-            let view = UILabel()
-            view.numberOfLines = 0
-            view.font = UIFont(name: "Gill Sans SemiBold" , size: 24)
-            view.textColor = UIColor(red: 0.05, green: 0.05, blue: 0.16, alpha: 1)
-            return view
-        }()
+        let view = UILabel()
+        view.numberOfLines = 0
+        view.font = R.font.interBold(size: 24)
+        view.textColor = UIColor(red: 0.02, green: 0.02, blue: 0.063, alpha: 1)
+        return view
+    }()
         
      let tagLabel: UILabel = {
-            let view = UILabel()
-            view.numberOfLines = 0
-            view.font = UIFont(name: "Gill Sans SemiBold" , size: 14)
-            view.textColor = UIColor(red: 0.151, green: 0.151, blue: 0.155, alpha: 1.0)
-            return view
-        }()
+        let view = UILabel()
+        view.numberOfLines = 0
+        view.font = R.font.interRegular(size: 14)
+        view.textColor = UIColor(red: 0.591, green: 0.591, blue: 0.609, alpha: 1)
+        return view
+    }()
         
      let departmentLabel: UILabel = {
-            let view = UILabel()
-            view.numberOfLines = 0
-            view.font = UIFont(name: "Gill Sans Regular", size: 13)
-            view.textColor = UIColor(red: 0.85, green: 0.85, blue: 0.92, alpha: 1.0)
-            return view
-        }()
+        let view = UILabel()
+        view.numberOfLines = 0
+        view.font = R.font.interRegular(size: 13)
+        view.textColor = UIColor(red: 0.333, green: 0.333, blue: 0.361, alpha: 1)
+        return view
+    }()
     
     private let stackView: UIStackView = {
         let view = UIStackView()
@@ -118,6 +116,7 @@ class ProfileView: BaseView {
         self.departmentLabel.text = department?.title
         phoneCell.setData(phoneNumber: phone)
         birthCell.setData(dateBirth: dateBirth, years: years)
+        
         
     }
     

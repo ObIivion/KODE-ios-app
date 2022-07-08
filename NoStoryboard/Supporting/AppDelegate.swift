@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let navController = UINavigationController(rootViewController: EmployeeListVC())
         navController.navigationBar.prefersLargeTitles = false
-        navController.navigationBar.isHidden = false
+        navController.navigationBar.isHidden = true
         
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = navController

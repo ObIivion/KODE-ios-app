@@ -28,7 +28,7 @@ class BottomSheetSortingView: BaseView {
         let label = UILabel()
         label.text = "По алфавиту"
         label.textColor = UIColor(cgColor: CGColor(red: 5/255, green: 5/255, blue: 16/255, alpha: 1))
-        label.font = UIFont(name: "Inter-Medium", size: 16)
+        label.font = R.font.interMedium(size: 16)
         return label
     }()
     
@@ -36,7 +36,7 @@ class BottomSheetSortingView: BaseView {
         let label = UILabel()
         label.text = "По дате рождения"
         label.textColor = UIColor(cgColor: CGColor(red: 5/255, green: 5/255, blue: 16/255, alpha: 1))
-        label.font = UIFont(name: "Inter-Medium", size: 16)
+        label.font = R.font.interMedium(size: 16)
         return label
     }()
     
@@ -44,7 +44,7 @@ class BottomSheetSortingView: BaseView {
         let label = UILabel()
         label.text = "Сортировка"
         label.textColor = UIColor(red: 0.02, green: 0.02, blue: 0.063, alpha: 1)
-        label.font = UIFont(name: "Inter-SemiBold", size: 20)
+        label.font = R.font.interSemiBold(size: 20)
         return label
     }()
     

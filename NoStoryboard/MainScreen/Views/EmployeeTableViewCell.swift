@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Rswift
 
 class EmployeeTableViewCell: UITableViewCell
 {
@@ -22,35 +23,35 @@ class EmployeeTableViewCell: UITableViewCell
     }()
     
     private let nameLabel: UILabel = {
-        
+
         let view = UILabel()
         view.numberOfLines = 0
-        view.font = UIFont(name: "Gill Sans SemiBold" , size: 16)
-        view.textColor = UIColor(red: 0.05, green: 0.05, blue: 0.16, alpha: 1)
+        view.textColor = UIColor(red: 0.02, green: 0.02, blue: 0.063, alpha: 1)
+        view.font = R.font.interMedium(size: 16)
         return view
     }()
     
     private let tagLabel: UILabel = {
         let view = UILabel()
         view.numberOfLines = 0
-        view.font = UIFont(name: "Gill Sans SemiBold" , size: 14)
-        view.textColor = UIColor(red: 0.151, green: 0.151, blue: 0.155, alpha: 1.0)
+        view.textColor = UIColor(red: 0.591, green: 0.591, blue: 0.609, alpha: 1)
+        view.font = R.font.interMedium(size: 14)
         return view
     }()
     
     private let departmentLabel: UILabel = {
         let view = UILabel()
         view.numberOfLines = 0
-        view.font = UIFont(name: "Gill Sans Regular", size: 13)
-        view.textColor = UIColor(red: 0.85, green: 0.85, blue: 0.92, alpha: 1.0)
+        view.textColor = UIColor(red: 0.333, green: 0.333, blue: 0.361, alpha: 1)
+        view.font = R.font.interRegular(size: 13)
         return view
     }()
     
     let birthdayLabel: UILabel = {
         let view = UILabel()
         view.numberOfLines = 0
-        view.font = UIFont(name: "Gill Sans Regular", size: 15)
         view.textColor = UIColor(red: 0.333, green: 0.333, blue: 0.361, alpha: 1)
+        view.font = R.font.interRegular(size: 15)
         view.isHidden = true
         return view
     }()

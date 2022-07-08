@@ -24,11 +24,13 @@ class BirthViewCell: BaseView {
     
     private let birthDataLabel: UILabel = {
         let label = UILabel()
+        label.font = R.font.interMedium(size: 16)
         return label
     }()
     
     private let yearsLabel: UILabel = {
         let label = UILabel()
+        label.font = R.font.interMedium(size: 16)
         return label
     }()
     

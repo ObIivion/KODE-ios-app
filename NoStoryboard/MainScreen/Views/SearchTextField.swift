@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Foundation
 import Rswift
 
 class SearchTextField: UITextField {
@@ -21,6 +20,8 @@ class SearchTextField: UITextField {
         
         let leftImage = UIImageView(frame: .zero)
         leftImage.image = R.image.vector()
+        leftImage.image = leftImage.image?.withRenderingMode(.alwaysTemplate)
+        leftImage.tintColor = UIColor(red: 0.765, green: 0.765, blue: 0.776, alpha: 1)
         self.leftViewMode = .unlessEditing
         self.leftView = leftImage
         

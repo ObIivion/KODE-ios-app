@@ -1,4 +1,5 @@
 import UIKit
+import Rswift
 
 class EmployeeListVCRootView: BaseView {
     
@@ -6,7 +7,7 @@ class EmployeeListVCRootView: BaseView {
         let button = UIButton()
         button.setTitle("Отмена", for: .normal)
         button.setTitleColor(UIColor(red: 0.396, green: 0.204, blue: 1, alpha: 1), for: .normal)
-        button.titleLabel?.font = UIFont(name: "Gill Sans SemiBold" , size: 16)
+        button.titleLabel?.font = R.font.interSemiBold(size: 14)
         button.isHidden = true
         return button
     }()
@@ -22,6 +23,13 @@ class EmployeeListVCRootView: BaseView {
         return tab
     }()
     
+    private let separatorLineUnderTabs: UIView = {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0.33))
+        view.backgroundColor = UIColor(red: 0.765, green: 0.765, blue: 0.776, alpha: 1)
+        
+        return view
+    }()
+    
     let employeeTableView = UITableView()
     
     let errorView = LostInternetConnectionView()
@@ -32,6 +40,7 @@ class EmployeeListVCRootView: BaseView {
         addSubview(cancelButton)
         addSubview(employeeTableView)
         addSubview(topTabsCollectionView)
+        addSubview(separatorLineUnderTabs)
         addSubview(errorView)
         
         setupConstraints()
@@ -62,6 +71,14 @@ class EmployeeListVCRootView: BaseView {
             topTabsCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
             topTabsCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
             topTabsCollectionView.heightAnchor.constraint(equalToConstant: 36)
+        ])
+        
+        separatorLineUnderTabs.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            separatorLineUnderTabs.topAnchor.constraint(equalTo: topTabsCollectionView.bottomAnchor, constant: 7.67),
+            separatorLineUnderTabs.leadingAnchor.constraint(equalTo: leadingAnchor),
+            separatorLineUnderTabs.trailingAnchor.constraint(equalTo: trailingAnchor),
+            separatorLineUnderTabs.heightAnchor.constraint(equalToConstant: 0.33)
         ])
         
         employeeTableView.translatesAutoresizingMaskIntoConstraints = false

@@ -24,6 +24,7 @@ class PhoneViewCell: BaseView {
     
    private let phoneLabel: UILabel = {
        let label = UILabel()
+       label.font = R.font.interMedium(size: 16)
        return label
     }()
     

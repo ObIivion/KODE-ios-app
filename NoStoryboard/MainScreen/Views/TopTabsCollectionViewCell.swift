@@ -6,26 +6,36 @@
 //
 
 import UIKit
+import Rswift
 
 class TopTabsCollectionViewCell: UICollectionViewCell {
     
     private(set) var model: Department?
     
     static let identifier = "Cell"
-    private let label = UILabel()
+    
+    private let label: UILabel = {
+        let view = UILabel()
+        view.font = R.font.interMedium(size: 15)
+        return view
+    }()
+
     private var bottomBorderView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 2))
     
     func setCellSelected(_ isSelected: Bool) {
         if isSelected {
             bottomBorderView.isHidden = false
+            label.textColor = UIColor(red: 0.02, green: 0.02, blue: 0.063, alpha: 1)
         } else {
             bottomBorderView.isHidden = true
+            label.textColor = UIColor(red: 0.591, green: 0.591, blue: 0.609, alpha: 1)
         }
     }
     
     func setModel(_ department: Department) {
         self.model = department
         label.text = department.title
+        label.textColor = UIColor(red: 0.591, green: 0.591, blue: 0.609, alpha: 1)
     }
             
         override init(frame: CGRect) {

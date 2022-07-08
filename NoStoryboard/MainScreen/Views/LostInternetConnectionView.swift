@@ -23,7 +23,7 @@ class LostInternetConnectionView: BaseView {
         let label = UILabel()
         label.text = "Какой-то сверхразум всё сломал"
         label.numberOfLines = 0
-        label.font = UIFont(name: "Gill Sans SemiBold" , size: 17)
+        label.font = R.font.interSemiBold(size: 17)
         label.textColor = UIColor(red: 0.05, green: 0.05, blue: 0.16, alpha: 1)
         return label
     }()
@@ -32,7 +32,7 @@ class LostInternetConnectionView: BaseView {
         let label = UILabel()
         label.text = "Постараемся быстро починить"
         label.numberOfLines = 0
-        label.font = UIFont(name: "Gill Sans Regular" , size: 16)
+        label.font = R.font.interRegular(size: 16)
         label.textColor = UIColor(red: 151/255, green: 151/255, blue: 155/255, alpha: 1)
         return label
     }()
@@ -43,7 +43,7 @@ class LostInternetConnectionView: BaseView {
         button.setTitle("Попробовать снова", for: .normal)
         button.setTitleColor(UIColor(red: 101/255, green: 52/255, blue: 1, alpha: 1), for: .normal)
         button.setTitle("Меня нажали", for: .highlighted)
-        button.titleLabel?.font = UIFont(name: "Gill Sans SemiBold" , size: 16)
+        button.titleLabel?.font = R.font.interSemiBold(size: 17)
         return button
     }()
 

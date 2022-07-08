@@ -85,6 +85,7 @@ struct R: Rswift.Validatable {
   }
 
   static func validate() throws {
+    try font.validate()
     try intern.validate()
   }
 
@@ -126,6 +127,165 @@ struct R: Rswift.Validatable {
       return UIKit.UIColor(named: R.color.accentColor.name)
     }
     #endif
+
+    fileprivate init() {}
+  }
+
+  /// This `R.file` struct is generated, and contains static references to 9 files.
+  struct file {
+    /// Resource file `Inter-Black.ttf`.
+    static let interBlackTtf = Rswift.FileResource(bundle: R.hostingBundle, name: "Inter-Black", pathExtension: "ttf")
+    /// Resource file `Inter-Bold.ttf`.
+    static let interBoldTtf = Rswift.FileResource(bundle: R.hostingBundle, name: "Inter-Bold", pathExtension: "ttf")
+    /// Resource file `Inter-ExtraBold.ttf`.
+    static let interExtraBoldTtf = Rswift.FileResource(bundle: R.hostingBundle, name: "Inter-ExtraBold", pathExtension: "ttf")
+    /// Resource file `Inter-ExtraLight.ttf`.
+    static let interExtraLightTtf = Rswift.FileResource(bundle: R.hostingBundle, name: "Inter-ExtraLight", pathExtension: "ttf")
+    /// Resource file `Inter-Light.ttf`.
+    static let interLightTtf = Rswift.FileResource(bundle: R.hostingBundle, name: "Inter-Light", pathExtension: "ttf")
+    /// Resource file `Inter-Medium.ttf`.
+    static let interMediumTtf = Rswift.FileResource(bundle: R.hostingBundle, name: "Inter-Medium", pathExtension: "ttf")
+    /// Resource file `Inter-Regular.ttf`.
+    static let interRegularTtf = Rswift.FileResource(bundle: R.hostingBundle, name: "Inter-Regular", pathExtension: "ttf")
+    /// Resource file `Inter-SemiBold.ttf`.
+    static let interSemiBoldTtf = Rswift.FileResource(bundle: R.hostingBundle, name: "Inter-SemiBold", pathExtension: "ttf")
+    /// Resource file `Inter-Thin.ttf`.
+    static let interThinTtf = Rswift.FileResource(bundle: R.hostingBundle, name: "Inter-Thin", pathExtension: "ttf")
+
+    /// `bundle.url(forResource: "Inter-Black", withExtension: "ttf")`
+    static func interBlackTtf(_: Void = ()) -> Foundation.URL? {
+      let fileResource = R.file.interBlackTtf
+      return fileResource.bundle.url(forResource: fileResource)
+    }
+
+    /// `bundle.url(forResource: "Inter-Bold", withExtension: "ttf")`
+    static func interBoldTtf(_: Void = ()) -> Foundation.URL? {
+      let fileResource = R.file.interBoldTtf
+      return fileResource.bundle.url(forResource: fileResource)
+    }
+
+    /// `bundle.url(forResource: "Inter-ExtraBold", withExtension: "ttf")`
+    static func interExtraBoldTtf(_: Void = ()) -> Foundation.URL? {
+      let fileResource = R.file.interExtraBoldTtf
+      return fileResource.bundle.url(forResource: fileResource)
+    }
+
+    /// `bundle.url(forResource: "Inter-ExtraLight", withExtension: "ttf")`
+    static func interExtraLightTtf(_: Void = ()) -> Foundation.URL? {
+      let fileResource = R.file.interExtraLightTtf
+      return fileResource.bundle.url(forResource: fileResource)
+    }
+
+    /// `bundle.url(forResource: "Inter-Light", withExtension: "ttf")`
+    static func interLightTtf(_: Void = ()) -> Foundation.URL? {
+      let fileResource = R.file.interLightTtf
+      return fileResource.bundle.url(forResource: fileResource)
+    }
+
+    /// `bundle.url(forResource: "Inter-Medium", withExtension: "ttf")`
+    static func interMediumTtf(_: Void = ()) -> Foundation.URL? {
+      let fileResource = R.file.interMediumTtf
+      return fileResource.bundle.url(forResource: fileResource)
+    }
+
+    /// `bundle.url(forResource: "Inter-Regular", withExtension: "ttf")`
+    static func interRegularTtf(_: Void = ()) -> Foundation.URL? {
+      let fileResource = R.file.interRegularTtf
+      return fileResource.bundle.url(forResource: fileResource)
+    }
+
+    /// `bundle.url(forResource: "Inter-SemiBold", withExtension: "ttf")`
+    static func interSemiBoldTtf(_: Void = ()) -> Foundation.URL? {
+      let fileResource = R.file.interSemiBoldTtf
+      return fileResource.bundle.url(forResource: fileResource)
+    }
+
+    /// `bundle.url(forResource: "Inter-Thin", withExtension: "ttf")`
+    static func interThinTtf(_: Void = ()) -> Foundation.URL? {
+      let fileResource = R.file.interThinTtf
+      return fileResource.bundle.url(forResource: fileResource)
+    }
+
+    fileprivate init() {}
+  }
+
+  /// This `R.font` struct is generated, and contains static references to 9 fonts.
+  struct font: Rswift.Validatable {
+    /// Font `Inter-Black`.
+    static let interBlack = Rswift.FontResource(fontName: "Inter-Black")
+    /// Font `Inter-Bold`.
+    static let interBold = Rswift.FontResource(fontName: "Inter-Bold")
+    /// Font `Inter-ExtraBold`.
+    static let interExtraBold = Rswift.FontResource(fontName: "Inter-ExtraBold")
+    /// Font `Inter-ExtraLight`.
+    static let interExtraLight = Rswift.FontResource(fontName: "Inter-ExtraLight")
+    /// Font `Inter-Light`.
+    static let interLight = Rswift.FontResource(fontName: "Inter-Light")
+    /// Font `Inter-Medium`.
+    static let interMedium = Rswift.FontResource(fontName: "Inter-Medium")
+    /// Font `Inter-Regular`.
+    static let interRegular = Rswift.FontResource(fontName: "Inter-Regular")
+    /// Font `Inter-SemiBold`.
+    static let interSemiBold = Rswift.FontResource(fontName: "Inter-SemiBold")
+    /// Font `Inter-Thin`.
+    static let interThin = Rswift.FontResource(fontName: "Inter-Thin")
+
+    /// `UIFont(name: "Inter-Black", size: ...)`
+    static func interBlack(size: CGFloat) -> UIKit.UIFont? {
+      return UIKit.UIFont(resource: interBlack, size: size)
+    }
+
+    /// `UIFont(name: "Inter-Bold", size: ...)`
+    static func interBold(size: CGFloat) -> UIKit.UIFont? {
+      return UIKit.UIFont(resource: interBold, size: size)
+    }
+
+    /// `UIFont(name: "Inter-ExtraBold", size: ...)`
+    static func interExtraBold(size: CGFloat) -> UIKit.UIFont? {
+      return UIKit.UIFont(resource: interExtraBold, size: size)
+    }
+
+    /// `UIFont(name: "Inter-ExtraLight", size: ...)`
+    static func interExtraLight(size: CGFloat) -> UIKit.UIFont? {
+      return UIKit.UIFont(resource: interExtraLight, size: size)
+    }
+
+    /// `UIFont(name: "Inter-Light", size: ...)`
+    static func interLight(size: CGFloat) -> UIKit.UIFont? {
+      return UIKit.UIFont(resource: interLight, size: size)
+    }
+
+    /// `UIFont(name: "Inter-Medium", size: ...)`
+    static func interMedium(size: CGFloat) -> UIKit.UIFont? {
+      return UIKit.UIFont(resource: interMedium, size: size)
+    }
+
+    /// `UIFont(name: "Inter-Regular", size: ...)`
+    static func interRegular(size: CGFloat) -> UIKit.UIFont? {
+      return UIKit.UIFont(resource: interRegular, size: size)
+    }
+
+    /// `UIFont(name: "Inter-SemiBold", size: ...)`
+    static func interSemiBold(size: CGFloat) -> UIKit.UIFont? {
+      return UIKit.UIFont(resource: interSemiBold, size: size)
+    }
+
+    /// `UIFont(name: "Inter-Thin", size: ...)`
+    static func interThin(size: CGFloat) -> UIKit.UIFont? {
+      return UIKit.UIFont(resource: interThin, size: size)
+    }
+
+    static func validate() throws {
+      if R.font.interBlack(size: 42) == nil { throw Rswift.ValidationError(description:"[R.swift] Font 'Inter-Black' could not be loaded, is 'Inter-Black.ttf' added to the UIAppFonts array in this targets Info.plist?") }
+      if R.font.interBold(size: 42) == nil { throw Rswift.ValidationError(description:"[R.swift] Font 'Inter-Bold' could not be loaded, is 'Inter-Bold.ttf' added to the UIAppFonts array in this targets Info.plist?") }
+      if R.font.interExtraBold(size: 42) == nil { throw Rswift.ValidationError(description:"[R.swift] Font 'Inter-ExtraBold' could not be loaded, is 'Inter-ExtraBold.ttf' added to the UIAppFonts array in this targets Info.plist?") }
+      if R.font.interExtraLight(size: 42) == nil { throw Rswift.ValidationError(description:"[R.swift] Font 'Inter-ExtraLight' could not be loaded, is 'Inter-ExtraLight.ttf' added to the UIAppFonts array in this targets Info.plist?") }
+      if R.font.interLight(size: 42) == nil { throw Rswift.ValidationError(description:"[R.swift] Font 'Inter-Light' could not be loaded, is 'Inter-Light.ttf' added to the UIAppFonts array in this targets Info.plist?") }
+      if R.font.interMedium(size: 42) == nil { throw Rswift.ValidationError(description:"[R.swift] Font 'Inter-Medium' could not be loaded, is 'Inter-Medium.ttf' added to the UIAppFonts array in this targets Info.plist?") }
+      if R.font.interRegular(size: 42) == nil { throw Rswift.ValidationError(description:"[R.swift] Font 'Inter-Regular' could not be loaded, is 'Inter-Regular.ttf' added to the UIAppFonts array in this targets Info.plist?") }
+      if R.font.interSemiBold(size: 42) == nil { throw Rswift.ValidationError(description:"[R.swift] Font 'Inter-SemiBold' could not be loaded, is 'Inter-SemiBold.ttf' added to the UIAppFonts array in this targets Info.plist?") }
+      if R.font.interThin(size: 42) == nil { throw Rswift.ValidationError(description:"[R.swift] Font 'Inter-Thin' could not be loaded, is 'Inter-Thin.ttf' added to the UIAppFonts array in this targets Info.plist?") }
+    }
 
     fileprivate init() {}
   }

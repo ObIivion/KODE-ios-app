@@ -119,6 +119,7 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
             case let .success(responseData):
                 self.employee = responseData.items
                 self.mainView.setMainView()
+                self.shouldShowBirthday = false
                 self.mainView.employeeTableView.reloadData()
                 self.refreshControl.endRefreshing()
             case let .failure(error):

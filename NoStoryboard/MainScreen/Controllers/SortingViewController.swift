@@ -10,12 +10,6 @@ import Rswift
 
 protocol SortingViewDelegate: AnyObject {
     
-//    var thisYearBirthdayEmployee: [EmployeeModel] {get set}
-//    
-//    var nextYearBirthdayEmployee: [EmployeeModel] {get set}
-//    
-//    func checkMonths(birthdayDate: Date?)
-    
     func sortByAlphabet()
     
     func sortByBirthday()

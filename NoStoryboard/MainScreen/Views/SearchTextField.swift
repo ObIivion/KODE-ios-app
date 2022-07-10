@@ -22,8 +22,9 @@ class SearchTextField: UITextField {
         leftImage.image = R.image.vector()
         leftImage.image = leftImage.image?.withRenderingMode(.alwaysTemplate)
         leftImage.tintColor = UIColor(red: 0.765, green: 0.765, blue: 0.776, alpha: 1)
-        self.leftViewMode = .unlessEditing
+        self.leftViewMode = .always
         self.leftView = leftImage
+        
         
         rightImageButton.setImage(R.image.listUiAlt(), for: .normal)
         self.rightViewMode = .always

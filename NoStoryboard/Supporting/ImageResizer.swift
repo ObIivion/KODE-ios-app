@@ -7,11 +7,11 @@
 
 import UIKit
 
-class ImageResizer{
+extension UIImage {
     
-    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage{
+    func resized(_ targetSize: CGSize) -> UIImage! {
         
-        let currentSize = image.size
+        let currentSize = self.size
         
         let widthRatio = targetSize.width / currentSize.width
         let heightRatio = targetSize.height / currentSize.height
@@ -21,11 +21,12 @@ class ImageResizer{
         let rect = CGRect(origin: .zero, size: newSize)
         
         UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-        image.draw(in: rect)
+        self.draw(in: rect)
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
         return newImage!
+        
     }
     
 }

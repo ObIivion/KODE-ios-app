@@ -53,16 +53,18 @@ class EmployeeListVCRootView: BaseView {
         
         searchTextField.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            searchTextField.widthAnchor.constraint(equalTo: widthAnchor, constant: -50),
+            searchTextField.trailingAnchor.constraint(equalTo: cancelButton.leadingAnchor, constant: -16),
+            searchTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             searchTextField.heightAnchor.constraint(equalToConstant: 40),
-            searchTextField.centerXAnchor.constraint(equalTo: centerXAnchor),
-            searchTextField.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 14),
+            searchTextField.widthAnchor.constraint(equalToConstant: 343),
+            searchTextField.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor)
         ])
         
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             cancelButton.leadingAnchor.constraint(equalTo: searchTextField.trailingAnchor, constant: 12),
-            cancelButton.centerYAnchor.constraint(equalTo: searchTextField.centerYAnchor)
+            cancelButton.centerYAnchor.constraint(equalTo: searchTextField.centerYAnchor),
+            cancelButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -28)
         ])
         
         topTabsCollectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -127,7 +129,6 @@ class EmployeeListVCRootView: BaseView {
         employeeTableView.isHidden = true
         topTabsCollectionView.isHidden = true
         errorView.isHidden = false
-        
     }
     
     func setMainView(){
@@ -136,7 +137,25 @@ class EmployeeListVCRootView: BaseView {
         searchTextField.isHidden = false
         employeeTableView.isHidden = false
         topTabsCollectionView.isHidden = false
+    }
+    
+    func setSearchEditingMode(){
         
+        NSLayoutConstraint.activate([searchTextField.widthAnchor.constraint(equalToConstant: 265)])
+        cancelButton.isHidden = false
+        layoutIfNeeded()
+        
+        let leftView = UIImageView()
+        leftView.image = R.image.vector_editing()
+        self.searchTextField.leftView = leftView
+        
+    }
+    
+    func setNotEditingMode() {
+        self.searchTextField.transform = CGAffineTransform(scaleX: 1, y: 1)
+        let leftView = UIImageView()
+        leftView.image = R.image.vector()
+        self.cancelButton.isHidden = true
     }
     
 }

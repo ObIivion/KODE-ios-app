@@ -75,6 +75,8 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
         
         mainView.employeeTableView.refreshControl = refreshControl
         
+        mainView.employeeTableView.separatorColor = .clear
+        
         mainView.employeeTableView.delegate = self
         mainView.employeeTableView.dataSource = self
         mainView.topTabsCollectionView.delegate = self
@@ -135,7 +137,6 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
         sender.backgroundColor = UIColor(red: 0.3, green: 0.5, blue: 0.8, alpha: 0.3)
         
         self.mainView.setMainView()
-        
         employeeProvider.getData(EmployeeList.self, from: "/kode-education/trainee-test/25143926/users", self.loadData(result:))
         
     }
@@ -144,9 +145,10 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
     @objc
     private func textFieldDidChange(_ sender: UITextField) {// принято называть sender
         
+        mainView.setSearchEditingMode()
         searchText = sender.text ?? ""
-        
         mainView.employeeTableView.reloadData()
+        mainView.setSearchEditingMode()
     }
     
     private func loadData(result: Result<EmployeeList, Error>) {
@@ -156,7 +158,7 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
             self.employee = responseData.items
             self.mainView.setMainView()
             self.mainView.employeeTableView.reloadData()
-        case let .failure(error):
+        case .failure(_):
             self.mainView.setErrorView()
             
         }
@@ -216,6 +218,7 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
             let shouldBeSelected = cell.model == self.selectedDepartment
             cell.setCellSelected(shouldBeSelected)
         })
+        floatingPanelController.hide()
     }
     
     @objc
@@ -300,7 +303,9 @@ extension EmployeeListVC: UITableViewDelegate, UITableViewDataSource {
         let vc = DetailsVC() // просто создаем новый инстанс второго экрана
         vc.employee = filteredEmployee[indexPath.item] // устанавливаем ему модель
         
-        navigationController?.pushViewController(vc, animated: true) // пушим
+        floatingPanelController.hide()
+        tableView.deselectRow(at: indexPath, animated: false)
+        navigationController?.pushViewController(vc, animated: true)// пушим
     }
 }
 
@@ -351,6 +356,15 @@ extension EmployeeListVC: FloatingPanelControllerDelegate {
         sortingVC.delegate = self
         floatingPanelController.set(contentViewController: sortingVC)
         floatingPanelController.isRemovalInteractionEnabled = true
+        
+    }
+    
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touch: UITouch? = touches.first
+        if touch?.view != floatingPanelController.contentViewController?.viewIfLoaded {
+            floatingPanelController.hide(animated: true, completion: nil)
+        }
     }
     
 }
@@ -391,19 +405,4 @@ extension EmployeeListVC: SortingViewDelegate {
         self.shouldShowBirthday = shouldShow
         mainView.employeeTableView.reloadData()
     }
-}
-    
-extension EmployeeListVC: UITextFieldDelegate {
-        
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        mainView.searchTextField.rightImageButton.isHidden = true
-        mainView.cancelButton.isHidden = false
-        mainView.searchTextField.placeholder = ""
-        
-        let leftImage = UIImageView(frame: .zero)
-        leftImage.image = R.image.vector_editing()
-        mainView.searchTextField.leftViewMode = .whileEditing
-        mainView.searchTextField.leftView = leftImage
-    }
-    
 }

@@ -59,15 +59,14 @@ class ProfileView: BaseView {
         return view
     }()
     
-    private let avatarResizer = ImageResizer()
-    
      private let birthCell = BirthViewCell()
      private let phoneCell = PhoneViewCell()
 
         override func setup() {
             
-        employeeImageView.image = avatarResizer.resizeImage(image: employeeImageView.image!, targetSize: CGSize(width: 104, height: 104))
-        
+        employeeImageView.image = employeeImageView.image?.resized(CGSize(width: 104, height: 104))
+        employeeImageView.contentMode = .scaleAspectFill
+            
         backgroundColor = .white
         
         stackView.addArrangedSubview(birthCell)

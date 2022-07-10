@@ -91,6 +91,8 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
         
         mainView.searchTextField.rightImageButton.addTarget(self, action: #selector(rightViewButtonClicked(_:)), for: .touchUpInside)
         
+        mainView.cancelButton.addTarget(self, action: #selector(cancelClicked(_:)), for: .touchUpInside)
+        
         updateDepartmentSelection()// обновляем выбор на старте, пусть будет
         
         // вот это замыкание пусть останется просто чтобы было куда смотреть, а то пиздец. Я сделал функцию из этого замыкания и она даже заработала, но не сказал бы, что понимаю почему это сработало (ну +- только если и то не факт что напишу аналогично сам)
@@ -107,6 +109,13 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
         }
         
         navigationItem.title = "MainNavViewController"
+        
+    }
+    
+    @objc
+    private func cancelClicked(_ sender: UIButton) {
+        
+        mainView.searchTextField.text = ""
         
     }
     

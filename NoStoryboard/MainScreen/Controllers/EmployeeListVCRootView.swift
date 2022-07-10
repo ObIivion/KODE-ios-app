@@ -7,6 +7,7 @@ class EmployeeListVCRootView: BaseView {
         let button = UIButton()
         button.setTitle("Отмена", for: .normal)
         button.setTitleColor(UIColor(red: 0.396, green: 0.204, blue: 1, alpha: 1), for: .normal)
+        button.setTitleColor(UIColor.white, for: .highlighted)
         button.titleLabel?.font = R.font.interSemiBold(size: 14)
         button.isHidden = true
         return button

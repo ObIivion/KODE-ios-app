@@ -113,13 +113,6 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
     }
     
     @objc
-    private func cancelClicked(_ sender: UIButton) {
-        
-        mainView.searchTextField.text = ""
-        
-    }
-    
-    @objc
     private func didPullToRefresh(_ sender: UIRefreshControl) {
         
         self.mainView.setMainView()
@@ -159,13 +152,29 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
         
         if filteredEmployee.isEmpty {
             mainView.setNotFoundView()
-            print("------ ------ -----SetNotFoundView ----- ----- ------")
         } else {
             mainView.setIsFoundView()
-            print("------- ------ ---SetIsFoundView ----- ------- ------")
         }
         
         mainView.employeeTableView.reloadData()
+    }
+    
+    @objc
+    private func cancelClicked(_ sender: UIButton) {
+        
+        mainView.searchTextField.text = ""
+        searchText = ""
+        mainView.employeeTableView.reloadData()
+        
+    }
+    
+    private func updateRightViewSelection(){
+        
+        if shouldShowBirthday {
+            mainView.searchTextField.rightImageButton.isSelected = true
+        } else {
+            mainView.searchTextField.rightImageButton.isSelected = false
+        }
     }
     
     private func loadData(result: Result<EmployeeList, Error>) {
@@ -391,11 +400,11 @@ extension EmployeeListVC: SortingViewDelegate {
         
         employee.sort(by: { $0.firstName < $1.firstName })
         mainView.employeeTableView.reloadData()
+        updateRightViewSelection()
     }
     
     func sortByBirthday() {
         
-        print("----- SORTED BY DAY LEFT DR -----")
         employee.sort { date1, date2 in
             guard let date1 = date1.birthdayDate else { return false }
             guard let date2 = date2.birthdayDate else { return false }
@@ -414,6 +423,7 @@ extension EmployeeListVC: SortingViewDelegate {
             return dayDifference1 < dayDifference2
         }
         mainView.employeeTableView.reloadData()
+        updateRightViewSelection()
     }
     
     func showBirthday(shouldShow: Bool){

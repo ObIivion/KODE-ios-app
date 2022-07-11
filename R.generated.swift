@@ -290,7 +290,7 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
 
-  /// This `R.image` struct is generated, and contains static references to 10 images.
+  /// This `R.image` struct is generated, and contains static references to 11 images.
   struct image {
     /// Image `NLO`.
     static let nlO = Rswift.ImageResource(bundle: R.hostingBundle, name: "NLO")
@@ -300,6 +300,8 @@ struct R: Rswift.Validatable {
     static let goose = Rswift.ImageResource(bundle: R.hostingBundle, name: "goose")
     /// Image `isSelected`.
     static let isSelected = Rswift.ImageResource(bundle: R.hostingBundle, name: "isSelected")
+    /// Image `list-ui-alt_selected`.
+    static let listUiAlt_selected = Rswift.ImageResource(bundle: R.hostingBundle, name: "list-ui-alt_selected")
     /// Image `list-ui-alt`.
     static let listUiAlt = Rswift.ImageResource(bundle: R.hostingBundle, name: "list-ui-alt")
     /// Image `loupe`.
@@ -345,6 +347,13 @@ struct R: Rswift.Validatable {
     /// `UIImage(named: "list-ui-alt", bundle: ..., traitCollection: ...)`
     static func listUiAlt(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.listUiAlt, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIImage(named: "list-ui-alt_selected", bundle: ..., traitCollection: ...)`
+    static func listUiAlt_selected(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.listUiAlt_selected, compatibleWith: traitCollection)
     }
     #endif
 

@@ -27,6 +27,7 @@ class SearchTextField: UITextField {
         
         
         rightImageButton.setImage(R.image.listUiAlt(), for: .normal)
+        rightImageButton.setImage(R.image.listUiAlt_selected(), for: .selected)
         self.rightViewMode = .always
         self.rightView = rightImageButton
         

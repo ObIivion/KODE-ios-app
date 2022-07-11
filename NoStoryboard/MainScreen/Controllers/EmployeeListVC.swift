@@ -432,3 +432,10 @@ extension EmployeeListVC: SortingViewDelegate {
         mainView.employeeTableView.reloadData()
     }
 }
+
+extension EmployeeListVC{
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+    }
+}

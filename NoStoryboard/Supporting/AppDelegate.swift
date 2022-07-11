@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navController.navigationBar.isHidden = false
         navController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.clear]
         
+        
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = navController
         window.makeKeyAndVisible()

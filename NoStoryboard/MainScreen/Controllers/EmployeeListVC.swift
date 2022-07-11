@@ -66,6 +66,11 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
     // очень странно хранить такой контроллер, который просто держит в себе один объект, но при том зачем-то в контроллере со списком
     
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -430,12 +435,5 @@ extension EmployeeListVC: SortingViewDelegate {
         
         self.shouldShowBirthday = shouldShow
         mainView.employeeTableView.reloadData()
-    }
-}
-
-extension EmployeeListVC{
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(true)
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 }

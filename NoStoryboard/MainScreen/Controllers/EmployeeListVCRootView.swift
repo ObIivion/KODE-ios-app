@@ -33,6 +33,12 @@ class EmployeeListVCRootView: BaseView {
     
     let employeeTableView = UITableView()
     
+    let notFoundSearchView: NotFoundOnSearchView = {
+        let view = NotFoundOnSearchView()
+        view.isHidden = true
+        return view
+    }()
+    
     let errorView = LostInternetConnectionView()
     
     override func setup() {
@@ -40,6 +46,7 @@ class EmployeeListVCRootView: BaseView {
         addSubview(searchTextField)
         addSubview(cancelButton)
         addSubview(employeeTableView)
+        addSubview(notFoundSearchView)
         addSubview(topTabsCollectionView)
         addSubview(separatorLineUnderTabs)
         addSubview(errorView)
@@ -84,6 +91,15 @@ class EmployeeListVCRootView: BaseView {
             separatorLineUnderTabs.heightAnchor.constraint(equalToConstant: 0.33)
         ])
         
+        notFoundSearchView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            notFoundSearchView.topAnchor.constraint(equalTo: topTabsCollectionView.bottomAnchor, constant: 22),
+            notFoundSearchView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            notFoundSearchView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            notFoundSearchView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            
+        ])
+        
         employeeTableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             employeeTableView.topAnchor.constraint(equalTo: topTabsCollectionView.bottomAnchor, constant: 22),
@@ -99,6 +115,19 @@ class EmployeeListVCRootView: BaseView {
             errorView.leadingAnchor.constraint(equalTo: leadingAnchor),
             errorView.trailingAnchor.constraint(equalTo: trailingAnchor),
         ])
+    }
+    
+    func setNotFoundView(){
+        
+        employeeTableView.isHidden = true
+        notFoundSearchView.isHidden = false
+    }
+    
+    func setIsFoundView(){
+        
+        employeeTableView.isHidden = false
+        notFoundSearchView.isHidden = true
+        
     }
     
     private func setViewDependingOnConnection(){

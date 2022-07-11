@@ -28,7 +28,7 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
     
     private var employee: [EmployeeModel] = [] // список сотрудников который мы получили
     
-    var filteredEmployee: [EmployeeModel] { // это как-бы переменная, но на самом деле в нее нельзя записать, она каждый раз будет вычиляться заново, по сути это только getter, такие переменные больше функции чем переменные
+    private var filteredEmployee: [EmployeeModel] { // это как-бы переменная, но на самом деле в нее нельзя записать, она каждый раз будет вычиляться заново, по сути это только getter, такие переменные больше функции чем переменные
         return employee
             .filter({
                 $0.department == selectedDepartment || selectedDepartment == nil // возвращаем только сотрудников с отделом как текущий, а если текущтй nil - вернутся все, без филтрации
@@ -38,14 +38,14 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
             })
     }
     
-    var thisYearBirthdayEmployee: [EmployeeModel] {
+    private var thisYearBirthdayEmployee: [EmployeeModel] {
         
         return filteredEmployee.filter {
             return self.calculateDayDifference(birthdayDate: $0.birthdayDate) > 0
         }
     }
     
-    var nextYearBirthdayEmployee: [EmployeeModel] {
+    private var nextYearBirthdayEmployee: [EmployeeModel] {
         
         return filteredEmployee.filter {
             
@@ -63,7 +63,7 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
     private let employeeProvider = ApiProvider()
     
     // убрал var modelController = ModelController()
-    // очень странно хранить такой контроллер , который просто держит в себе один объект, но при том зачем-то в контроллере со списком
+    // очень странно хранить такой контроллер, который просто держит в себе один объект, но при том зачем-то в контроллере со списком
     
     
     override func viewDidLoad() {
@@ -156,8 +156,16 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
         
         mainView.setSearchEditingMode()
         searchText = sender.text ?? ""
+        
+        if filteredEmployee.isEmpty {
+            mainView.setNotFoundView()
+            print("------ ------ -----SetNotFoundView ----- ----- ------")
+        } else {
+            mainView.setIsFoundView()
+            print("------- ------ ---SetIsFoundView ----- ------- ------")
+        }
+        
         mainView.employeeTableView.reloadData()
-        mainView.setSearchEditingMode()
     }
     
     private func loadData(result: Result<EmployeeList, Error>) {
@@ -292,15 +300,14 @@ extension EmployeeListVC: UITableViewDelegate, UITableViewDataSource {
             if shouldShowBirthday {
                 let sortedEmployee = employeeModelForSections[indexPath.section][indexPath.row]
                 cell.setData(firstName: sortedEmployee.firstName, lastName: sortedEmployee.lastName, tag: sortedEmployee.userTag, department: sortedEmployee.department, dateBirth: formatDate(date: sortedEmployee.birthdayDate))
-                cell.setBirthdayLabelVisibility(shouldShowBirthday: self.shouldShowBirthday)
-                cell.setViewWithData()
             } else {
+                let employee = filteredEmployee[indexPath.row]
+                cell.setData(firstName: employee.firstName, lastName: employee.lastName, tag: employee.userTag, department: employee.department, dateBirth: formatDate(date: employee.birthdayDate))
+            }
             
-        let employee = filteredEmployee[indexPath.row]
-            cell.setData(firstName: employee.firstName, lastName: employee.lastName, tag: employee.userTag, department: employee.department, dateBirth: formatDate(date: employee.birthdayDate))
             cell.setBirthdayLabelVisibility(shouldShowBirthday: self.shouldShowBirthday)
             cell.setViewWithData()
-            }
+            
         } else {
             cell.setLoadingView()
         }

@@ -267,9 +267,7 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
         
         mainView.setDimView(true)
         floatingPanelController.addPanel(toParent: self)
-        floatingPanelController.hide()
         floatingPanelController.show(animated: true, completion: nil)
-                
     }
 }
 
@@ -399,7 +397,6 @@ extension EmployeeListVC: FloatingPanelControllerDelegate {
         floatingPanelController.isRemovalInteractionEnabled = true
         
     }
-    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch: UITouch? = touches.first

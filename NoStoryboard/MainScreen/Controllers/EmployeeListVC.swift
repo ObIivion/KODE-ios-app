@@ -78,6 +78,8 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
         
         setupFloatingPanel()
         
+        mainView.globalView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tabOnBackgroundOfFloatingPanel(_:))))
+        
         mainView.employeeTableView.refreshControl = refreshControl
         
         mainView.employeeTableView.separatorColor = .clear
@@ -114,6 +116,14 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
         }
         
         navigationItem.title = "MainNavViewController"
+        
+    }
+    
+    @objc
+    private func tabOnBackgroundOfFloatingPanel(_ recognizer: UITapGestureRecognizer) {
+        
+        mainView.setDimView(false)
+        floatingPanelController.removePanelFromParent(animated: true)
         
     }
     
@@ -255,6 +265,7 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
     @objc
     func rightViewButtonClicked(_ sender: UIButton){
         
+        mainView.setDimView(true)
         floatingPanelController.addPanel(toParent: self)
         floatingPanelController.hide()
         floatingPanelController.show(animated: true, completion: nil)

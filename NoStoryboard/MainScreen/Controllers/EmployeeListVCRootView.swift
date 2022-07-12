@@ -3,6 +3,13 @@ import Rswift
 
 class EmployeeListVCRootView: BaseView {
     
+    let globalView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(red: 0.02, green: 0.02, blue: 0.063, alpha: 0.16)
+        view.isHidden = true
+        return view
+    }()
+    
     let cancelButton: UIButton = {
         let button = UIButton()
         button.setTitle("Отмена", for: .normal)
@@ -42,7 +49,9 @@ class EmployeeListVCRootView: BaseView {
     let errorView = LostInternetConnectionView()
     
     override func setup() {
+        
         backgroundColor = .white
+        
         addSubview(searchTextField)
         addSubview(cancelButton)
         addSubview(employeeTableView)
@@ -50,6 +59,7 @@ class EmployeeListVCRootView: BaseView {
         addSubview(topTabsCollectionView)
         addSubview(separatorLineUnderTabs)
         addSubview(errorView)
+        addSubview(globalView)
         
         setupConstraints()
         
@@ -58,6 +68,14 @@ class EmployeeListVCRootView: BaseView {
     }
     
     private func setupConstraints() {
+        
+        globalView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            globalView.topAnchor.constraint(equalTo: topAnchor),
+            globalView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            globalView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            globalView.trailingAnchor.constraint(equalTo: trailingAnchor)
+        ])
         
         searchTextField.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -115,6 +133,12 @@ class EmployeeListVCRootView: BaseView {
             errorView.leadingAnchor.constraint(equalTo: leadingAnchor),
             errorView.trailingAnchor.constraint(equalTo: trailingAnchor),
         ])
+    }
+    
+    func setDimView(_ shouldSet: Bool){
+        
+        shouldSet ? (globalView.isHidden = false) : (globalView.isHidden = true)
+        
     }
     
     func setNotFoundView(){

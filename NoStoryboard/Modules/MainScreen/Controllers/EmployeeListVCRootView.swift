@@ -135,12 +135,6 @@ class EmployeeListVCRootView: BaseView {
         ])
     }
     
-    func setDimView(_ shouldSet: Bool){
-        
-        shouldSet ? (globalView.isHidden = false) : (globalView.isHidden = true)
-        
-    }
-    
     func setNotFoundView(){
         
         employeeTableView.isHidden = true

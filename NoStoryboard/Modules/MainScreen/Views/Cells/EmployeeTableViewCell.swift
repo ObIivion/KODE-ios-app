@@ -6,12 +6,20 @@
 //
 
 import UIKit
-import Rswift
 
-class EmployeeTableViewCell: UITableViewCell
-{
+struct EmployeeTableViewCellModel {
+    let name: String
+    let tag: String
+    let department: String?
+    let dateBirth: String
+}
+
+class EmployeeTableViewCell: UITableViewCell { // фигурные скобочки - на той же строке)))), тв не на с# пишешь
     
-    var shouldShowBirthday = false
+    var shouldShowBirthday: Bool {
+        get { !birthdayLabel.isHidden }
+        set { birthdayLabel.isHidden = !newValue }
+    }
     
     static let identifier = "tableCell"
 
@@ -109,10 +117,6 @@ class EmployeeTableViewCell: UITableViewCell
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setBirthdayLabelVisibility(shouldShowBirthday: Bool) {
-        birthdayLabel.isHidden = !shouldShowBirthday
-    }
-    
     private func setupConstraints(){
     
         employeeImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -176,8 +180,23 @@ class EmployeeTableViewCell: UITableViewCell
             departmentLoadingView.heightAnchor.constraint(equalToConstant: 12)])
         
     }
+
+    func setData(_ model: EmployeeTableViewCellModel?){
+        if let model = model {
+            employeeImageView.image = UIImage(named: "goose")
+            nameLabel.text = model.name
+            tagLabel.text = model.tag
+            departmentLabel.text = model.department
+            birthdayLabel.text = model.dateBirth
+            
+            setViewWithData()
+        } else {
+            setLoadingView()
+        }
+       
+    }
     
-    func setLoadingView() {
+    private func setLoadingView() {
         
         nameLabel.isHidden = true
         employeeImageView.isHidden = true
@@ -191,7 +210,7 @@ class EmployeeTableViewCell: UITableViewCell
         
     }
     
-    func setViewWithData() {
+    private func setViewWithData() {
         
         nameLabel.isHidden = false
         employeeImageView.isHidden = false
@@ -205,13 +224,6 @@ class EmployeeTableViewCell: UITableViewCell
         
     }
     
-    func setData(firstName: String, lastName: String, tag: String, department: Department?, dateBirth: String){
-        employeeImageView.image = UIImage(named: "goose")
-        nameLabel.text = "\(firstName) \(lastName)"
-        tagLabel.text = tag
-        departmentLabel.text = department?.title
-        birthdayLabel.text = dateBirth
-    }
     
     private func shimmerLoadingAnimation(viewToAnimate: UIView){
         

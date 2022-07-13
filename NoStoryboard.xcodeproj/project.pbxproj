@@ -12,6 +12,8 @@
 		608F0A252850F8B8002596EF /* EmployeeListVCRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608F0A242850F8B8002596EF /* EmployeeListVCRootView.swift */; };
 		608F0A2A2850FAF1002596EF /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608F0A292850FAF1002596EF /* BaseView.swift */; };
 		608F0A2F2850FB92002596EF /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608F0A2E2850FB92002596EF /* BaseViewController.swift */; };
+		60D8504E287ED52D009F852C /* Collection + subscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D8504D287ED52D009F852C /* Collection + subscript.swift */; };
+		60D85053287ED5E4009F852C /* Employee + CellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D85052287ED5E4009F852C /* Employee + CellModel.swift */; };
 		786DE759B10D47D3975F2260 /* Pods_NoStoryboard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82759A7562C9570A78469F28 /* Pods_NoStoryboard.framework */; };
 		A32EEFD3285FB91000B4906E /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32EEFD2285FB91000B4906E /* R.generated.swift */; };
 		A32EEFD82860CD9700B4906E /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32EEFD72860CD9700B4906E /* NetworkMonitor.swift */; };
@@ -74,6 +76,8 @@
 		608F0A242850F8B8002596EF /* EmployeeListVCRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EmployeeListVCRootView.swift; path = ../Controllers/EmployeeListVCRootView.swift; sourceTree = "<group>"; };
 		608F0A292850FAF1002596EF /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		608F0A2E2850FB92002596EF /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		60D8504D287ED52D009F852C /* Collection + subscript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection + subscript.swift"; sourceTree = "<group>"; };
+		60D85052287ED5E4009F852C /* Employee + CellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Employee + CellModel.swift"; sourceTree = "<group>"; };
 		82759A7562C9570A78469F28 /* Pods_NoStoryboard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NoStoryboard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F47A389F7A4F8AD94977CB5 /* Pods-NoStoryboard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoStoryboard.debug.xcconfig"; path = "Target Support Files/Pods-NoStoryboard/Pods-NoStoryboard.debug.xcconfig"; sourceTree = "<group>"; };
 		A32EEFD2285FB91000B4906E /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
@@ -254,6 +258,7 @@
 				608F0A292850FAF1002596EF /* BaseView.swift */,
 				608F0A2E2850FB92002596EF /* BaseViewController.swift */,
 				A3ECD6F2285BD21300DE450F /* ImageResizer.swift */,
+				60D8504D287ED52D009F852C /* Collection + subscript.swift */,
 				A3F5B2DF285E81D100E07952 /* YearsDict.stringsdict */,
 				A39CC1FE285F0BA700B86502 /* Localizable.strings */,
 			);
@@ -265,6 +270,7 @@
 			children = (
 				A37B170928390FB70029C602 /* EmployeeListVC.swift */,
 				A37B1713283C20970029C602 /* Views */,
+				60D85052287ED5E4009F852C /* Employee + CellModel.swift */,
 			);
 			path = MainScreen;
 			sourceTree = "<group>";
@@ -565,10 +571,12 @@
 				A39E84C3283D0FB200961CF5 /* ApiProvider.swift in Sources */,
 				A3F9FEF7284CC4DA00090A65 /* TopTabsCollectionViewCell.swift in Sources */,
 				A3A5ABB6287C2FC500A0BB77 /* NotFoundOnSearchView.swift in Sources */,
+				60D85053287ED5E4009F852C /* Employee + CellModel.swift in Sources */,
 				608F0A122850F12C002596EF /* Department.swift in Sources */,
 				A3C2A81D286329A800DDB1C3 /* BottomSheetSortingView.swift in Sources */,
 				A37B16DC2838F8E10029C602 /* NoStoryboard.xcdatamodeld in Sources */,
 				A32EEFD82860CD9700B4906E /* NetworkMonitor.swift in Sources */,
+				60D8504E287ED52D009F852C /* Collection + subscript.swift in Sources */,
 				A3F9FEF9284CC56300090A65 /* SearchTextField.swift in Sources */,
 				A379511A287454E300DD9D49 /* HeaderSectionView.swift in Sources */,
 				608F0A252850F8B8002596EF /* EmployeeListVCRootView.swift in Sources */,

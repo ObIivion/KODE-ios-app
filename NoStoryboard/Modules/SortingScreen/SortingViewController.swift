@@ -39,7 +39,7 @@ class SortingViewController: BaseViewController<BottomSheetSortingView> {
         delegate?.showBirthday(shouldShow: false)
         
         delegate?.sortByAlphabet()
-        
+        dismiss(animated: true, completion: nil)
     }
     
     @objc
@@ -49,6 +49,6 @@ class SortingViewController: BaseViewController<BottomSheetSortingView> {
         mainView.birthdaySortRadioButton.isSelected = true
         delegate?.showBirthday(shouldShow: true)
         delegate?.sortByBirthday()
-        
+        dismiss(animated: true, completion: nil)
     }
 }

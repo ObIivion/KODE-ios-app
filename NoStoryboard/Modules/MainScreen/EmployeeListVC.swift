@@ -10,57 +10,44 @@ import FloatingPanel
 
 class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
     
-    private var floatingPanelController = FloatingPanelController()
-    
-    var shouldShowBirthday: Bool = false
-    
     private let refreshControl: UIRefreshControl = {
         let refresh = UIRefreshControl()
         refresh.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
         return refresh
-        
     }()
+    
+    private let employeeProvider = ApiProvider()
     
     private let tabs = Department.allCases // статическое поле allCases генерирует сам свифт - достаточно добавить CaseIterable протокол енаму
     
+    private var shouldShowBirthday: Bool = false
     private var searchText: String = "" // строка по которой фильтруем
     private var selectedDepartment: Department? = nil // отдел по которому фильтруем
     
     private var employee: [EmployeeModel] = [] // список сотрудников который мы получили
+
+    private var tableModel: [[EmployeeModel]]  = []
     
-    private var filteredEmployee: [EmployeeModel] { // это как-бы переменная, но на самом деле в нее нельзя записать, она каждый раз будет вычиляться заново, по сути это только getter, такие переменные больше функции чем переменные
-        return employee
+    private func updateTableModel() {
+        // если каждый раз полагать на вычисляемые переменные - со временем начинает лагать - для каждой ячейки идет вычисление всего заново, а элементов слишком много.
+        // ПОэтому я каждый раз при изменении фильтров ьбуду один раз пересчитывать итоговую модель для таблицы, сохранять ее в переменную и оттуда уже выводить
+        
+        let filteredEmployee = employee
             .filter({
                 $0.department == selectedDepartment || selectedDepartment == nil // возвращаем только сотрудников с отделом как текущий, а если текущтй nil - вернутся все, без филтрации
             })
             .filter({
                 $0.firstName.starts(with: searchText) || $0.lastName.starts(with: searchText) || searchText.isEmpty // добавил условие searchText.isEmpty чтоб сохранились все элементы если поиск пустой
             })
-    }
-    
-    private var thisYearBirthdayEmployee: [EmployeeModel] {
         
-        return filteredEmployee.filter {
-            return self.calculateDayDifference(birthdayDate: $0.birthdayDate) > 0
-        }
-    }
-    
-    private var nextYearBirthdayEmployee: [EmployeeModel] {
         
-        return filteredEmployee.filter {
-            
-            return self.calculateDayDifference(birthdayDate: $0.birthdayDate) < 0
-            
-        }
-    }
-    
-    var employeeModelForSections: [[EmployeeModel]] {
+        tableModel = [
+            filteredEmployee.filter { isCurrentYearBirthday($0.birthdayDate) || !shouldShowBirthday }, // если не делим на др - за счет !shouldShowBirthday все окажутся в первой секции
+            filteredEmployee.filter { !isCurrentYearBirthday($0.birthdayDate) && shouldShowBirthday } // self не надо - это non esacping closure. за счет shouldShowBirthday секция будет пуста, если не надо показывать др
+        ].filter({ !$0.isEmpty })
         
-        return [thisYearBirthdayEmployee, nextYearBirthdayEmployee]
-        
+        mainView.employeeTableView.reloadData()
     }
-
-    private let employeeProvider = ApiProvider()
     
     // убрал var modelController = ModelController()
     // очень странно хранить такой контроллер, который просто держит в себе один объект, но при том зачем-то в контроллере со списком
@@ -76,12 +63,9 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
         
         mainView.errorView.tryAgainButton.addTarget(self, action: #selector(checkConnection(_:)), for: .touchUpInside)
         
-        setupFloatingPanel()
-        
-        mainView.globalView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tabOnBackgroundOfFloatingPanel(_:))))
-        
         mainView.employeeTableView.refreshControl = refreshControl
         
+        mainView.employeeTableView.separatorStyle = .none
         mainView.employeeTableView.separatorColor = .clear
         
         mainView.employeeTableView.delegate = self
@@ -102,51 +86,37 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
         
         updateDepartmentSelection()// обновляем выбор на старте, пусть будет
         
-        // вот это замыкание пусть останется просто чтобы было куда смотреть, а то пиздец. Я сделал функцию из этого замыкания и она даже заработала, но не сказал бы, что понимаю почему это сработало (ну +- только если и то не факт что напишу аналогично сам)
-        employeeProvider.getData(EmployeeList.self, from: "/kode-education/trainee-test/25143926/users") { result in // поправил url - теперь нам надо писать только изменяемую часть
-            
-            switch result {
-            case let .success(responseData):
-                self.employee = responseData.items
-                self.mainView.setMainView()
-                self.mainView.employeeTableView.reloadData()
-            case .failure(_):
-                self.mainView.setErrorView()
-            }
-        }
+        refetchData()
         
         navigationItem.title = "MainNavViewController"
         
     }
     
-    @objc
-    private func tabOnBackgroundOfFloatingPanel(_ recognizer: UITapGestureRecognizer) {
+    func refetchData() {
         
-        mainView.setDimView(false)
-        floatingPanelController.removePanelFromParent(animated: true)
-        
+        refreshControl.beginRefreshing()
+        employeeProvider.getData(EmployeeList.self, from: "/kode-education/trainee-test/25143926/users") { result in // поправил url - теперь нам надо писать только изменяемую часть
+            
+            self.refreshControl.endRefreshing()
+            
+            switch result {
+            case let .success(responseData):
+                self.employee = responseData.items
+                self.mainView.setMainView()
+                self.updateTableModel()
+            case .failure(_):
+                self.mainView.setErrorView()
+            }
+        }
     }
+
     
     @objc
     private func didPullToRefresh(_ sender: UIRefreshControl) {
         
         self.mainView.setMainView()
         
-        employeeProvider.getData(EmployeeList.self, from: "/kode-education/trainee-test/25143926/users") { result in // поправил url - теперь нам надо писать только изменяемую часть
-            
-            switch result {
-            case let .success(responseData):
-                self.employee = responseData.items
-                self.mainView.setMainView()
-                self.shouldShowBirthday = false
-                self.mainView.employeeTableView.reloadData()
-                self.refreshControl.endRefreshing()
-            case let .failure(error):
-                self.refreshControl.endRefreshing()
-                self.mainView.setErrorView()
-                print(error)
-            }
-        }
+        refetchData()
     }
     
     @objc
@@ -154,7 +124,8 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
         sender.backgroundColor = UIColor(red: 0.3, green: 0.5, blue: 0.8, alpha: 0.3)
         
         self.mainView.setMainView()
-        employeeProvider.getData(EmployeeList.self, from: "/kode-education/trainee-test/25143926/users", self.loadData(result:))
+        
+        refetchData()
         
     }
     
@@ -165,13 +136,13 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
         mainView.setSearchEditingMode()
         searchText = sender.text ?? ""
         
-        if filteredEmployee.isEmpty {
+        if tableModel.isEmpty {
             mainView.setNotFoundView()
         } else {
             mainView.setIsFoundView()
         }
         
-        mainView.employeeTableView.reloadData()
+        updateTableModel()
     }
     
     @objc
@@ -179,8 +150,8 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
         
         mainView.searchTextField.text = ""
         searchText = ""
-        mainView.employeeTableView.reloadData()
         
+        updateTableModel()
     }
     
     private func updateRightViewSelection(){
@@ -192,48 +163,12 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
         }
     }
     
-    private func loadData(result: Result<EmployeeList, Error>) {
-        
-        switch result {
-        case let .success(responseData):
-            self.employee = responseData.items
-            self.mainView.setMainView()
-            self.mainView.employeeTableView.reloadData()
-        case .failure(_):
-            self.mainView.setErrorView()
-            
-        }
-    }
-    
-    private func formatDate (date: Date?) -> String {
-
-            let formatter = DateFormatter()
-            formatter.locale = Locale(identifier: "ru_RU")
-            formatter.setLocalizedDateFormatFromTemplate("dd MMM")
-
-        if let date = date {
-            
-            var date = formatter.string(from: date)
-            
-            if date.count == 7 {
-                date.removeLast()
-            }
-            
-            if date.count == 8 {
-                date.removeLast(2)
-            }
-            return date
-        }
-        
-        return "Дата не была получена"
-    }
-    
     /// Это чтобы посчитать, в этом году будет день рождения или уже в следующем.
     /// Если число отрицательное - в следующем году. Если положительное - в этом
-    
-    private func calculateDayDifference(birthdayDate: Date?) -> Int {
+    // Вот если тебе надо разделять только на текущий и следующий годы, то зачем инт? Это только сбивает. Возвращай бул
+    private func isCurrentYearBirthday(_ birthdayDate: Date?) -> Bool {
         
-        guard let date = birthdayDate else { return 0}
+        guard let date = birthdayDate else { return false }
         
         let calendar = Calendar.current
         let dateCurrent = Date()
@@ -247,11 +182,13 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
         bufferDateComponents.month = birthdayDateComponents.month
         bufferDateComponents.day = birthdayDateComponents.day
             
-        guard let bufferDate = calendar.date(from: bufferDateComponents) else { return 0 }
-                
-        guard let dayDifference = calendar.dateComponents([.day], from: dateCurrent, to: bufferDate).day else { return 0 }
+        // guard , ровно как и if можно днлать на несколько строче сразу
+        guard
+            let bufferDate = calendar.date(from: bufferDateComponents),
+            let dayDifference = calendar.dateComponents([.day], from: dateCurrent, to: bufferDate).day
+        else { return false }
         
-        return dayDifference
+        return dayDifference >= 0
     }
     
     private func updateDepartmentSelection() {
@@ -259,15 +196,26 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
             let shouldBeSelected = cell.model == self.selectedDepartment
             cell.setCellSelected(shouldBeSelected)
         })
-        floatingPanelController.hide()
     }
     
     @objc
     func rightViewButtonClicked(_ sender: UIButton){
+       
+        let floatingPanelController = FloatingPanelController()
         
-        mainView.setDimView(true)
-        floatingPanelController.addPanel(toParent: self)
-        floatingPanelController.show(animated: true, completion: nil)
+        floatingPanelController.delegate = self
+        
+        let sortingVC = SortingViewController()
+        
+        sortingVC.delegate = self
+        floatingPanelController.set(contentViewController: sortingVC)
+        floatingPanelController.isRemovalInteractionEnabled = true
+        floatingPanelController.backdropView.dismissalTapGestureRecognizer.isEnabled = true
+        floatingPanelController.backdropView.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+        floatingPanelController.backdropView.alpha = 1
+        floatingPanelController.layout = ModalPanelLayout()
+        
+        present(floatingPanelController, animated: true, completion: nil)
     }
 }
 
@@ -275,74 +223,46 @@ class EmployeeListVC: BaseViewController<EmployeeListVCRootView>  {
 
 extension EmployeeListVC: UITableViewDelegate, UITableViewDataSource {
     
+    func numberOfSections(in tableView: UITableView) -> Int { max(tableModel.count, 1) }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
         if employee.isEmpty {
             return 15
-        } else {
-            
-        if self.shouldShowBirthday {
-           
-            return section == 0 ? thisYearBirthdayEmployee.count : nextYearBirthdayEmployee.count
-            
-        } else {
-            return filteredEmployee.count // теперь всегда данные берем из filtered
         }
-    }
-}
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-
-        return self.shouldShowBirthday ?  2 : 1
         
-}
+        return tableModel.at(section)?.count ?? 0
+    }
+    
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if section == 0 {
-            return nil
-        } else {
-            return HeaderSectionView()
-        }
+        if section == 0 || tableModel.at(section)?.isEmpty != false { return nil }
+        
+        return HeaderSectionView()
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 {
-            return 0
-        } else {
-            return 68
-        }
+        section == 0 ? 0 : 68
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: EmployeeTableViewCell.identifier) as! EmployeeTableViewCell
-        cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: tableView.bounds.width)
-        if !employee.isEmpty {
-            
-            if shouldShowBirthday {
-                let sortedEmployee = employeeModelForSections[indexPath.section][indexPath.row]
-                cell.setData(firstName: sortedEmployee.firstName, lastName: sortedEmployee.lastName, tag: sortedEmployee.userTag, department: sortedEmployee.department, dateBirth: formatDate(date: sortedEmployee.birthdayDate))
-            } else {
-                let employee = filteredEmployee[indexPath.row]
-                cell.setData(firstName: employee.firstName, lastName: employee.lastName, tag: employee.userTag, department: employee.department, dateBirth: formatDate(date: employee.birthdayDate))
-            }
-            
-            cell.setBirthdayLabelVisibility(shouldShowBirthday: self.shouldShowBirthday)
-            cell.setViewWithData()
-            
-        } else {
-            cell.setLoadingView()
-        }
+        cell.shouldShowBirthday = shouldShowBirthday
+        
+        let employee = tableModel.at(indexPath.section)?.at(indexPath.row)
+        
+        cell.setData(employee?.listCellModel)
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let employee = tableModel.at(indexPath.section)?.at(indexPath.row) else { return }
         
         let vc = DetailsVC() // просто создаем новый инстанс второго экрана
-        vc.employee = filteredEmployee[indexPath.item] // устанавливаем ему модель
-        
-        floatingPanelController.hide()
+        vc.employee = employee // устанавливаем ему модель
+    
         tableView.deselectRow(at: indexPath, animated: false)
         navigationController?.pushViewController(vc, animated: true)// пушим
     }
@@ -375,8 +295,8 @@ extension EmployeeListVC: UICollectionViewDelegate, UICollectionViewDataSource{
         } else {
             selectedDepartment = tabs[indexPath.item]
         }
-        mainView.employeeTableView.reloadData()
-        // пускай здесь отсанется только логика
+        
+        updateTableModel()
         
         // а вот дальше пойдет обновление ячеек
         updateDepartmentSelection()
@@ -386,25 +306,7 @@ extension EmployeeListVC: UICollectionViewDelegate, UICollectionViewDataSource{
 }
 
 extension EmployeeListVC: FloatingPanelControllerDelegate {
-    
-    func setupFloatingPanel() {
-        
-        floatingPanelController.delegate = self
-        
-        guard let sortingVC = SortingViewController() as? SortingViewController else { return }
-        sortingVC.delegate = self
-        floatingPanelController.set(contentViewController: sortingVC)
-        floatingPanelController.isRemovalInteractionEnabled = true
-        
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let touch: UITouch? = touches.first
-        if touch?.view != floatingPanelController.contentViewController?.viewIfLoaded {
-            floatingPanelController.hide(animated: true, completion: nil)
-        }
-    }
-    
+
 }
 
 extension EmployeeListVC: SortingViewDelegate {
@@ -412,36 +314,38 @@ extension EmployeeListVC: SortingViewDelegate {
     func sortByAlphabet() {
         
         employee.sort(by: { $0.firstName < $1.firstName })
-        mainView.employeeTableView.reloadData()
+
         updateRightViewSelection()
+        
+        updateTableModel()
     }
     
     func sortByBirthday() {
         
-        employee.sort { date1, date2 in
-            guard let date1 = date1.birthdayDate else { return false }
-            guard let date2 = date2.birthdayDate else { return false }
-            
-            var dayDifference1 = calculateDayDifference(birthdayDate: date1)
-            var dayDifference2 = calculateDayDifference(birthdayDate: date2)
-            
-            if (dayDifference1 < 0) {
-                dayDifference1 += 365
-            }
-            
-            if dayDifference2 < 0 {
-                dayDifference2 += 365
-            }
-            
-            return dayDifference1 < dayDifference2
-        }
-        mainView.employeeTableView.reloadData()
+        employee.sort { date1, date2 in return date1.birthdayDate ?? Date() < date2.birthdayDate ?? Date() }
+        
+        updateTableModel()
         updateRightViewSelection()
     }
     
-    func showBirthday(shouldShow: Bool){
+    func showBirthday(shouldShow: Bool) {
         
         self.shouldShowBirthday = shouldShow
-        mainView.employeeTableView.reloadData()
+        updateTableModel()
+    }
+}
+
+class ModalPanelLayout: FloatingPanelLayout {
+    let position: FloatingPanelPosition = .bottom
+    let initialState: FloatingPanelState = .full
+
+    var anchors: [FloatingPanelState : FloatingPanelLayoutAnchoring] {
+        return [
+            .full: FloatingPanelLayoutAnchor(fractionalInset: 0.3, edge: .bottom, referenceGuide: .safeArea)
+        ]
+    }
+
+    func backdropAlpha(for state: FloatingPanelState) -> CGFloat {
+        return 0.3
     }
 }

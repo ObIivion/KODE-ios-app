@@ -173,6 +173,25 @@
 			path = DTO;
 			sourceTree = "<group>";
 		};
+		60D85036287ECC58009F852C /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				60D8503A287ECC61009F852C /* SortingScreen */,
+				A3ECD6E5285BD09F00DE450F /* ProfileScreen */,
+				A37B1712283C1FBD0029C602 /* MainScreen */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		60D8503A287ECC61009F852C /* SortingScreen */ = {
+			isa = PBXGroup;
+			children = (
+				A3C2A81C286329A800DDB1C3 /* BottomSheetSortingView.swift */,
+				A3C2A81A2863288900DDB1C3 /* SortingViewController.swift */,
+			);
+			path = SortingScreen;
+			sourceTree = "<group>";
+		};
 		A37B16C52838F8E10029C602 = {
 			isa = PBXGroup;
 			children = (
@@ -200,8 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				608F0A0A2850F0FC002596EF /* API */,
-				A3ECD6E5285BD09F00DE450F /* ProfileScreen */,
-				A37B1712283C1FBD0029C602 /* MainScreen */,
+				60D85036287ECC58009F852C /* Modules */,
 				A37B170828390F340029C602 /* Supporting */,
 				A37B16DF2838F8E10029C602 /* LaunchScreen.storyboard */,
 				A37B16E22838F8E10029C602 /* Info.plist */,
@@ -245,7 +263,7 @@
 		A37B1712283C1FBD0029C602 /* MainScreen */ = {
 			isa = PBXGroup;
 			children = (
-				A37B1715283C20A60029C602 /* Controllers */,
+				A37B170928390FB70029C602 /* EmployeeListVC.swift */,
 				A37B1713283C20970029C602 /* Views */,
 			);
 			path = MainScreen;
@@ -258,20 +276,10 @@
 				608F0A242850F8B8002596EF /* EmployeeListVCRootView.swift */,
 				A3F9FEF8284CC56300090A65 /* SearchTextField.swift */,
 				A32EEFD92860E32B00B4906E /* LostInternetConnectionView.swift */,
-				A3C2A81C286329A800DDB1C3 /* BottomSheetSortingView.swift */,
 				A3795119287454E300DD9D49 /* HeaderSectionView.swift */,
 				A3A5ABB5287C2FC500A0BB77 /* NotFoundOnSearchView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		A37B1715283C20A60029C602 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				A37B170928390FB70029C602 /* EmployeeListVC.swift */,
-				A3C2A81A2863288900DDB1C3 /* SortingViewController.swift */,
-			);
-			path = Controllers;
 			sourceTree = "<group>";
 		};
 		A3A5ABA02875FD7400A0BB77 /* Inter */ = {
@@ -310,18 +318,10 @@
 		A3ECD6E5285BD09F00DE450F /* ProfileScreen */ = {
 			isa = PBXGroup;
 			children = (
-				A3ECD6E6285BD09F00DE450F /* Controllers */,
+				A3ECD6E7285BD09F00DE450F /* DetailsVC.swift */,
 				A3ECD6E8285BD09F00DE450F /* Views */,
 			);
 			path = ProfileScreen;
-			sourceTree = "<group>";
-		};
-		A3ECD6E6285BD09F00DE450F /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				A3ECD6E7285BD09F00DE450F /* DetailsVC.swift */,
-			);
-			path = Controllers;
 			sourceTree = "<group>";
 		};
 		A3ECD6E8285BD09F00DE450F /* Views */ = {

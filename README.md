@@ -20,14 +20,11 @@ Swift iOS exercise application (reference: KODE-Android)
 - CocoaPods, чтобы подтянуть FloatingPanel (модальное окно) и RSwift
 
 
-[noInternetView.webm](https://user-images.githubusercontent.com/60381965/197362237-692af7cd-faac-43f6-9833-11262fae006f.webm)
+![noInternetConection (1)](https://user-images.githubusercontent.com/60381965/197363625-d66a62ab-63a5-49db-94c8-1d58ce0771d5.gif)
+![loadingAnimation](https://user-images.githubusercontent.com/60381965/197363500-7fc17a05-18aa-4349-b488-4a0e9abea7a7.gif)
 
-[loadingAnimation.webm](https://user-images.githubusercontent.com/60381965/197362257-ff49983c-3c08-44ea-b003-c843ad8ed903.webm)
+![Searching](https://user-images.githubusercontent.com/60381965/197363758-e67d29a2-32a1-42a0-a9a4-e63172f713eb.gif)
+![fillterByProfession](https://user-images.githubusercontent.com/60381965/197363766-ef0d1e3a-3a5e-4474-aca5-b231658b9a4b.gif)
 
-[filterByProfession.webm](https://user-images.githubusercontent.com/60381965/197362326-b286b9b5-ea9b-4679-b3aa-6b49b7c04064.webm)
-
-[searching.webm](https://user-images.githubusercontent.com/60381965/197362273-3809f932-24e5-42c6-b999-1630b794c05a.webm)
-
-[detailsScreen.webm](https://user-images.githubusercontent.com/60381965/197359502-8b8d3523-25a4-4e03-bf2f-8059f361f932.webm)
-
-[sortByName.webm](https://user-images.githubusercontent.com/60381965/197359726-990b808e-7243-4531-810b-cef133aa08e9.webm)
+![SortingByName](https://user-images.githubusercontent.com/60381965/197363333-f68f5f72-e330-4705-8b6a-80897fc290b1.gif)
+![detailsScreen](https://user-images.githubusercontent.com/60381965/197363431-6794f52d-a4e3-4951-a03d-37a378d96980.gif)

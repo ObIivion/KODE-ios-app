@@ -12,6 +12,7 @@ Swift iOS exercise application (reference: KODE-Android)
 
 Технологии, использованные в проекте:
 - UIKit, вёрстка кодом
+- CABasicAnimation для создания shimmer loading view
 - URLSession.dataTask для получения данных с сервера
 - Codable, JSONDecoder для парсинга 
 - UIGraphics для изменения размера UIImage

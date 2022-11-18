@@ -1,7 +1,7 @@
 # KODE-ios-app
 Swift iOS exercise application (reference: KODE-Android)
 
-Моё первое iOS приложение
+Моё первое iOS приложение. В качестве архитектуры - Cocoa MVC.
 
 - подтягивает данные о сотрудниках с сервера в UITableView
 - фильтрация сотрудников
